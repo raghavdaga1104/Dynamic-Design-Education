@@ -1,0 +1,353 @@
+{
+  "unit_id": "UNIT6_Searching",
+  "unit_title": "Searching Algorithms",
+  "topics": [
+    {
+      "topic": "Linear Search",
+      "definition": "Linear Search (also called Sequential Search) is the simplest searching algorithm that checks each element of a list one by one from left to right until the target element is found or the entire list has been traversed. It works on both sorted and unsorted data.",
+      "key_concepts": [
+        "Scans elements sequentially from index 0 to n-1",
+        "Works on unsorted and sorted arrays",
+        "Returns the index of the first occurrence of the target",
+        "Returns -1 (or None) if the target is not found",
+        "O(n) time complexity in average and worst case",
+        "O(1) best case — target is the first element",
+        "O(1) space complexity — no extra memory needed",
+        "Can search for any condition, not just equality"
+      ],
+      "code_examples": [
+        {
+          "description": "Linear search — basic, all occurrences, and with condition",
+          "code": "# Basic linear search — first occurrence\ndef linear_search(arr, target):\n    for i, val in enumerate(arr):\n        if val == target:\n            return i       # found — return index\n    return -1              # not found\n\nprint(linear_search([4, 2, 7, 1, 9, 3], 7))   # 2\nprint(linear_search([4, 2, 7, 1, 9, 3], 5))   # -1\n\n# Find ALL occurrences\ndef linear_search_all(arr, target):\n    return [i for i, val in enumerate(arr) if val == target]\n\nprint(linear_search_all([1, 2, 3, 2, 4, 2], 2))  # [1, 3, 5]\n\n# Search with condition — first element > 5\ndef search_condition(arr, condition):\n    for i, val in enumerate(arr):\n        if condition(val):\n            return i\n    return -1\n\nprint(search_condition([1, 3, 7, 2, 9], lambda x: x > 5))  # 2"
+        },
+        {
+          "description": "Linear search on 2D list and string",
+          "code": "# Search in 2D list — return (row, col)\ndef search_2d(matrix, target):\n    for i, row in enumerate(matrix):\n        for j, val in enumerate(row):\n            if val == target:\n                return (i, j)\n    return None\n\nmatrix = [[1,2,3],[4,5,6],[7,8,9]]\nprint(search_2d(matrix, 5))   # (1, 1)\nprint(search_2d(matrix, 10))  # None\n\n# Search in string\ndef find_char(s, char):\n    for i, c in enumerate(s):\n        if c == char:\n            return i\n    return -1\n\nprint(find_char('from from python_source.content._source.content.', 't'))   # 2"
+        }
+      ],
+      "complexity": {
+        "Best Case": "O(1) — target is the first element",
+        "Average Case": "O(n) — target is in the middle on average",
+        "Worst Case": "O(n) — target is last or not present",
+        "Space": "O(1) — no extra space needed"
+      },
+      "advantages": [
+        "Works on unsorted arrays — no preprocessing needed",
+        "Simple to implement and understand",
+        "Works for any data type that supports equality comparison",
+        "Can find all occurrences, not just the first",
+        "Works on linked lists and other non-random-access structures"
+      ],
+      "disadvantages": [
+        "O(n) time — slow for large arrays",
+        "Not suitable when frequent searches are needed on large datasets",
+        "Does not take advantage of sorted order"
+      ],
+      "important_points": [
+        "Linear search is the only option for unsorted data",
+        "from from python_source.content._source.content.'s in operator uses linear search for lists: O(n)",
+        "from from python_source.content._source.content.'s in operator uses hashing for sets/dicts: O(1)",
+        "For a single search on unsorted data, linear search is optimal",
+        "Use binary search when data is sorted and multiple searches are needed"
+      ],
+      "exam_questions": [
+        "What is linear search? Write its algorithm.",
+        "What is the time complexity of linear search in best, average, and worst cases?",
+        "When would you prefer linear search over binary search?",
+        "Write a linear search function that returns all indices where target is found.",
+        "What is the time complexity of from from python_source.content._source.content.'s in operator on a list vs a set?"
+      ],
+      "explanation": "Linear search is the simplest and most universal search algorithm. It requires no preprocessing and works on any iterable. Its O(n) complexity makes it impractical for large sorted datasets where binary search is far superior, but it remains the only option for unsorted or non-random-access data."
+    },
+    {
+      "topic": "Binary Search",
+      "definition": "Binary Search is an efficient searching algorithm that works on sorted arrays. It repeatedly halves the search space by comparing the target with the middle element. If the target equals the middle, the search is complete. If less, search the left half; if greater, search the right half. This gives O(log n) time complexity.",
+      "key_concepts": [
+        "REQUIRES sorted array — does not work on unsorted data",
+        "Divides search space in half at each step",
+        "Compare target with middle element: equal (found), less (go left), greater (go right)",
+        "Iterative and recursive implementations both valid",
+        "O(log n) time — halving means log₂(n) steps maximum",
+        "O(1) space for iterative; O(log n) for recursive (call stack)",
+        "Can find first/last occurrence of a value in a sorted array",
+        "Used in many real-world applications: databases, phone books, sorted files"
+      ],
+      "code_examples": [
+        {
+          "description": "Binary search — iterative and recursive",
+          "code": "# Iterative Binary Search — O(1) space\ndef binary_search(arr, target):\n    lo, hi = 0, len(arr) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2          # avoid overflow vs (lo+hi)/2\n        if arr[mid] == target:\n            return mid                 # found\n        elif arr[mid] < target:\n            lo = mid + 1              # search right half\n        else:\n            hi = mid - 1              # search left half\n    return -1                         # not found\n\narr = [1, 3, 5, 7, 9, 11, 13, 15]\nprint(binary_search(arr, 7))    # 3\nprint(binary_search(arr, 6))    # -1\n\n# Recursive Binary Search — O(log n) space\ndef binary_search_rec(arr, target, lo=0, hi=None):\n    if hi is None:\n        hi = len(arr) - 1\n    if lo > hi:\n        return -1                     # base case: not found\n    mid = (lo + hi) // 2\n    if arr[mid] == target:\n        return mid\n    elif arr[mid] < target:\n        return binary_search_rec(arr, target, mid + 1, hi)\n    else:\n        return binary_search_rec(arr, target, lo, mid - 1)\n\nprint(binary_search_rec(arr, 11))  # 5"
+        },
+        {
+          "description": "Binary search variants — first/last occurrence, search insert position",
+          "code": "# Find FIRST occurrence of target\ndef first_occurrence(arr, target):\n    lo, hi, result = 0, len(arr)-1, -1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            result = mid\n            hi = mid - 1    # keep searching LEFT for first\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return result\n\n# Find LAST occurrence of target\ndef last_occurrence(arr, target):\n    lo, hi, result = 0, len(arr)-1, -1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            result = mid\n            lo = mid + 1    # keep searching RIGHT for last\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return result\n\narr = [1, 2, 2, 2, 3, 4, 5]\nprint(first_occurrence(arr, 2))  # 1\nprint(last_occurrence(arr, 2))   # 3\n\n# bisect module — from from python_source.content._source.content. built-in binary search\nimport bisect\narr = [1, 3, 5, 7, 9]\nprint(bisect.bisect_left(arr, 5))   # 2 — index to insert left\nprint(bisect.bisect_right(arr, 5))  # 3 — index to insert right\nbisect.insort(arr, 6)               # insert 6 maintaining order\nprint(arr)  # [1, 3, 5, 6, 7, 9]"
+        }
+      ],
+      "trace_example": "Array: [1, 3, 5, 7, 9, 11, 13], target=7\nStep 1: lo=0, hi=6, mid=3, arr[3]=7 == 7 → FOUND at index 3\n\nArray: [1, 3, 5, 7, 9, 11, 13], target=6\nStep 1: lo=0, hi=6, mid=3, arr[3]=7 > 6 → hi=2\nStep 2: lo=0, hi=2, mid=1, arr[1]=3 < 6 → lo=2\nStep 3: lo=2, hi=2, mid=2, arr[2]=5 < 6 → lo=3\nStep 4: lo=3 > hi=2 → return -1 (NOT FOUND)",
+      "complexity": {
+        "Best Case": "O(1) — target is the middle element",
+        "Average Case": "O(log n)",
+        "Worst Case": "O(log n)",
+        "Space (iterative)": "O(1)",
+        "Space (recursive)": "O(log n) — call stack"
+      },
+      "advantages": [
+        "O(log n) — extremely fast for large sorted arrays",
+        "Simple and elegant implementation",
+        "Works for any sorted comparable data",
+        "Bisect module provides ready-to-use implementation in from from python_source.content._source.content.",
+        "Can be adapted for many variants: first/last occurrence, floor/ceil"
+      ],
+      "disadvantages": [
+        "Requires sorted array — sorting costs O(n log n)",
+        "Not suitable for unsorted or frequently changing data",
+        "Random access required — does not work on linked lists",
+        "Slight overhead for very small arrays — linear search may be faster"
+      ],
+      "important_points": [
+        "mid = (lo + hi) // 2 — use this to avoid integer overflow (vs (lo+hi)/2)",
+        "lo <= hi is the correct loop condition — not lo < hi",
+        "After the loop, lo is the insertion point for the target",
+        "from from python_source.content._source.content.'s bisect module provides binary search: bisect_left, bisect_right, insort",
+        "Binary search on answer: a powerful technique for optimisation problems"
+      ],
+      "exam_questions": [
+        "Trace binary search on [2,4,6,8,10,12,14] for target=10.",
+        "What is the time complexity of binary search? Why is it O(log n)?",
+        "What is the precondition for binary search?",
+        "Write binary search to find the first occurrence of a value in a sorted array.",
+        "How many comparisons does binary search need for an array of 1024 elements?"
+      ],
+      "explanation": "Binary search is one of the most important algorithms in computer science. By halving the search space at each step, it achieves O(log n) — for 1 million elements, it takes at most 20 comparisons. The key precondition is a sorted array. from from python_source.content._source.content.'s bisect module provides a production-ready implementation."
+    },
+    {
+      "topic": "Search on Data Structures",
+      "definition": "Different data structures support different search strategies with varying time complexities. Choosing the right data structure for the access pattern is as important as choosing the right algorithm. This topic covers searching in lists, sets, dicts, strings, and sorted structures.",
+      "key_concepts": [
+        "List: linear search O(n) for unsorted; binary search O(log n) for sorted",
+        "Set: hash-based O(1) average membership test",
+        "Dict: hash-based O(1) average key lookup",
+        "String: substring search with str.find() O(n*m) naively",
+        "Sorted list with bisect: O(log n) search, O(n) insert",
+        "Hash collision: worst case O(n) for set/dict — rare in practice",
+        "Counting occurrences: collections.Counter for frequency mapping",
+        "Two-sum problem: hash map reduces O(n²) brute force to O(n)"
+      ],
+      "code_examples": [
+        {
+          "description": "Search across list, set, dict, and string",
+          "code": "# List — O(n)\nlst = [3, 1, 4, 1, 5, 9, 2, 6]\nprint(5 in lst)              # True  — O(n)\nprint(lst.index(4))          # 2     — O(n)\nprint(lst.count(1))          # 2     — O(n)\n\n# Set — O(1) average\ns = {3, 1, 4, 1, 5, 9, 2, 6}  # duplicates removed\nprint(5 in s)                # True  — O(1)\nprint(7 in s)                # False — O(1)\n\n# Dict — O(1) average\ngrades = {'Alice': 92, 'Bob': 85, 'Carol': 78}\nprint('Alice' in grades)     # True  — key search O(1)\nprint(grades.get('Bob', 0))  # 85    — O(1)\nprint(grades.get('Dan', 0))  # 0     — default if not found\n\n# String — substring search\ns = 'hello from from python_source.content._source.content. world'\nprint('from from python_source.content._source.content.' in s)         # True  — O(n*m)\nprint(s.find('from from python_source.content._source.content.'))      # 6     — index or -1\nprint(s.index('world'))      # 13    — raises ValueError if not found\nprint(s.count('o'))          # 3     — count occurrences"
+        },
+        {
+          "description": "Practical search patterns — two-sum, frequency count, sorted search",
+          "code": "# Two-Sum — find pair that adds to target\ndef two_sum(nums, target):\n    seen = {}               # value → index\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:   # O(1) lookup\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n\nprint(two_sum([2, 7, 11, 15], 9))   # [0, 1]  (2+7=9)\nprint(two_sum([3, 2, 4], 6))        # [1, 2]  (2+4=6)\n\n# Frequency count\nfrom collections import Counter\nwords = ['apple','banana','apple','cherry','banana','apple']\nfreq = Counter(words)\nprint(freq)                  # Counter({'apple':3,'banana':2,'cherry':1})\nprint(freq.most_common(2))   # [('apple',3),('banana',2)]\n\n# Search in sorted list with bisect\nimport bisect\nsorted_arr = [1, 3, 5, 7, 9, 11]\nidx = bisect.bisect_left(sorted_arr, 7)\nfound = idx < len(sorted_arr) and sorted_arr[idx] == 7\nprint(found, idx)            # True 3"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Data Structure",
+          "Search",
+          "Insert",
+          "Delete",
+          "Ordered"
+        ],
+        "rows": [
+          [
+            "Unsorted list",
+            "O(n)",
+            "O(1) end / O(n) middle",
+            "O(n)",
+            "Yes"
+          ],
+          [
+            "Sorted list",
+            "O(log n)",
+            "O(n)",
+            "O(n)",
+            "Yes"
+          ],
+          [
+            "Set",
+            "O(1) avg",
+            "O(1) avg",
+            "O(1) avg",
+            "No"
+          ],
+          [
+            "Dict",
+            "O(1) avg",
+            "O(1) avg",
+            "O(1) avg",
+            "No (3.7+ insertion order)"
+          ],
+          [
+            "String",
+            "O(n*m)",
+            "N/A (immutable)",
+            "N/A",
+            "Yes"
+          ]
+        ]
+      },
+      "important_points": [
+        "Use set for O(1) membership testing — convert list to set if searching repeatedly",
+        "dict.get(key, default) is safer than dict[key] — no KeyError on missing key",
+        "str.find() returns -1 if not found; str.index() raises ValueError",
+        "Counter is the best tool for frequency-based search problems",
+        "Two-sum pattern: use a hash map to reduce O(n²) to O(n)"
+      ],
+      "exam_questions": [
+        "What is the time complexity of searching in a list vs a set in from from python_source.content._source.content.?",
+        "Write a function to find if a pair in an array sums to a target value — O(n).",
+        "What is the difference between str.find() and str.index()?",
+        "How does Counter work? Write an example to find the most frequent element.",
+        "When should you convert a list to a set before searching?"
+      ],
+      "explanation": "The right data structure makes all the difference in search performance. Lists give O(n) search; sets and dicts give O(1) average. For sorted data, binary search via bisect gives O(log n). The two-sum hash map pattern is a classic interview technique that reduces O(n²) brute force to O(n)."
+    },
+    {
+      "topic": "Binary Search on Answer",
+      "definition": "Binary Search on Answer is an advanced technique where binary search is applied not on an array but on the answer space (a range of possible values). Instead of searching for an element, we search for the minimum or maximum value that satisfies a given condition. The condition must be monotonic — once True, it stays True (or once False, stays False).",
+      "key_concepts": [
+        "Apply binary search on the RANGE OF ANSWERS, not on an array",
+        "Condition must be monotonic: if condition(x) is True, condition(x+1) is also True",
+        "Find the minimum x such that condition(x) is True",
+        "Or find the maximum x such that condition(x) is True",
+        "Time complexity: O(log(range) * cost_of_condition)",
+        "Common pattern: lo=min_possible, hi=max_possible, search for boundary",
+        "Used in optimisation problems: minimise maximum, maximise minimum",
+        "Real-world examples: find square root, koko eating bananas, capacity to ship packages"
+      ],
+      "code_examples": [
+        {
+          "description": "Square root, find peak, and minimum capacity problems",
+          "code": "# Integer square root — binary search on answer\ndef isqrt(n):\n    if n < 0:\n        return -1\n    lo, hi = 0, n\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if mid * mid == n:\n            return mid\n        elif mid * mid < n:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return hi   # floor of sqrt\n\nprint(isqrt(25))   # 5\nprint(isqrt(26))   # 5 (floor)\nprint(isqrt(100))  # 10\n\n# Minimum pages — allocate books to students\n# Each student gets contiguous books, minimise max pages any student reads\ndef can_allocate(pages, students, max_pages):\n    count, current = 1, 0\n    for p in pages:\n        if p > max_pages:\n            return False\n        if current + p > max_pages:\n            count += 1\n            current = p\n        else:\n            current += p\n    return count <= students\n\ndef min_pages(pages, students):\n    lo, hi = max(pages), sum(pages)\n    result = hi\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if can_allocate(pages, students, mid):\n            result = mid\n            hi = mid - 1   # try smaller\n        else:\n            lo = mid + 1\n    return result\n\nprint(min_pages([12, 34, 67, 90], 2))  # 113"
+        }
+      ],
+      "important_points": [
+        "The condition function must be monotonic for binary search on answer to work",
+        "lo = minimum possible answer, hi = maximum possible answer",
+        "This technique converts O(n²) or O(n³) solutions to O(n log n)",
+        "Common in competitive programming and technical interviews",
+        "Always verify the condition is truly monotonic before applying"
+      ],
+      "exam_questions": [
+        "What is binary search on answer? When is it applicable?",
+        "Write a binary search solution to find the integer square root of n.",
+        "What property must the condition function satisfy for this technique to work?",
+        "Explain the book allocation problem and solve it using binary search on answer.",
+        "What is the time complexity of binary search on answer if condition check is O(n)?"
+      ],
+      "explanation": "Binary search on answer is a powerful extension of binary search to optimisation problems. Instead of searching for a value in an array, we search for the optimal answer in a range. The key insight is that if a condition is monotonic, we can binary search for the exact boundary point in O(log n) steps."
+    },
+    {
+      "topic": "Searching Algorithm Comparison",
+      "definition": "A comprehensive comparison of searching strategies based on time complexity, space requirements, preconditions, and practical applicability. Choosing the right search method depends on data structure, data ordering, and frequency of searches.",
+      "key_concepts": [
+        "Linear search: O(n), no preconditions, works on any iterable",
+        "Binary search: O(log n), requires sorted array and random access",
+        "Hash-based search: O(1) average for set/dict",
+        "Interpolation search: O(log log n) average for uniformly distributed sorted data",
+        "Jump search: O(√n) — jumps ahead by block size then linear within block",
+        "Exponential search: O(log n) — useful when size is unknown",
+        "Search choice depends on: data size, sorted status, search frequency, data structure"
+      ],
+      "comparison_table": {
+        "headers": [
+          "Algorithm",
+          "Best",
+          "Average",
+          "Worst",
+          "Space",
+          "Sorted Required"
+        ],
+        "rows": [
+          [
+            "Linear Search",
+            "O(1)",
+            "O(n)",
+            "O(n)",
+            "O(1)",
+            "No"
+          ],
+          [
+            "Binary Search",
+            "O(1)",
+            "O(log n)",
+            "O(log n)",
+            "O(1)",
+            "Yes"
+          ],
+          [
+            "Jump Search",
+            "O(1)",
+            "O(√n)",
+            "O(√n)",
+            "O(1)",
+            "Yes"
+          ],
+          [
+            "Interpolation Search",
+            "O(1)",
+            "O(log log n)",
+            "O(n)",
+            "O(1)",
+            "Yes (uniform)"
+          ],
+          [
+            "Hash Set/Dict",
+            "O(1)",
+            "O(1)",
+            "O(n)*",
+            "O(n)",
+            "No"
+          ],
+          [
+            "from from python_source.content._source.content. in (list)",
+            "O(1)",
+            "O(n)",
+            "O(n)",
+            "O(1)",
+            "No"
+          ],
+          [
+            "from from python_source.content._source.content. in (set)",
+            "O(1)",
+            "O(1)",
+            "O(n)*",
+            "O(n)",
+            "No"
+          ]
+        ]
+      },
+      "code_examples": [
+        {
+          "description": "Jump search and interpolation search implementations",
+          "code": "import math\n\n# Jump Search — O(√n)\ndef jump_search(arr, target):\n    n    = len(arr)\n    step = int(math.sqrt(n))\n    prev = 0\n    # Jump forward in blocks\n    while prev < n and arr[min(step, n)-1] < target:\n        prev  = step\n        step += int(math.sqrt(n))\n        if prev >= n:\n            return -1\n    # Linear search in the identified block\n    for i in range(prev, min(step, n)):\n        if arr[i] == target:\n            return i\n    return -1\n\narr = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\nprint(jump_search(arr, 13))   # 7\n\n# Interpolation Search — O(log log n) for uniform distribution\ndef interpolation_search(arr, target):\n    lo, hi = 0, len(arr) - 1\n    while lo <= hi and arr[lo] <= target <= arr[hi]:\n        if lo == hi:\n            return lo if arr[lo] == target else -1\n        # Estimate position by value proportion\n        pos = lo + ((target - arr[lo]) * (hi - lo)\n                    // (arr[hi] - arr[lo]))\n        if arr[pos] == target:\n            return pos\n        elif arr[pos] < target:\n            lo = pos + 1\n        else:\n            hi = pos - 1\n    return -1\n\narr = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]\nprint(interpolation_search(arr, 70))  # 6"
+        }
+      ],
+      "when_to_use": [
+        "Linear Search: unsorted data, single search, linked lists, small datasets",
+        "Binary Search: sorted array, frequent searches, large datasets",
+        "Hash Set/Dict: fastest membership test, unordered data, no duplicates needed",
+        "Jump Search: sorted array, when binary search overhead is too high",
+        "Interpolation Search: large sorted uniformly distributed numeric data",
+        "bisect module: from from python_source.content._source.content.ic binary search with insert-in-order capability"
+      ],
+      "important_points": [
+        "For repeated searches on a fixed dataset — convert to set for O(1) lookup",
+        "Binary search requires sorted data — sort cost O(n log n) must be amortised",
+        "Hash collision worst case is O(n) but extremely rare with good hash functions",
+        "from from python_source.content._source.content.'s dict and set use open addressing with a hash table",
+        "Jump search block size √n is optimal — balances jumps and linear steps"
+      ],
+      "exam_questions": [
+        "Compare linear search and binary search — time complexity, preconditions, use cases.",
+        "What is jump search? What is its time complexity and optimal block size?",
+        "When would you use interpolation search over binary search?",
+        "What is the worst-case time complexity of searching in a from from python_source.content._source.content. set?",
+        "You have an unsorted list of 1 million elements and need to search it 10000 times. What is the most efficient approach?"
+      ],
+      "explanation": "Searching algorithm selection depends on data size, structure, and search frequency. For unsorted data, linear search is the only option. For sorted arrays, binary search is O(log n). For unordered frequent lookups, hash-based structures (set/dict) give O(1). The bisect module is from from python_source.content._source.content.'s built-in tool for sorted array search."
+    }
+  ]
+}

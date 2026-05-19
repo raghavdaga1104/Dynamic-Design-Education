@@ -1,0 +1,40 @@
+{
+  "user_id": "testuser_01",
+  "skill_mastery": {
+    "advanced oop": 0.1,
+    "python basics": 0.85,
+    "linked lists": 0.1,
+    "arrays": 0.1,
+    "recursion": 0.1,
+    "searching": 0.1,
+    "oop concepts": 0.1,
+    "python functions": 0.1,
+    "trees": 0.1,
+    "dynamic programming": 0.1,
+    "hash tables": 0.1,
+    "stacks and queues": 0.1,
+    "graph algorithms": 0.1,
+    "sorting": 0.1
+  },
+  "completed_units": [],
+  "current_unit_id": "UNIT2_PythonFunctions",
+  "streak_days": 0,
+  "flashcards": {},
+  "last_review_day": {},
+  "quiz_history": [],
+  "diagnostic_result": {
+    "topic": "python",
+    "score_raw": 0,
+    "score_max": 20,
+    "score_percent": 0.0,
+    "tier": "beginner",
+    "starting_unit": "UNIT1_PythonBasics",
+    "skipped": true,
+    "message": "You chose to start from the beginning. Your first unit is ready."
+  },
+  "current_day": 0,
+  "_created_at": 1777493629.7949617,
+  "mistake_log": [],
+  "concept_index": {},
+  "consecutive_failures": {}
+}

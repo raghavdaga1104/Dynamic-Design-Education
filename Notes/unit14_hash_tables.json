@@ -1,0 +1,393 @@
+{
+  "unit_id": "UNIT14_HashTables",
+  "unit_title": "Hash Tables",
+  "topics": [
+    {
+      "topic": "Hashing Fundamentals",
+      "definition": "Hashing is a technique that maps data of arbitrary size to fixed-size values (hash codes) using a hash function. A hash table stores key-value pairs and uses hashing to achieve average O(1) time for insertion, deletion, and lookup.",
+      "key_concepts": [
+        "Hash function: converts a key to an integer index in the hash table",
+        "Hash code: the integer output of the hash function",
+        "Bucket: a slot in the hash table array where values are stored",
+        "Load factor: ratio of stored elements to total buckets \u2014 n/m",
+        "Collision: two different keys produce the same hash index",
+        "Perfect hash function: no collisions \u2014 each key maps to a unique index",
+        "Uniform distribution: a good hash function distributes keys evenly",
+        "Rehashing: resize and rehash all keys when load factor exceeds threshold",
+        "from from python_source.content._source.content. hash(): built-in function returning hash code of an object",
+        "Hashable: objects that have a hash value \u2014 immutable types (int, str, tuple)"
+      ],
+      "code_examples": [
+        {
+          "description": "Hash function basics",
+          "code": "print(hash(42))\nprint(hash(\"hello\"))\n\ndef simple_hash(key, size):\n    total = 0\n    for ch in key:\n        total += ord(ch)\n    return total % size\n\ndef poly_hash(key, size, prime=31):\n    total, power = 0, 1\n    for ch in key:\n        total = (total + ord(ch) * power) % size\n        power = (power * prime) % size\n    return total"
+        },
+        {
+          "description": "Load factor and rehashing",
+          "code": "class SimpleHashTable:\n    def __init__(self, capacity=8):\n        self.capacity = capacity\n        self.buckets = [None] * capacity\n        self.size = 0\n\n    @property\n    def load_factor(self):\n        return self.size / self.capacity\n\n    def _hash(self, key):\n        return hash(key) % self.capacity\n\n    def put(self, key, value):\n        if self.load_factor >= 0.75:\n            self._rehash()\n        idx = self._hash(key)\n        self.buckets[idx] = (key, value)\n        self.size += 1\n\n    def _rehash(self):\n        old = self.buckets\n        self.capacity *= 2\n        self.buckets = [None] * self.capacity\n        self.size = 0\n        for item in old:\n            if item: self.put(*item)\n\n    def get(self, key):\n        idx = self._hash(key)\n        if self.buckets[idx] and self.buckets[idx][0] == key:\n            return self.buckets[idx][1]\n        return None"
+        }
+      ],
+      "important_points": [
+        "hash() in from from python_source.content._source.content. is randomised per session for strings \u2014 not stable across runs",
+        "Only immutable objects are hashable: int, float, str, tuple, frozenset",
+        "Mutable objects (list, dict, set) are NOT hashable \u2014 cannot be dict keys",
+        "Load factor > 0.75 typically triggers rehashing in from from python_source.content._source.content. dicts",
+        "from from python_source.content._source.content. dicts are implemented as hash tables with open addressing",
+        "A good hash function: fast to compute, uniform distribution, deterministic"
+      ],
+      "exam_questions": [
+        "What is a hash function? What properties should a good hash function have?",
+        "What is a load factor? What happens when it exceeds the threshold?",
+        "Why are lists not hashable in from from python_source.content._source.content. but tuples are?",
+        "What is rehashing? Why is it needed?",
+        "Write a simple hash function for string keys."
+      ],
+      "explanation": "Hashing maps keys to array indices for O(1) average-case operations. A good hash function distributes keys uniformly to minimise collisions. The load factor controls when rehashing occurs \u2014 from from python_source.content._source.content. dicts rehash when load factor exceeds ~0.75, doubling capacity each time."
+    },
+    {
+      "topic": "Collision Resolution",
+      "definition": "A collision occurs when two different keys produce the same hash index. The two main approaches are Chaining (each bucket holds a linked list of colliding entries) and Open Addressing (colliding entries are stored in other buckets using a probing sequence).",
+      "key_concepts": [
+        "Chaining: each bucket contains a linked list of all key-value pairs that hash to that index",
+        "Open Addressing: on collision, probe for the next available slot",
+        "Linear Probing: check index+1, index+2, ... until empty slot found",
+        "Quadratic Probing: check index+1^2, index+2^2, index+3^2, ...",
+        "Double Hashing: use a second hash function to determine step size",
+        "Clustering: consecutive occupied slots \u2014 degrades performance",
+        "Primary clustering: problem with linear probing \u2014 long runs of occupied slots",
+        "Tombstone: marker for deleted slots in open addressing \u2014 prevents broken probe chains",
+        "from from python_source.content._source.content. dicts use open addressing with random probing"
+      ],
+      "code_examples": [
+        {
+          "description": "Chaining collision resolution",
+          "code": "class ChainingHashTable:\n    def __init__(self, capacity=8):\n        self.capacity = capacity\n        self.buckets = [[] for _ in range(capacity)]\n        self.size = 0\n\n    def _hash(self, key):\n        return hash(key) % self.capacity\n\n    def put(self, key, value):\n        idx = self._hash(key)\n        bucket = self.buckets[idx]\n        for i, (k, v) in enumerate(bucket):\n            if k == key:\n                bucket[i] = (key, value)\n                return\n        bucket.append((key, value))\n        self.size += 1\n\n    def get(self, key):\n        idx = self._hash(key)\n        for k, v in self.buckets[idx]:\n            if k == key: return v\n        return None\n\n    def delete(self, key):\n        idx = self._hash(key)\n        for i, (k, v) in enumerate(self.buckets[idx]):\n            if k == key:\n                self.buckets[idx].pop(i)\n                self.size -= 1\n                return True\n        return False"
+        },
+        {
+          "description": "Linear probing with tombstone deletion",
+          "code": "class LinearProbingHT:\n    DELETED = object()\n\n    def __init__(self, capacity=8):\n        self.capacity = capacity\n        self.keys = [None] * capacity\n        self.values = [None] * capacity\n        self.size = 0\n\n    def _hash(self, key): return hash(key) % self.capacity\n\n    def put(self, key, value):\n        idx = self._hash(key)\n        while self.keys[idx] not in (None, self.DELETED):\n            if self.keys[idx] == key:\n                self.values[idx] = value\n                return\n            idx = (idx + 1) % self.capacity\n        self.keys[idx] = key\n        self.values[idx] = value\n        self.size += 1\n\n    def get(self, key):\n        idx = self._hash(key)\n        while self.keys[idx] is not None:\n            if self.keys[idx] == key and self.keys[idx] is not self.DELETED:\n                return self.values[idx]\n            idx = (idx + 1) % self.capacity\n        return None\n\n    def delete(self, key):\n        idx = self._hash(key)\n        while self.keys[idx] is not None:\n            if self.keys[idx] == key:\n                self.keys[idx] = self.DELETED\n                self.values[idx] = None\n                self.size -= 1\n                return True\n            idx = (idx + 1) % self.capacity\n        return False"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Property",
+          "Chaining",
+          "Linear Probing",
+          "Double Hashing"
+        ],
+        "rows": [
+          [
+            "Collision handling",
+            "Linked list per bucket",
+            "Probe next slot",
+            "Second hash for step"
+          ],
+          [
+            "Memory",
+            "Extra for pointers",
+            "In-place (compact)",
+            "In-place"
+          ],
+          [
+            "Load factor limit",
+            "Can exceed 1.0",
+            "Keep < 0.7",
+            "Keep < 0.7"
+          ],
+          [
+            "Cache performance",
+            "Poor (pointer chasing)",
+            "Good (cache-friendly)",
+            "Moderate"
+          ],
+          [
+            "Clustering",
+            "None",
+            "Primary clustering",
+            "None"
+          ],
+          [
+            "Delete",
+            "Simple remove",
+            "Tombstone needed",
+            "Tombstone needed"
+          ],
+          [
+            "Used in",
+            "Java HashMap",
+            "from from python_source.content._source.content. dict",
+            "Some databases"
+          ]
+        ]
+      },
+      "important_points": [
+        "Chaining: worst case O(n) when all keys hash to same bucket",
+        "Linear probing: primary clustering degrades performance at high load",
+        "Tombstone prevents breaking probe chains on deletion",
+        "Without tombstone: deleting a middle slot breaks subsequent lookups",
+        "from from python_source.content._source.content. dict uses open addressing with pseudo-random probing (not linear)",
+        "Double hashing eliminates clustering but is more complex to implement"
+      ],
+      "exam_questions": [
+        "What is a collision in a hash table? Give two methods to resolve it.",
+        "Explain chaining with an example. What is its worst-case time complexity?",
+        "What is linear probing? What is the clustering problem?",
+        "What is a tombstone? Why is it needed in open addressing?",
+        "Compare chaining and open addressing \u2014 advantages and disadvantages."
+      ],
+      "explanation": "Collision resolution is fundamental to hash table correctness. Chaining is simple and handles high load factors but has poor cache performance. Linear probing is cache-friendly but suffers from clustering. Tombstones are essential for open addressing deletion \u2014 without them, probe chains break and lookups fail."
+    },
+    {
+      "topic": "from from python_source.content._source.content. Dictionaries and Sets",
+      "definition": "from from python_source.content._source.content. dict and set are built-in hash table implementations. dict maps hashable keys to values with O(1) average operations. set stores unique hashable elements with O(1) membership testing.",
+      "key_concepts": [
+        "dict: hash table mapping keys to values, O(1) average get/set/delete",
+        "set: hash table storing unique elements, O(1) average add/remove/in",
+        "Both require hashable keys/elements \u2014 immutable types only",
+        "dict preserves insertion order (from from python_source.content._source.content. 3.7+)",
+        "dict.get(key, default): safe lookup \u2014 returns default if key missing",
+        "dict.setdefault(key, default): inserts key with default if not present",
+        "collections.defaultdict: auto-initialises missing keys",
+        "collections.Counter: specialised dict for counting",
+        "frozenset: immutable set \u2014 hashable, can be used as dict key"
+      ],
+      "code_examples": [
+        {
+          "description": "Dictionary operations, methods, comprehensions",
+          "code": "d = {\"name\": \"Alice\", \"age\": 21}\nprint(d[\"name\"])\nprint(d.get(\"city\", \"N/A\"))\nd[\"city\"] = \"Delhi\"\ndel d[\"age\"]\nd.setdefault(\"score\", 0)\nd.update({\"major\": \"CS\"})\npopped = d.pop(\"score\", -1)\nsquares = {x: x**2 for x in range(1, 6)}\ninverted = {v: k for k, v in squares.items()}"
+        },
+        {
+          "description": "Sets, frozensets, defaultdict, Counter",
+          "code": "a = {1, 2, 3, 4, 5}\nb = {3, 4, 5, 6, 7}\nprint(a | b)   # union\nprint(a & b)   # intersection\nprint(a - b)   # difference\nprint(a ^ b)   # symmetric difference\n\nfs = frozenset([1, 2, 3])\nd = {fs: \"my_set\"}   # frozenset as dict key\n\nfrom collections import defaultdict, Counter\n\ngraph = defaultdict(list)\nfor u, v in [(0,1),(0,2),(1,3)]:\n    graph[u].append(v)\n\nword_count = defaultdict(int)\nfor word in \"apple banana apple cherry\".split():\n    word_count[word] += 1\n\nc = Counter(\"aabbcccdddd\")\nprint(c.most_common(2))\nc1 = Counter(\"aab\")\nc2 = Counter(\"abc\")\nprint(c1 + c2)\nprint(c1 & c2)"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Operation",
+          "dict",
+          "set",
+          "list",
+          "tuple"
+        ],
+        "rows": [
+          [
+            "Lookup",
+            "O(1) avg",
+            "O(1) avg",
+            "O(n)",
+            "O(n)"
+          ],
+          [
+            "Insert",
+            "O(1) avg",
+            "O(1) avg",
+            "O(1) amort",
+            "N/A"
+          ],
+          [
+            "Delete",
+            "O(1) avg",
+            "O(1) avg",
+            "O(n)",
+            "N/A"
+          ],
+          [
+            "Ordered",
+            "Yes (3.7+)",
+            "No",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "Duplicates",
+            "No (keys)",
+            "No",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "Hashable req",
+            "Keys only",
+            "Elements",
+            "No",
+            "No"
+          ],
+          [
+            "Memory",
+            "High",
+            "High",
+            "Low",
+            "Low"
+          ]
+        ]
+      },
+      "important_points": [
+        "dict.get() is safer than dict[] \u2014 no KeyError on missing keys",
+        "defaultdict eliminates the need for if key not in dict: dict[key] = [] pattern",
+        "Counter is the best tool for frequency counting and anagram detection",
+        "Sets are perfect for deduplication and O(1) membership testing",
+        "frozenset is hashable \u2014 can be used as a dict key or set element",
+        "dict.items() returns view objects \u2014 they reflect live changes to the dict"
+      ],
+      "exam_questions": [
+        "What is the time complexity of dict lookup, insert, and delete?",
+        "What is the difference between dict.get() and dict[]?",
+        "What is a defaultdict? How does it differ from a regular dict?",
+        "What is Counter? Write an example to find the most frequent character in a string.",
+        "Write a set to remove duplicates from a list while preserving uniqueness."
+      ],
+      "explanation": "from from python_source.content._source.content. dict and set are optimised hash table implementations. dict gives O(1) average key-value operations and preserves insertion order since from from python_source.content._source.content. 3.7. defaultdict and Counter are specialised variants that simplify common patterns like grouping and frequency counting."
+    },
+    {
+      "topic": "Hash Table Problems",
+      "definition": "Hash table problems use dicts and sets to reduce the time complexity from O(n^2) to O(n). Key patterns: two-sum, anagram grouping, frequency counting, and sliding window with hash maps.",
+      "key_concepts": [
+        "Two-sum: use dict to store seen values and their indices \u2014 O(n)",
+        "Anagram detection: sort characters or use Counter for signature",
+        "Group anagrams: use sorted string as dict key",
+        "Subarray sum equals k: prefix sum + hash map \u2014 O(n)",
+        "Longest substring without repeating: sliding window + set \u2014 O(n)",
+        "First non-repeating character: Counter + linear scan",
+        "Isomorphic strings: two-way character mapping",
+        "Frequency-based problems: Counter + heap for top-k elements"
+      ],
+      "code_examples": [
+        {
+          "description": "Two-sum, group anagrams, subarray sum equals k",
+          "code": "from collections import defaultdict\n\ndef two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n\ndef group_anagrams(words):\n    groups = defaultdict(list)\n    for word in words:\n        key = \"\".join(sorted(word))\n        groups[key].append(word)\n    return list(groups.values())\n\ndef subarray_sum(nums, k):\n    count = 0\n    prefix_sum = 0\n    freq = defaultdict(int)\n    freq[0] = 1\n    for num in nums:\n        prefix_sum += num\n        count += freq[prefix_sum - k]\n        freq[prefix_sum] += 1\n    return count"
+        },
+        {
+          "description": "Longest substring, top-k frequent, first unique char, isomorphic",
+          "code": "from collections import Counter\nimport heapq\n\ndef length_of_longest_substring(s):\n    char_idx = {}\n    max_len = 0\n    left = 0\n    for right, ch in enumerate(s):\n        if ch in char_idx and char_idx[ch] >= left:\n            left = char_idx[ch] + 1\n        char_idx[ch] = right\n        max_len = max(max_len, right - left + 1)\n    return max_len\n\ndef top_k_frequent(nums, k):\n    count = Counter(nums)\n    return heapq.nlargest(k, count.keys(), key=count.get)\n\ndef first_unique(s):\n    count = Counter(s)\n    for i, ch in enumerate(s):\n        if count[ch] == 1:\n            return i\n    return -1\n\ndef is_isomorphic(s, t):\n    s_to_t, t_to_s = {}, {}\n    for a, b in zip(s, t):\n        if s_to_t.get(a, b) != b or t_to_s.get(b, a) != a:\n            return False\n        s_to_t[a] = b\n        t_to_s[b] = a\n    return True"
+        }
+      ],
+      "important_points": [
+        "Two-sum hash map: store seen values, look for complement \u2014 O(n) not O(n^2)",
+        "Group anagrams: sorted string as key groups all anagrams together",
+        "Prefix sum + hash map: subarray sum problems in O(n) \u2014 critical pattern",
+        "Sliding window + set/dict: substring problems in O(n)",
+        "Counter + heapq.nlargest: top-k frequent in O(n log k)",
+        "Always consider if a set or dict can reduce an O(n^2) solution to O(n)"
+      ],
+      "exam_questions": [
+        "Write the two-sum solution using a hash map. What is its time complexity?",
+        "Write a function to group anagrams from a list of strings.",
+        "Explain the prefix sum + hash map approach for subarray sum equals k.",
+        "Write a function to find the longest substring without repeating characters.",
+        "Find the top k frequent elements in an array using Counter and heapq."
+      ],
+      "explanation": "Hash table problems follow recurring patterns: two-sum (complement lookup), anagram grouping (sorted signature key), prefix sum (running sum + frequency map), and sliding window. Recognising these patterns transforms O(n^2) brute-force into O(n) solutions."
+    },
+    {
+      "topic": "Hash Tables vs Other Data Structures",
+      "definition": "Hash tables excel at O(1) key-based lookup but do not support ordering or range queries. Trees support ordered operations in O(log n). Arrays support random access in O(1). Choose based on operations needed.",
+      "key_concepts": [
+        "Hash table: O(1) average for insert/delete/search \u2014 but no ordering",
+        "BST: O(log n) for all operations \u2014 supports ordering, range queries, floor/ceiling",
+        "Array: O(1) random access, O(n) search \u2014 best when index-based access needed",
+        "Linked list: O(1) insert/delete at known position \u2014 no random access",
+        "Trie: O(m) for string operations (m = string length) \u2014 best for prefix search",
+        "Heap: O(log n) insert, O(1) min/max \u2014 best for priority queue",
+        "Hash table worst case: O(n) when all keys collide \u2014 hash DoS attack"
+      ],
+      "code_examples": [
+        {
+          "description": "Set vs list, bisect, heap, trie",
+          "code": "import heapq, bisect\n\n# Set vs List for membership\ndata = list(range(100000))\ns = set(data)\n# s lookup O(1); list lookup O(n)\n\n# Sorted list + bisect for range queries\nsorted_data = sorted([5,3,8,1,9,2,7,4,6])\nlo = bisect.bisect_left(sorted_data, 3)\nhi = bisect.bisect_right(sorted_data, 7)\nprint(sorted_data[lo:hi])   # [3,4,5,6,7]\n\n# Heap\ntasks = [(3,\"low\"),(1,\"high\"),(2,\"medium\")]\nheap = []\nfor p, t in tasks: heapq.heappush(heap, (p, t))\nwhile heap: print(heapq.heappop(heap))\n\n# Trie\nclass Trie:\n    def __init__(self): self.children = {}; self.end = False\n    def insert(self, word):\n        node = self\n        for ch in word:\n            node.children.setdefault(ch, Trie())\n            node = node.children[ch]\n        node.end = True\n    def search(self, word):\n        node = self\n        for ch in word:\n            if ch not in node.children: return False\n            node = node.children[ch]\n        return node.end\n    def starts_with(self, prefix):\n        node = self\n        for ch in prefix:\n            if ch not in node.children: return False\n            node = node.children[ch]\n        return True"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Data Structure",
+          "Search",
+          "Insert",
+          "Delete",
+          "Ordered",
+          "Best Use Case"
+        ],
+        "rows": [
+          [
+            "Hash Table (dict)",
+            "O(1) avg",
+            "O(1) avg",
+            "O(1) avg",
+            "No",
+            "Key-value lookup, counting"
+          ],
+          [
+            "Set",
+            "O(1) avg",
+            "O(1) avg",
+            "O(1) avg",
+            "No",
+            "Membership test, dedup"
+          ],
+          [
+            "BST",
+            "O(log n)",
+            "O(log n)",
+            "O(log n)",
+            "Yes",
+            "Range queries, sorted data"
+          ],
+          [
+            "Array/List",
+            "O(n)",
+            "O(1) end",
+            "O(n)",
+            "Yes",
+            "Index access, iteration"
+          ],
+          [
+            "Heap",
+            "O(n)",
+            "O(log n)",
+            "O(log n)",
+            "Partial",
+            "Priority queue, top-k"
+          ],
+          [
+            "Trie",
+            "O(m)",
+            "O(m)",
+            "O(m)",
+            "Yes",
+            "Prefix search, autocomplete"
+          ],
+          [
+            "Sorted List+bisect",
+            "O(log n)",
+            "O(n)",
+            "O(n)",
+            "Yes",
+            "Static sorted data + search"
+          ]
+        ]
+      },
+      "when_to_use": [
+        "dict/set: O(1) lookup, counting, grouping, deduplication",
+        "list: ordered data, index access, iteration, small datasets",
+        "BST/SortedList: need sorted order + fast search + range queries",
+        "Heap: top-k elements, priority queue, k-way merge",
+        "Trie: prefix matching, autocomplete, spell checking",
+        "Deque: BFS, sliding window, O(1) both-end operations",
+        "Counter: frequency counting, top-k, anagram detection"
+      ],
+      "important_points": [
+        "No single data structure is best for everything \u2014 choose based on operations needed",
+        "Hash tables do not support: ordering, range queries, predecessor/successor",
+        "If you need ordering + fast search: use BST or sorted list with bisect",
+        "For top-k elements: Counter + heapq.nlargest is O(n log k)",
+        "Trie is O(m) per operation \u2014 better than dict for prefix search"
+      ],
+      "exam_questions": [
+        "Compare hash table and BST \u2014 when would you choose each?",
+        "What operations does a hash table NOT support that a BST does?",
+        "You need to find the most frequent k elements. What data structures do you use?",
+        "What is a Trie? How is it better than a hash table for prefix search?",
+        "A student proposes using a list for O(1) membership testing. What is wrong and what should they use?"
+      ],
+      "explanation": "No data structure excels at everything. Hash tables give O(1) lookup but no ordering. BSTs give O(log n) with full ordering support. Heaps give O(1) min/max with O(log n) insert. Tries give O(m) string operations for prefix-heavy workloads. Select the data structure whose strengths match the problem requirements."
+    }
+  ]
+}

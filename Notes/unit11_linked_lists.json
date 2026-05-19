@@ -1,0 +1,223 @@
+{
+  "unit_id": "UNIT11_LinkedLists",
+  "unit_title": "Linked Lists",
+  "topics": [
+    {
+      "topic": "Singly Linked Lists",
+      "definition": "A singly linked list is a linear data structure where each element (node) contains data and a pointer (next) to the next node in the sequence. Unlike arrays, linked list nodes are not stored in contiguous memory — each node can be anywhere in memory. The list starts at a head node and ends at a node whose next pointer is None.",
+      "key_concepts": [
+        "Node: basic unit containing data and a next pointer",
+        "Head: reference to the first node — None if list is empty",
+        "Tail: last node whose next pointer is None",
+        "Traversal: follow next pointers from head to tail",
+        "Dynamic size: grows and shrinks at runtime without reallocation",
+        "O(1) insertion/deletion at head — no shifting needed",
+        "O(n) access by index — must traverse from head",
+        "O(n) search — must scan all nodes",
+        "No random access — cannot do lst[i] like arrays"
+      ],
+      "code_examples": [
+        {
+          "description": "Node class, LinkedList class, insertion, deletion, traversal",
+          "code": "class Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\nclass LinkedList:\n    def __init__(self):\n        self.head = None\n        self.size = 0\n\n    # Insert at beginning — O(1)\n    def prepend(self, data):\n        node = Node(data)\n        node.next = self.head\n        self.head = node\n        self.size += 1\n\n    # Insert at end — O(n)\n    def append(self, data):\n        node = Node(data)\n        if not self.head:\n            self.head = node\n        else:\n            curr = self.head\n            while curr.next:\n                curr = curr.next\n            curr.next = node\n        self.size += 1\n\n    # Insert at index — O(n)\n    def insert(self, index, data):\n        if index == 0:\n            self.prepend(data)\n            return\n        curr = self.head\n        for _ in range(index - 1):\n            if not curr: raise IndexError('Index out of range')\n            curr = curr.next\n        node = Node(data)\n        node.next = curr.next\n        curr.next = node\n        self.size += 1\n\n    # Delete by value — O(n)\n    def delete(self, data):\n        if not self.head: return\n        if self.head.data == data:\n            self.head = self.head.next\n            self.size -= 1\n            return\n        curr = self.head\n        while curr.next:\n            if curr.next.data == data:\n                curr.next = curr.next.next\n                self.size -= 1\n                return\n            curr = curr.next\n\n    # Traversal — O(n)\n    def to_list(self):\n        result, curr = [], self.head\n        while curr:\n            result.append(curr.data)\n            curr = curr.next\n        return result\n\n    def __str__(self):\n        return ' -> '.join(str(x) for x in self.to_list()) + ' -> None'\n\n    def __len__(self): return self.size\n\n# Usage\nll = LinkedList()\nll.append(1); ll.append(2); ll.append(3)\nll.prepend(0)\nll.insert(2, 99)\nprint(ll)          # 0 -> 1 -> 99 -> 2 -> 3 -> None\nll.delete(99)\nprint(ll)          # 0 -> 1 -> 2 -> 3 -> None\nprint(len(ll))     # 4"
+        },
+        {
+          "description": "Search, reverse, and find middle of linked list",
+          "code": "class LinkedList:\n    # ... (same as above)\n\n    # Search — O(n)\n    def search(self, data):\n        curr, idx = self.head, 0\n        while curr:\n            if curr.data == data: return idx\n            curr = curr.next\n            idx += 1\n        return -1\n\n    # Reverse in place — O(n)\n    def reverse(self):\n        prev, curr = None, self.head\n        while curr:\n            nxt        = curr.next\n            curr.next  = prev\n            prev       = curr\n            curr       = nxt\n        self.head = prev\n\n    # Find middle — slow/fast pointer O(n)\n    def find_middle(self):\n        slow = fast = self.head\n        while fast and fast.next:\n            slow = slow.next\n            fast = fast.next.next\n        return slow.data if slow else None\n\nll = LinkedList()\nfor v in [1, 2, 3, 4, 5]: ll.append(v)\nprint(ll.find_middle())  # 3\nll.reverse()\nprint(ll)                # 5 -> 4 -> 3 -> 2 -> 1 -> None"
+        }
+      ],
+      "complexity_summary": {
+        "Prepend (insert at head)": "O(1)",
+        "Append (insert at tail)": "O(n) without tail pointer, O(1) with",
+        "Insert at index i": "O(i)",
+        "Delete at head": "O(1)",
+        "Delete by value": "O(n)",
+        "Search": "O(n)",
+        "Access by index": "O(n)",
+        "Traversal": "O(n)",
+        "Reverse": "O(n)",
+        "Find middle": "O(n)"
+      },
+      "important_points": [
+        "Always check for empty list (head is None) before operations",
+        "To delete a node, you need the PREVIOUS node — not the node itself",
+        "Slow/fast pointer (Floyd's technique) finds middle in one pass",
+        "Reversing a linked list changes next pointers — does not copy data",
+        "Linked list has no random access — index access is O(n)",
+        "Add a tail pointer to make append O(1)"
+      ],
+      "exam_questions": [
+        "Write a LinkedList class with append, prepend, delete, and reverse methods.",
+        "How do you find the middle of a linked list in one pass?",
+        "What is the time complexity of inserting at the head vs tail of a singly linked list?",
+        "Trace the reversal of linked list 1→2→3→4→None.",
+        "How do you delete a node from a linked list given only a reference to that node?"
+      ],
+      "explanation": "Singly linked lists provide O(1) head insertion and dynamic sizing without reallocation. The trade-off is O(n) access by index and search. The slow/fast pointer technique is the most important linked list pattern — it finds the middle, detects cycles, and finds the k-th from last node in a single traversal."
+    },
+    {
+      "topic": "Doubly Linked Lists",
+      "definition": "A doubly linked list is a linked list where each node has two pointers — next (pointing to the next node) and prev (pointing to the previous node). This bidirectional linkage allows traversal in both directions and makes deletion O(1) when the node reference is known, at the cost of extra memory per node.",
+      "key_concepts": [
+        "Each node has data, next pointer, and prev pointer",
+        "Head: first node — head.prev is None",
+        "Tail: last node — tail.next is None",
+        "Bidirectional traversal — can go forward and backward",
+        "O(1) deletion when node reference is known (no need to find previous node)",
+        "O(1) insertion at both head and tail with tail pointer",
+        "Extra memory: one additional pointer per node vs singly linked list",
+        "from from python_source.content._source.content.'s collections.deque is implemented as a doubly linked list"
+      ],
+      "code_examples": [
+        {
+          "description": "Doubly linked list with head and tail pointers",
+          "code": "class DNode:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n        self.prev = None\n\nclass DoublyLinkedList:\n    def __init__(self):\n        self.head = None\n        self.tail = None\n        self.size = 0\n\n    # Insert at head — O(1)\n    def prepend(self, data):\n        node = DNode(data)\n        if not self.head:\n            self.head = self.tail = node\n        else:\n            node.next       = self.head\n            self.head.prev  = node\n            self.head       = node\n        self.size += 1\n\n    # Insert at tail — O(1) with tail pointer\n    def append(self, data):\n        node = DNode(data)\n        if not self.tail:\n            self.head = self.tail = node\n        else:\n            node.prev       = self.tail\n            self.tail.next  = node\n            self.tail       = node\n        self.size += 1\n\n    # Delete a node — O(1) given node reference\n    def delete_node(self, node):\n        if node.prev: node.prev.next = node.next\n        else:         self.head = node.next      # deleting head\n        if node.next: node.next.prev = node.prev\n        else:         self.tail = node.prev      # deleting tail\n        self.size -= 1\n\n    def forward(self):\n        result, curr = [], self.head\n        while curr:\n            result.append(curr.data)\n            curr = curr.next\n        return result\n\n    def backward(self):\n        result, curr = [], self.tail\n        while curr:\n            result.append(curr.data)\n            curr = curr.prev\n        return result\n\ndll = DoublyLinkedList()\nfor v in [1, 2, 3, 4]: dll.append(v)\ndll.prepend(0)\nprint(dll.forward())   # [0, 1, 2, 3, 4]\nprint(dll.backward())  # [4, 3, 2, 1, 0]"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Feature",
+          "Singly Linked List",
+          "Doubly Linked List",
+          "Array/List"
+        ],
+        "rows": [
+          [
+            "Memory per node",
+            "data + 1 pointer",
+            "data + 2 pointers",
+            "data only"
+          ],
+          [
+            "Insert at head",
+            "O(1)",
+            "O(1)",
+            "O(n)"
+          ],
+          [
+            "Insert at tail",
+            "O(n)/O(1)*",
+            "O(1)",
+            "O(1) amort"
+          ],
+          [
+            "Delete given node",
+            "O(n) — need prev",
+            "O(1) — has prev",
+            "O(n)"
+          ],
+          [
+            "Access by index",
+            "O(n)",
+            "O(n)",
+            "O(1)"
+          ],
+          [
+            "Traversal",
+            "Forward only",
+            "Both directions",
+            "Both"
+          ],
+          [
+            "Search",
+            "O(n)",
+            "O(n)",
+            "O(n)"
+          ]
+        ]
+      },
+      "important_points": [
+        "Doubly linked list uses 2x memory of singly linked list for pointers",
+        "O(1) deletion requires a reference to the node — not just the value",
+        "from from python_source.content._source.content.'s collections.deque uses a doubly linked list internally",
+        "LRU Cache is classically implemented with a doubly linked list + hash map",
+        "Always update BOTH prev and next pointers when inserting or deleting"
+      ],
+      "exam_questions": [
+        "What is the difference between a singly and doubly linked list?",
+        "Why is deletion O(1) in a doubly linked list but O(n) in a singly linked list?",
+        "Write a doubly linked list with O(1) insertion at both head and tail.",
+        "How is collections.deque implemented in from from python_source.content._source.content.?",
+        "What is an LRU cache and how does a doubly linked list help implement it?"
+      ],
+      "explanation": "Doubly linked lists add a prev pointer to each node, enabling O(1) deletion given a node reference and O(1) tail insertion. These properties make them ideal for LRU cache, browser history, and undo/redo systems. The trade-off is extra memory per node. from from python_source.content._source.content.'s deque is backed by a doubly linked list."
+    },
+    {
+      "topic": "Traversal Insertion and Deletion",
+      "definition": "The three fundamental linked list operations — traversal, insertion, and deletion — are the building blocks for all linked list algorithms. Understanding these operations with precise pointer manipulation is essential for writing correct linked list code.",
+      "key_concepts": [
+        "Traversal: follow next pointers from head until None",
+        "Insertion at head: create node, point it to head, update head — O(1)",
+        "Insertion at tail: traverse to last node, update its next — O(n)",
+        "Insertion at position i: traverse to node i-1, rewire next pointers — O(i)",
+        "Deletion at head: update head to head.next — O(1)",
+        "Deletion at tail: traverse to second-last node, set next to None — O(n)",
+        "Deletion by value: find predecessor, rewire its next pointer — O(n)",
+        "Two-pointer techniques: slow/fast, left/right for various problems"
+      ],
+      "code_examples": [
+        {
+          "description": "Key linked list pointer operations with diagrams",
+          "code": "# Insertion at position — pointer diagram\n# Before: ... → A → C → ...\n# After:  ... → A → B → C → ...\ndef insert_after(node_a, data):\n    node_b       = Node(data)\n    node_b.next  = node_a.next   # B → C\n    node_a.next  = node_b        # A → B\n\n# Deletion of node B:\n# Before: A → B → C\n# After:  A → C  (B is orphaned)\ndef delete_after(node_a):\n    if node_a.next:\n        node_a.next = node_a.next.next  # A → C\n\n# Detect cycle — Floyd's cycle detection\ndef has_cycle(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next          # move 1 step\n        fast = fast.next.next    # move 2 steps\n        if slow is fast:          # they meet → cycle!\n            return True\n    return False\n\n# Find cycle start\ndef cycle_start(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow is fast:\n            # Reset slow to head — both now move 1 step\n            slow = head\n            while slow is not fast:\n                slow = slow.next\n                fast = fast.next\n            return slow   # cycle start node\n    return None\n\n# Remove nth node from end — two-pointer\ndef remove_nth_from_end(head, n):\n    dummy      = Node(0)\n    dummy.next = head\n    fast = slow = dummy\n    for _ in range(n + 1):\n        fast = fast.next\n    while fast:\n        slow = slow.next\n        fast = fast.next\n    slow.next = slow.next.next   # skip the nth node\n    return dummy.next"
+        },
+        {
+          "description": "Merge two sorted linked lists and find intersection",
+          "code": "# Merge two sorted linked lists — O(n+m)\ndef merge_sorted(l1, l2):\n    dummy = curr = Node(0)\n    while l1 and l2:\n        if l1.data <= l2.data:\n            curr.next = l1\n            l1 = l1.next\n        else:\n            curr.next = l2\n            l2 = l2.next\n        curr = curr.next\n    curr.next = l1 or l2   # attach remaining\n    return dummy.next\n\n# Check if linked list is palindrome\ndef is_palindrome(head):\n    # Step 1: find middle\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n    # Step 2: reverse second half\n    prev, curr = None, slow\n    while curr:\n        nxt       = curr.next\n        curr.next = prev\n        prev      = curr\n        curr      = nxt\n    # Step 3: compare first and reversed second\n    left, right = head, prev\n    while right:\n        if left.data != right.data:\n            return False\n        left  = left.next\n        right = right.next\n    return True"
+        }
+      ],
+      "important_points": [
+        "Use a dummy head node to simplify edge cases (empty list, delete head)",
+        "Always save next pointer before rewiring: nxt = curr.next",
+        "Two-pointer (slow/fast) solves: middle, cycle detection, nth from end",
+        "Floyd's cycle detection: fast moves 2x — if cycle, they will meet",
+        "To remove nth from end: advance fast by n+1, then move both until fast is None"
+      ],
+      "exam_questions": [
+        "Trace the insertion of node B between A and C in a linked list.",
+        "How do you detect a cycle in a linked list? Write Floyd's algorithm.",
+        "How do you remove the nth node from the end of a linked list?",
+        "Write a function to merge two sorted linked lists.",
+        "How do you check if a linked list is a palindrome?"
+      ],
+      "explanation": "Pointer manipulation is the core skill for linked lists. The dummy head node simplifies edge cases. The slow/fast pointer technique is the most versatile tool — it detects cycles, finds midpoints, and removes nth-from-end elements. Merge of sorted lists uses the same logic as merge sort's merge step."
+    },
+    {
+      "topic": "Linked List Algorithms",
+      "definition": "Advanced linked list algorithms combine pointer manipulation, recursion, and two-pointer techniques to solve complex problems efficiently. Key algorithms include sorting a linked list, flattening nested lists, reversing in groups, and implementing advanced data structures like LRU cache.",
+      "key_concepts": [
+        "Merge sort on linked list: O(n log n), no extra space needed (unlike array)",
+        "Reverse in groups of k: recursive or iterative approach",
+        "Flatten multilevel linked list: DFS/BFS approach",
+        "LRU Cache: doubly linked list + hash map, O(1) get and put",
+        "Sort list: merge sort preferred — O(n log n), O(log n) space",
+        "Add two numbers: traverse both lists, handle carry",
+        "Rotate list: find tail, make circular, break at new head"
+      ],
+      "code_examples": [
+        {
+          "description": "Merge sort on linked list and reverse in groups of k",
+          "code": "# Merge Sort for Linked List — O(n log n)\ndef sort_list(head):\n    if not head or not head.next:\n        return head              # base case\n\n    # Find middle\n    slow, fast = head, head.next\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n    mid        = slow.next\n    slow.next  = None           # split into two halves\n\n    left  = sort_list(head)    # sort left\n    right = sort_list(mid)     # sort right\n    return merge(left, right)  # merge sorted halves\n\ndef merge(l1, l2):\n    dummy = curr = Node(0)\n    while l1 and l2:\n        if l1.data <= l2.data:\n            curr.next, l1 = l1, l1.next\n        else:\n            curr.next, l2 = l2, l2.next\n        curr = curr.next\n    curr.next = l1 or l2\n    return dummy.next\n\n# Reverse in groups of k\ndef reverse_k_group(head, k):\n    curr, count = head, 0\n    while curr and count < k:\n        curr  = curr.next\n        count += 1\n    if count < k:\n        return head             # not enough nodes\n    # Reverse k nodes\n    prev, curr = None, head\n    for _ in range(k):\n        nxt       = curr.next\n        curr.next = prev\n        prev      = curr\n        curr      = nxt\n    head.next = reverse_k_group(curr, k)  # recurse on rest\n    return prev"
+        },
+        {
+          "description": "LRU Cache using doubly linked list + hash map",
+          "code": "class LRUCache:\n    class Node:\n        def __init__(self, key=0, val=0):\n            self.key  = key\n            self.val  = val\n            self.prev = None\n            self.next = None\n\n    def __init__(self, capacity):\n        self.cap   = capacity\n        self.cache = {}          # key → node\n        # Dummy head and tail sentinels\n        self.head  = self.Node()\n        self.tail  = self.Node()\n        self.head.next = self.tail\n        self.tail.prev = self.head\n\n    def _remove(self, node):\n        node.prev.next = node.next\n        node.next.prev = node.prev\n\n    def _insert_front(self, node):\n        node.next = self.head.next\n        node.prev = self.head\n        self.head.next.prev = node\n        self.head.next      = node\n\n    def get(self, key):\n        if key not in self.cache: return -1\n        node = self.cache[key]\n        self._remove(node)\n        self._insert_front(node)  # move to front (most recent)\n        return node.val\n\n    def put(self, key, value):\n        if key in self.cache:\n            self._remove(self.cache[key])\n        node = self.Node(key, value)\n        self.cache[key] = node\n        self._insert_front(node)\n        if len(self.cache) > self.cap:\n            lru = self.tail.prev   # least recently used\n            self._remove(lru)\n            del self.cache[lru.key]\n\ncache = LRUCache(2)\ncache.put(1, 1)\ncache.put(2, 2)\nprint(cache.get(1))    # 1\ncache.put(3, 3)        # evicts key 2\nprint(cache.get(2))    # -1 (evicted)"
+        }
+      ],
+      "important_points": [
+        "Merge sort is preferred for linked lists — no random access needed",
+        "Quick sort on linked lists is harder — partition requires traversal",
+        "LRU Cache: O(1) get and put using doubly linked list + hash map",
+        "Sentinel (dummy) head and tail nodes simplify insert/delete edge cases",
+        "Reverse in groups: recursive approach is clean but uses O(n/k) stack space"
+      ],
+      "exam_questions": [
+        "Why is merge sort preferred over quick sort for linked lists?",
+        "Write a function to sort a linked list using merge sort.",
+        "Explain the LRU cache. What data structures does it use and why?",
+        "Write a function to reverse a linked list in groups of k.",
+        "What is the time complexity of get() and put() in an LRU cache?"
+      ],
+      "explanation": "Advanced linked list algorithms combine multiple techniques. Merge sort on linked lists avoids the O(n) space overhead of array merge sort. LRU Cache is the most important linked list application — it uses a doubly linked list for O(1) move-to-front and a hash map for O(1) key lookup, giving O(1) overall for both get and put."
+    }
+  ]
+}

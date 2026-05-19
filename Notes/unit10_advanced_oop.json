@@ -1,0 +1,208 @@
+{
+  "unit_id": "UNIT10_AdvancedOOP",
+  "unit_title": "Advanced OOP",
+  "topics": [
+    {
+      "topic": "Abstract Classes",
+      "definition": "An abstract class is a class that cannot be instantiated directly and is meant to be subclassed. It defines a common interface (abstract methods) that all subclasses must implement. from from python_source.content._source.content. provides abstract classes through the abc (Abstract Base Classes) module using the ABC base class and @abstractmethod decorator.",
+      "key_concepts": [
+        "Abstract class: cannot be instantiated — serves as a blueprint for subclasses",
+        "Abstract method: declared in abstract class, must be overridden in every concrete subclass",
+        "@abstractmethod decorator marks a method as abstract",
+        "ABC: base class from abc module that enables abstract class behaviour",
+        "Concrete class: a subclass that implements all abstract methods — can be instantiated",
+        "If a subclass does not implement all abstract methods, it too becomes abstract",
+        "Abstract classes can have concrete (implemented) methods alongside abstract ones",
+        "Abstract properties: @property combined with @abstractmethod"
+      ],
+      "code_examples": [
+        {
+          "description": "Abstract class with abstract methods and concrete methods",
+          "code": "from abc import ABC, abstractmethod\n\nclass Shape(ABC):              # abstract class\n    def __init__(self, colour='black'):\n        self.colour = colour   # concrete attribute\n\n    @abstractmethod\n    def area(self):            # must be implemented by subclasses\n        pass\n\n    @abstractmethod\n    def perimeter(self):\n        pass\n\n    def describe(self):        # concrete method — shared by all subclasses\n        return (f\"{type(self).__name__}: colour={self.colour}, \"\n                f\"area={self.area():.2f}, perimeter={self.perimeter():.2f}\")\n\nclass Circle(Shape):\n    def __init__(self, r, colour='black'):\n        super().__init__(colour)\n        self.r = r\n    def area(self):      return 3.14159 * self.r ** 2\n    def perimeter(self): return 2 * 3.14159 * self.r\n\nclass Rectangle(Shape):\n    def __init__(self, w, h, colour='black'):\n        super().__init__(colour)\n        self.w, self.h = w, h\n    def area(self):      return self.w * self.h\n    def perimeter(self): return 2 * (self.w + self.h)\n\n# Shape()      # TypeError — cannot instantiate abstract class\nc = Circle(5, 'red')\nr = Rectangle(4, 6)\nprint(c.describe())  # Circle: colour=red, area=78.54, perimeter=31.42\nprint(r.describe())  # Rectangle: colour=black, area=24.00, perimeter=20.00\nprint(isinstance(c, Shape))  # True"
+        },
+        {
+          "description": "Abstract properties and abstract class registry",
+          "code": "from abc import ABC, abstractmethod\n\nclass Animal(ABC):\n    @property\n    @abstractmethod\n    def sound(self):           # abstract property\n        pass\n\n    @abstractmethod\n    def move(self):\n        pass\n\n    def describe(self):\n        return f\"{type(self).__name__} says {self.sound} and {self.move()}\"\n\nclass Dog(Animal):\n    @property\n    def sound(self): return 'Woof'\n    def move(self):  return 'runs'\n\nclass Bird(Animal):\n    @property\n    def sound(self): return 'Tweet'\n    def move(self):  return 'flies'\n\nanimals = [Dog(), Bird()]\nfor a in animals:\n    print(a.describe())\n# Dog says Woof and runs\n# Bird says Tweet and flies\n\n# Check abstract methods\nprint(Shape.__abstractmethods__)  # frozenset({'area', 'perimeter'})"
+        }
+      ],
+      "important_points": [
+        "Instantiating an abstract class raises TypeError — not just a convention",
+        "A subclass missing any abstract method also becomes abstract",
+        "Abstract classes can have __init__, concrete methods, and class/static methods",
+        "Use ABC for interface-like behaviour in from from python_source.content._source.content. — from from python_source.content._source.content. has no interface keyword",
+        "@property + @abstractmethod enforces abstract properties",
+        "ABCMeta is the metaclass; inheriting from ABC is the cleaner equivalent"
+      ],
+      "exam_questions": [
+        "What is an abstract class? How is it different from a regular class?",
+        "What happens if you try to instantiate an abstract class?",
+        "What happens if a subclass does not implement all abstract methods?",
+        "Write an abstract class Vehicle with abstract methods start() and stop().",
+        "What is the difference between an abstract method and a regular method?"
+      ],
+      "explanation": "Abstract classes enforce a contract — any subclass must implement the declared abstract methods or it too becomes abstract. This is from from python_source.content._source.content.'s mechanism for interface-like design. Unlike Java, from from python_source.content._source.content. abstract classes can also contain concrete implementations, making them more flexible than pure interfaces."
+    },
+    {
+      "topic": "Decorators",
+      "definition": "A decorator is a higher-order function that wraps another function or class to extend or modify its behaviour without changing its source code. Decorators use the @ syntax as syntactic sugar. They are widely used for logging, authentication, caching, timing, and input validation.",
+      "key_concepts": [
+        "Decorator: a function that takes a function as argument and returns a modified function",
+        "@decorator syntax is equivalent to: func = decorator(func)",
+        "Wrapper function: the inner function that adds behaviour before/after the original",
+        "functools.wraps: preserves the original function's metadata (__name__, __doc__)",
+        "Stacking decorators: multiple decorators applied bottom-up",
+        "Decorator with arguments: requires an extra outer function (three-level nesting)",
+        "Class decorators: a class used as a decorator using __call__",
+        "Built-in decorators: @staticmethod, @classmethod, @property, @functools.lru_cache"
+      ],
+      "code_examples": [
+        {
+          "description": "Basic decorator, functools.wraps, and stacking",
+          "code": "import functools\nimport time\n\n# Basic decorator\ndef timer(func):\n    @functools.wraps(func)     # preserve original metadata\n    def wrapper(*args, **kwargs):\n        start  = time.time()\n        result = func(*args, **kwargs)\n        end    = time.time()\n        print(f\"{func.__name__} took {end-start:.4f}s\")\n        return result\n    return wrapper\n\ndef logger(func):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        print(f\"Calling {func.__name__} with args={args}\")\n        result = func(*args, **kwargs)\n        print(f\"{func.__name__} returned {result}\")\n        return result\n    return wrapper\n\n# Stacking decorators — applied bottom-up: logger first, then timer\n@timer\n@logger\ndef add(a, b):\n    return a + b\n\nadd(3, 4)\n# Calling add with args=(3, 4)\n# add returned 7\n# add took 0.0001s\n\nprint(add.__name__)  # add  (preserved by functools.wraps)"
+        },
+        {
+          "description": "Decorator with arguments and class decorator",
+          "code": "import functools\n\n# Decorator with arguments — needs 3 levels\ndef repeat(n):\n    def decorator(func):\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            for _ in range(n):\n                result = func(*args, **kwargs)\n            return result\n        return wrapper\n    return decorator\n\n@repeat(3)\ndef greet(name):\n    print(f\"Hello, {name}!\")\n\ngreet('Alice')   # Hello, Alice! (printed 3 times)\n\n# Memoisation decorator\ndef memoize(func):\n    cache = {}\n    @functools.wraps(func)\n    def wrapper(*args):\n        if args not in cache:\n            cache[args] = func(*args)\n        return cache[args]\n    return wrapper\n\n@memoize\ndef fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)\n\nprint(fib(50))   # 12586269025 — instant\n\n# Input validation decorator\ndef validate_positive(func):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        if any(a <= 0 for a in args if isinstance(a, (int,float))):\n            raise ValueError('All arguments must be positive')\n        return func(*args, **kwargs)\n    return wrapper\n\n@validate_positive\ndef area(w, h):\n    return w * h\n\nprint(area(4, 5))   # 20\n# area(-1, 5)       # ValueError"
+        }
+      ],
+      "important_points": [
+        "@decorator is syntactic sugar for func = decorator(func)",
+        "Always use @functools.wraps(func) inside the wrapper to preserve metadata",
+        "Without functools.wraps, func.__name__ and func.__doc__ are lost",
+        "Stacking: @A @B def f() → f = A(B(f)) — B is applied first (closest to function)",
+        "Decorator with arguments needs three levels: outer(args) → decorator(func) → wrapper(*args)",
+        "lru_cache is the most important built-in decorator — automatic memoisation"
+      ],
+      "exam_questions": [
+        "What is a decorator in from from python_source.content._source.content.? Write a simple timing decorator.",
+        "What does @functools.wraps do? Why is it important?",
+        "What is the execution order when multiple decorators are stacked?",
+        "Write a decorator that validates that all function arguments are positive.",
+        "How do you write a decorator that takes arguments?"
+      ],
+      "explanation": "Decorators are from from python_source.content._source.content.'s elegant mechanism for cross-cutting concerns — logging, timing, caching, validation — without modifying the original function. The @ syntax is syntactic sugar for function wrapping. functools.wraps preserves the original function's identity. Decorator factories (decorators with arguments) add a third nesting level."
+    },
+    {
+      "topic": "Dunder Methods Advanced",
+      "definition": "Advanced dunder (magic) methods allow custom classes to behave like built-in from from python_source.content._source.content. types — supporting iteration, context management, attribute access, callable behaviour, and comparison. Mastering these methods enables truly from from python_source.content._source.content.ic class design.",
+      "key_concepts": [
+        "__iter__ and __next__: make a class iterable (iterator protocol)",
+        "__enter__ and __exit__: context manager protocol (with statement)",
+        "__getattr__ and __setattr__: intercept attribute access and assignment",
+        "__getitem__ and __setitem__: support indexing obj[key]",
+        "__call__: make an instance callable like a function",
+        "__del__: destructor — called when object is garbage collected",
+        "__slots__: restrict attributes and reduce memory usage",
+        "__new__: object creation (before __init__)",
+        "functools.total_ordering: derive all comparison methods from __eq__ and __lt__"
+      ],
+      "code_examples": [
+        {
+          "description": "Iterator protocol and context manager",
+          "code": "# Iterator Protocol — __iter__ and __next__\nclass CountUp:\n    def __init__(self, start, stop):\n        self.current = start\n        self.stop    = stop\n\n    def __iter__(self):\n        return self          # the object itself is the iterator\n\n    def __next__(self):\n        if self.current >= self.stop:\n            raise StopIteration   # signal end of iteration\n        val = self.current\n        self.current += 1\n        return val\n\nfor n in CountUp(1, 6):\n    print(n, end=' ')   # 1 2 3 4 5\n\nprint(list(CountUp(0, 4)))  # [0, 1, 2, 3]\n\n# Context Manager — __enter__ and __exit__\nclass Timer:\n    import time\n    def __enter__(self):\n        self.start = __import__('time').time()\n        return self             # value bound to 'as' variable\n\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        elapsed = __import__('time').time() - self.start\n        print(f'Elapsed: {elapsed:.4f}s')\n        return False            # False = do not suppress exceptions\n\nwith Timer() as t:\n    total = sum(range(1000000))\nprint(total)   # 499999500000 + Elapsed: 0.xxs"
+        },
+        {
+          "description": "__call__, __slots__, and total_ordering",
+          "code": "from functools import total_ordering\n\n# __call__ — make instance callable\nclass Multiplier:\n    def __init__(self, factor):\n        self.factor = factor\n\n    def __call__(self, x):\n        return x * self.factor\n\ndouble = Multiplier(2)\ntriple = Multiplier(3)\nprint(double(5))   # 10\nprint(triple(5))   # 15\nprint(callable(double))  # True\n\n# __slots__ — restrict attributes, save memory\nclass Point:\n    __slots__ = ['x', 'y']   # only x and y allowed\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    # p.z = 1  → AttributeError (not in __slots__)\n\n# @total_ordering — derive all comparisons from __eq__ and __lt__\n@total_ordering\nclass Student:\n    def __init__(self, name, gpa):\n        self.name = name\n        self.gpa  = gpa\n    def __eq__(self, other): return self.gpa == other.gpa\n    def __lt__(self, other): return self.gpa <  other.gpa\n    # __le__, __gt__, __ge__ are auto-derived!\n\ns1 = Student('Alice', 8.9)\ns2 = Student('Bob',   7.5)\nprint(s1 > s2)    # True\nprint(s1 <= s2)   # False"
+        }
+      ],
+      "important_points": [
+        "__iter__ returns the iterator object (often self); __next__ returns the next value",
+        "StopIteration signals end of iteration — for loop catches it automatically",
+        "__exit__ receives exception info — return True to suppress exceptions",
+        "__slots__ prevents dynamic attribute creation and saves memory",
+        "__call__ makes instances behave like functions — useful for stateful callables",
+        "@total_ordering requires __eq__ and one of __lt__, __le__, __gt__, __ge__"
+      ],
+      "exam_questions": [
+        "What is the iterator protocol? Write a class implementing it.",
+        "What are __enter__ and __exit__? Write a context manager class.",
+        "What does __call__ do? Give an example of when it is useful.",
+        "What is __slots__ and why would you use it?",
+        "What is @total_ordering and what methods must you define to use it?"
+      ],
+      "explanation": "Advanced dunder methods let custom classes integrate seamlessly with from from python_source.content._source.content.'s built-in syntax. __iter__/__next__ enable for-loop support. __enter__/__exit__ enable the with statement. __call__ makes instances callable. __slots__ optimises memory. @total_ordering reduces boilerplate for comparable classes."
+    },
+    {
+      "topic": "Design Patterns",
+      "definition": "Design patterns are reusable solutions to commonly occurring problems in software design. They are proven templates for structuring code. The three main categories are Creational (object creation), Structural (object composition), and Behavioural (object interaction). Key from from python_source.content._source.content. patterns include Singleton, Factory, Observer, and Strategy.",
+      "key_concepts": [
+        "Creational patterns: control object creation — Singleton, Factory, Builder",
+        "Structural patterns: organise object relationships — Decorator, Adapter, Facade",
+        "Behavioural patterns: define communication between objects — Observer, Strategy, Iterator",
+        "Singleton: ensure only one instance of a class exists",
+        "Factory Method: define interface for creating objects, let subclasses decide which class",
+        "Observer: one-to-many dependency — when one object changes, all dependents are notified",
+        "Strategy: define family of algorithms, encapsulate each, make them interchangeable",
+        "Decorator pattern: add behaviour dynamically (different from from from python_source.content._source.content.'s @ decorator)"
+      ],
+      "code_examples": [
+        {
+          "description": "Singleton and Factory patterns",
+          "code": "# Singleton — only one instance ever created\nclass Singleton:\n    _instance = None\n\n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance\n\n    def __init__(self):\n        self.value = 42\n\na = Singleton()\nb = Singleton()\nprint(a is b)        # True — same object\nprint(id(a), id(b))  # same id\n\n# Factory Method — create objects without specifying exact class\nclass Notification:\n    def send(self, msg): raise NotImplementedError\n\nclass EmailNotification(Notification):\n    def send(self, msg): print(f'Email: {msg}')\n\nclass SMSNotification(Notification):\n    def send(self, msg): print(f'SMS: {msg}')\n\nclass PushNotification(Notification):\n    def send(self, msg): print(f'Push: {msg}')\n\ndef notification_factory(channel):\n    channels = {\n        'email': EmailNotification,\n        'sms':   SMSNotification,\n        'push':  PushNotification\n    }\n    cls = channels.get(channel.lower())\n    if not cls: raise ValueError(f'Unknown channel: {channel}')\n    return cls()\n\nn = notification_factory('email')\nn.send('Hello!')   # Email: Hello!"
+        },
+        {
+          "description": "Observer and Strategy patterns",
+          "code": "# Observer Pattern — event-driven notification\nclass EventSystem:\n    def __init__(self):\n        self._listeners = {}   # event → list of callbacks\n\n    def subscribe(self, event, callback):\n        self._listeners.setdefault(event, []).append(callback)\n\n    def emit(self, event, data=None):\n        for cb in self._listeners.get(event, []):\n            cb(data)\n\nevents = EventSystem()\nevents.subscribe('login', lambda d: print(f'Log: user {d} logged in'))\nevents.subscribe('login', lambda d: print(f'Welcome back, {d}!'))\nevents.emit('login', 'Alice')\n# Log: user Alice logged in\n# Welcome back, Alice!\n\n# Strategy Pattern — interchangeable algorithms\nclass Sorter:\n    def __init__(self, strategy):\n        self.strategy = strategy\n\n    def sort(self, data):\n        return self.strategy(data)\n\n# Strategies are just functions (or lambdas)\nasc_sorter  = Sorter(sorted)\ndesc_sorter = Sorter(lambda d: sorted(d, reverse=True))\nlen_sorter  = Sorter(lambda d: sorted(d, key=len))\n\nwords = ['banana', 'apple', 'cherry', 'date']\nprint(asc_sorter.sort(words))   # ['apple','banana','cherry','date']\nprint(desc_sorter.sort(words))  # ['date','cherry','banana','apple']\nprint(len_sorter.sort(words))   # ['date','apple','banana','cherry']"
+        }
+      ],
+      "important_points": [
+        "Singleton uses __new__ to control instance creation — not __init__",
+        "Factory pattern decouples object creation from usage — open/closed principle",
+        "Observer implements loose coupling — publishers don't know about subscribers",
+        "Strategy allows runtime algorithm switching without changing client code",
+        "from from python_source.content._source.content. functions are first-class — many patterns reduce to passing functions",
+        "Don't overuse patterns — use them only when they solve a real problem"
+      ],
+      "exam_questions": [
+        "What is the Singleton pattern? Implement it in from from python_source.content._source.content..",
+        "What is the Factory pattern? When would you use it?",
+        "Explain the Observer pattern with an example.",
+        "What is the Strategy pattern? How does it differ from inheritance?",
+        "What are the three categories of design patterns? Give one example each."
+      ],
+      "explanation": "Design patterns provide proven templates for common OOP problems. Singleton ensures a single shared instance. Factory decouples creation from use. Observer enables event-driven systems. Strategy makes algorithms swappable at runtime. In from from python_source.content._source.content., many patterns are simpler because functions are first-class objects — strategies can be plain functions rather than full classes."
+    },
+    {
+      "topic": "Metaclasses and Class Internals",
+      "definition": "A metaclass is the class of a class — it controls how classes are created. In from from python_source.content._source.content., everything is an object, including classes themselves. The default metaclass is type. Custom metaclasses allow intercepting class creation to add validation, registration, or modification. Understanding class internals (MRO, __dict__, descriptors) completes the advanced OOP picture.",
+      "key_concepts": [
+        "type: from from python_source.content._source.content.'s built-in metaclass — all classes are instances of type",
+        "type(obj): returns the type (class) of obj",
+        "type(name, bases, dict): dynamically creates a new class",
+        "Custom metaclass: class Meta(type) — override __new__ or __init__",
+        "class MyClass(metaclass=Meta): use custom metaclass",
+        "__dict__: stores class or instance attributes as a dictionary",
+        "Descriptor protocol: __get__, __set__, __delete__ — used by @property",
+        "MRO: Method Resolution Order — determined by C3 linearisation",
+        "__init_subclass__: called when a class is subclassed — hook for validation"
+      ],
+      "code_examples": [
+        {
+          "description": "type(), dynamic class creation, and custom metaclass",
+          "code": "# type() — inspect and create classes dynamically\nprint(type(42))         # <class 'int'>\nprint(type(int))        # <class 'type'>\nprint(type(type))       # <class 'type'> — type is its own metaclass\n\n# Create class dynamically with type(name, bases, dict)\nDog = type('Dog', (object,), {\n    'species': 'Canis lupus',\n    'bark': lambda self: 'Woof!'\n})\nd = Dog()\nprint(d.bark())          # Woof!\nprint(Dog.species)       # Canis lupus\n\n# Custom metaclass — enforce that all methods have docstrings\nclass DocstringMeta(type):\n    def __new__(mcs, name, bases, namespace):\n        for attr, val in namespace.items():\n            if callable(val) and not attr.startswith('_'):\n                if not val.__doc__:\n                    raise TypeError(f'{name}.{attr} must have a docstring')\n        return super().__new__(mcs, name, bases, namespace)\n\nclass MyAPI(metaclass=DocstringMeta):\n    def fetch(self):\n        '''Fetch data from API.'''\n        return 'data'\n    # def save(self): pass  # would raise TypeError — no docstring"
+        },
+        {
+          "description": "__init_subclass__ and descriptor protocol",
+          "code": "# __init_subclass__ — hook called when class is subclassed\nclass Plugin:\n    registry = {}\n\n    def __init_subclass__(cls, plugin_name=None, **kwargs):\n        super().__init_subclass__(**kwargs)\n        if plugin_name:\n            Plugin.registry[plugin_name] = cls\n            print(f'Registered plugin: {plugin_name}')\n\nclass JSONPlugin(Plugin, plugin_name='json'):\n    def process(self): return 'json output'\n\nclass XMLPlugin(Plugin, plugin_name='xml'):\n    def process(self): return 'xml output'\n\nprint(Plugin.registry)  # {'json': JSONPlugin, 'xml': XMLPlugin}\nPlugin.registry['json']().process()  # 'json output'\n\n# Descriptor protocol — powers @property\nclass Validator:\n    def __set_name__(self, owner, name):\n        self.name = name\n\n    def __get__(self, obj, objtype=None):\n        if obj is None: return self\n        return obj.__dict__.get(self.name)\n\n    def __set__(self, obj, value):\n        if not isinstance(value, int) or value < 0:\n            raise ValueError(f'{self.name} must be non-negative int')\n        obj.__dict__[self.name] = value\n\nclass Product:\n    price    = Validator()\n    quantity = Validator()\n\n    def __init__(self, price, quantity):\n        self.price    = price\n        self.quantity = quantity\n\np = Product(10, 5)\nprint(p.price, p.quantity)  # 10 5\n# Product(-1, 5)             # ValueError"
+        }
+      ],
+      "important_points": [
+        "Everything in from from python_source.content._source.content. is an object — including classes (instances of type)",
+        "type(name, bases, dict) creates a class dynamically at runtime",
+        "Metaclasses are the most advanced from from python_source.content._source.content. feature — use sparingly",
+        "__init_subclass__ is a simpler alternative to metaclasses for subclass hooks",
+        "Descriptors power @property, @classmethod, @staticmethod under the hood",
+        "MRO accessible via ClassName.__mro__ or ClassName.mro()"
+      ],
+      "exam_questions": [
+        "What is a metaclass? What is from from python_source.content._source.content.'s default metaclass?",
+        "What does type(name, bases, dict) do?",
+        "What is the descriptor protocol? How does @property use it?",
+        "What is __init_subclass__ and when would you use it?",
+        "What is the difference between __dict__ of a class and an instance?"
+      ],
+      "explanation": "Metaclasses are the deepest level of from from python_source.content._source.content.'s object model — classes are themselves objects, instances of type. Custom metaclasses enable powerful class-creation hooks for validation, registration, and code generation. __init_subclass__ provides a simpler subclass hook. Descriptors implement the protocol that powers @property, @classmethod, and @staticmethod."
+    }
+  ]
+}

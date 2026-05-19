@@ -1,0 +1,282 @@
+{
+  "unit_id": "UNIT12_StacksQueues",
+  "unit_title": "Stacks & Queues",
+  "topics": [
+    {
+      "topic": "Stacks",
+      "definition": "A stack is a linear data structure that follows the Last In First Out (LIFO) principle — the last element added is the first to be removed. Think of a stack of plates: you add and remove from the top only. from from python_source.content._source.content. lists can serve as stacks using append() and pop(), or the collections.deque for thread-safe operations.",
+      "key_concepts": [
+        "LIFO: Last In First Out — the most recently added element is removed first",
+        "Push: add element to the top — O(1)",
+        "Pop: remove and return the top element — O(1)",
+        "Peek/Top: view the top element without removing — O(1)",
+        "isEmpty: check if stack is empty — O(1)",
+        "Overflow: pushing onto a full stack (bounded stacks)",
+        "Underflow: popping from an empty stack",
+        "from from python_source.content._source.content. list as stack: append() to push, pop() to pop",
+        "collections.deque: thread-safe alternative to list for stack"
+      ],
+      "code_examples": [
+        {
+          "description": "Stack implementation using list and class",
+          "code": "# Stack using from from python_source.content._source.content. list — simplest approach\nstack = []\nstack.append(1)    # push 1\nstack.append(2)    # push 2\nstack.append(3)    # push 3\nprint(stack[-1])   # peek → 3\nprint(stack.pop()) # pop  → 3\nprint(stack.pop()) # pop  → 2\nprint(stack)       # [1]\n\n# Stack class with error handling\nclass Stack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, item):\n        self._data.append(item)\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError('Pop from empty stack')\n        return self._data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError('Peek at empty stack')\n        return self._data[-1]\n\n    def is_empty(self): return len(self._data) == 0\n    def __len__(self):  return len(self._data)\n    def __str__(self):  return str(self._data) + ' ← top'\n\ns = Stack()\ns.push(10); s.push(20); s.push(30)\nprint(s)           # [10, 20, 30] ← top\nprint(s.peek())    # 30\nprint(s.pop())     # 30\nprint(len(s))      # 2"
+        },
+        {
+          "description": "Stack applications — balanced parentheses and expression evaluation",
+          "code": "# Balanced Parentheses\ndef is_balanced(s):\n    stack   = []\n    mapping = {')':'(', '}':'{', ']':'['}\n    for ch in s:\n        if ch in '({[':\n            stack.append(ch)\n        elif ch in ')}]':\n            if not stack or stack[-1] != mapping[ch]:\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nprint(is_balanced('({[]})'))   # True\nprint(is_balanced('({[})'))    # False\nprint(is_balanced('((()))'))   # True\n\n# Infix to Postfix conversion\ndef infix_to_postfix(expr):\n    precedence = {'+':1, '-':1, '*':2, '/':2, '**':3}\n    output, stack = [], []\n    for token in expr.split():\n        if token.isdigit():\n            output.append(token)\n        elif token == '(':\n            stack.append(token)\n        elif token == ')':\n            while stack and stack[-1] != '(':\n                output.append(stack.pop())\n            stack.pop()   # discard '('\n        else:             # operator\n            while (stack and stack[-1] != '(' and\n                   precedence.get(stack[-1], 0) >= precedence.get(token, 0)):\n                output.append(stack.pop())\n            stack.append(token)\n    while stack:\n        output.append(stack.pop())\n    return ' '.join(output)\n\nprint(infix_to_postfix('3 + 4 * 2'))     # 3 4 2 * +\nprint(infix_to_postfix('( 3 + 4 ) * 2')) # 3 4 + 2 *\n\n# Evaluate Postfix expression\ndef eval_postfix(expr):\n    stack = []\n    for token in expr.split():\n        if token.lstrip('-').isdigit():\n            stack.append(int(token))\n        else:\n            b, a = stack.pop(), stack.pop()\n            if   token == '+': stack.append(a + b)\n            elif token == '-': stack.append(a - b)\n            elif token == '*': stack.append(a * b)\n            elif token == '/': stack.append(a // b)\n    return stack[0]\n\nprint(eval_postfix('3 4 2 * +'))  # 11"
+        }
+      ],
+      "applications": [
+        "Balanced parentheses / bracket matching",
+        "Infix to postfix / prefix conversion",
+        "Postfix expression evaluation",
+        "Function call stack (recursion)",
+        "Undo/Redo operations",
+        "Browser back/forward navigation",
+        "DFS traversal (iterative)",
+        "Monotonic stack problems (next greater element)"
+      ],
+      "complexity_summary": {
+        "push": "O(1)",
+        "pop": "O(1)",
+        "peek": "O(1)",
+        "isEmpty": "O(1)",
+        "search": "O(n)",
+        "Space": "O(n)"
+      },
+      "important_points": [
+        "from from python_source.content._source.content. list pop() with no argument removes the LAST element — correct for stack",
+        "list.pop(0) removes the FIRST element — O(n), use deque for this instead",
+        "Always check is_empty() before pop() or peek() to avoid IndexError",
+        "The call stack in recursion is literally a stack data structure",
+        "Monotonic stack: maintain stack in increasing or decreasing order for range queries"
+      ],
+      "exam_questions": [
+        "What is LIFO? How does a stack implement it?",
+        "Write a stack class with push, pop, peek, and is_empty methods.",
+        "Write a function to check if parentheses in a string are balanced.",
+        "What are five real-world applications of a stack?",
+        "What is the time complexity of push and pop operations on a stack?"
+      ],
+      "explanation": "Stacks are one of the most fundamental data structures, implementing LIFO access. In from from python_source.content._source.content., a list with append() and pop() is the simplest stack. The key applications are bracket matching, expression evaluation, and DFS. The call stack in every program is literally a stack — each function call pushes a frame, each return pops it."
+    },
+    {
+      "topic": "Queues",
+      "definition": "A queue is a linear data structure that follows the First In First Out (FIFO) principle — the first element added is the first to be removed. Think of a line at a ticket counter: people join at the back and leave from the front. from from python_source.content._source.content.'s collections.deque is the standard queue implementation providing O(1) enqueue and dequeue.",
+      "key_concepts": [
+        "FIFO: First In First Out — the oldest element is removed first",
+        "Enqueue: add element to the rear — O(1)",
+        "Dequeue: remove element from the front — O(1)",
+        "Front: view the front element without removing — O(1)",
+        "collections.deque: from from python_source.content._source.content.'s O(1) double-ended queue",
+        "list as queue: append() to enqueue, pop(0) to dequeue — O(n) for dequeue (BAD)",
+        "queue.Queue: thread-safe queue from the queue module",
+        "Circular queue: fixed-size queue where rear wraps around to front",
+        "Priority Queue: elements dequeued in priority order — heapq module"
+      ],
+      "code_examples": [
+        {
+          "description": "Queue using deque, class implementation, and circular queue",
+          "code": "from collections import deque\n\n# Queue using deque — recommended\nq = deque()\nq.append(1)       # enqueue → rear\nq.append(2)\nq.append(3)\nprint(q[0])       # front → 1\nprint(q.popleft())# dequeue → 1  O(1)\nprint(q)          # deque([2, 3])\n\n# Queue class\nclass Queue:\n    def __init__(self):\n        self._data = deque()\n\n    def enqueue(self, item):\n        self._data.append(item)     # add to rear\n\n    def dequeue(self):\n        if self.is_empty():\n            raise IndexError('Dequeue from empty queue')\n        return self._data.popleft() # remove from front\n\n    def front(self):\n        if self.is_empty():\n            raise IndexError('Queue is empty')\n        return self._data[0]\n\n    def is_empty(self): return len(self._data) == 0\n    def __len__(self):  return len(self._data)\n    def __str__(self):  return 'front → ' + str(list(self._data)) + ' ← rear'\n\nq = Queue()\nq.enqueue('A'); q.enqueue('B'); q.enqueue('C')\nprint(q)            # front → ['A', 'B', 'C'] ← rear\nprint(q.dequeue())  # A\nprint(q.front())    # B\n\n# Circular Queue — fixed capacity\nclass CircularQueue:\n    def __init__(self, capacity):\n        self.cap   = capacity\n        self.data  = [None] * capacity\n        self.front = self.rear = self.size = 0\n\n    def enqueue(self, item):\n        if self.size == self.cap:\n            raise OverflowError('Queue is full')\n        self.data[self.rear] = item\n        self.rear = (self.rear + 1) % self.cap   # wrap around\n        self.size += 1\n\n    def dequeue(self):\n        if self.size == 0:\n            raise IndexError('Queue is empty')\n        item = self.data[self.front]\n        self.front = (self.front + 1) % self.cap # wrap around\n        self.size -= 1\n        return item\n\ncq = CircularQueue(4)\ncq.enqueue(1); cq.enqueue(2); cq.enqueue(3)\nprint(cq.dequeue())  # 1\ncq.enqueue(4)\ncq.enqueue(5)        # wraps around to index 0\nprint(cq.data)       # shows circular storage"
+        },
+        {
+          "description": "Priority queue using heapq and queue applications",
+          "code": "import heapq\n\n# Priority Queue using heapq (min-heap)\npq = []\nheapq.heappush(pq, (3, 'low priority'))\nheapq.heappush(pq, (1, 'high priority'))\nheapq.heappush(pq, (2, 'medium priority'))\n\nwhile pq:\n    priority, task = heapq.heappop(pq)\n    print(f'{priority}: {task}')\n# 1: high priority\n# 2: medium priority\n# 3: low priority\n\n# BFS using queue — level order traversal\nfrom collections import deque\n\ndef bfs_levels(graph, start):\n    visited = {start}\n    queue   = deque([(start, 0)])   # (node, level)\n    levels  = {}\n    while queue:\n        node, level = queue.popleft()\n        levels.setdefault(level, []).append(node)\n        for nb in graph[node]:\n            if nb not in visited:\n                visited.add(nb)\n                queue.append((nb, level + 1))\n    return levels\n\ngraph = {0:[1,2], 1:[3,4], 2:[5], 3:[], 4:[], 5:[]}\nprint(bfs_levels(graph, 0))\n# {0:[0], 1:[1,2], 2:[3,4,5]}"
+        }
+      ],
+      "applications": [
+        "BFS graph/tree traversal",
+        "CPU process scheduling (OS)",
+        "Print spooler / task queues",
+        "Web server request handling",
+        "Message passing between threads",
+        "Level order traversal of binary tree",
+        "Sliding window maximum (deque)",
+        "Breadth-first shortest path"
+      ],
+      "types_of_queues": [
+        "Simple Queue: FIFO, enqueue at rear, dequeue at front",
+        "Circular Queue: fixed-size, rear wraps to front when end is reached",
+        "Double-ended Queue (deque): insert/delete at both front and rear — O(1)",
+        "Priority Queue: highest priority element dequeued first — heapq",
+        "Blocking Queue: thread-safe, blocks when full/empty — queue.Queue"
+      ],
+      "comparison_table": {
+        "headers": [
+          "Operation",
+          "list",
+          "collections.deque",
+          "queue.Queue"
+        ],
+        "rows": [
+          [
+            "Enqueue (rear)",
+            "append() O(1)",
+            "append() O(1)",
+            "put() O(1)"
+          ],
+          [
+            "Dequeue (front)",
+            "pop(0) O(n) ❌",
+            "popleft() O(1) ✅",
+            "get() O(1) ✅"
+          ],
+          [
+            "Thread-safe",
+            "No",
+            "No",
+            "Yes"
+          ],
+          [
+            "Max size",
+            "Unlimited",
+            "Unlimited",
+            "Optional"
+          ],
+          [
+            "Use case",
+            "Avoid for queues",
+            "General purpose",
+            "Multi-threading"
+          ]
+        ]
+      },
+      "important_points": [
+        "NEVER use list.pop(0) for a queue — it is O(n); use deque.popleft() which is O(1)",
+        "collections.deque supports O(1) operations at both ends",
+        "heapq is a min-heap — negate values for max-heap: heappush(pq, -val)",
+        "queue.Queue is thread-safe — use in multithreaded programs",
+        "Circular queue solves the wasted space problem of array-based queues"
+      ],
+      "exam_questions": [
+        "What is FIFO? How does a queue implement it?",
+        "Why should you use collections.deque instead of a list for a queue?",
+        "What is a circular queue? How does it solve the space problem?",
+        "What is a priority queue? How is it implemented in from from python_source.content._source.content.?",
+        "Write a queue class using collections.deque with enqueue, dequeue, and front."
+      ],
+      "explanation": "Queues implement FIFO access — the backbone of BFS, scheduling, and event processing. from from python_source.content._source.content.'s collections.deque is the correct implementation — list.pop(0) is O(n) and should never be used. Priority queues use heapq for O(log n) insertion and extraction. The deque also underpins the sliding window maximum pattern."
+    },
+    {
+      "topic": "Stack and Queue Problems",
+      "definition": "Classic problems solved using stacks and queues test understanding of LIFO/FIFO properties, monotonic structures, and combining both data structures. These problems appear frequently in exams and technical interviews.",
+      "key_concepts": [
+        "Next Greater Element: monotonic stack — maintain decreasing stack, pop when greater element found",
+        "Min Stack: track minimum alongside stack — O(1) getMin()",
+        "Queue using two stacks: enqueue to stack1, dequeue by reversing into stack2",
+        "Stack using two queues: push by rotating queue",
+        "Sliding window maximum: monotonic deque maintains max in current window",
+        "Valid parentheses: stack-based bracket matching",
+        "Stock span problem: monotonic stack for range queries",
+        "Largest rectangle in histogram: monotonic stack"
+      ],
+      "code_examples": [
+        {
+          "description": "Min Stack and Next Greater Element",
+          "code": "# Min Stack — O(1) push, pop, getMin\nclass MinStack:\n    def __init__(self):\n        self.stack     = []\n        self.min_stack = []   # parallel stack tracking minimums\n\n    def push(self, val):\n        self.stack.append(val)\n        # push current min (or val if min_stack empty)\n        min_val = min(val, self.min_stack[-1] if self.min_stack else val)\n        self.min_stack.append(min_val)\n\n    def pop(self):\n        self.min_stack.pop()\n        return self.stack.pop()\n\n    def top(self):    return self.stack[-1]\n    def get_min(self): return self.min_stack[-1]  # O(1)!\n\nms = MinStack()\nms.push(5); ms.push(3); ms.push(7); ms.push(2)\nprint(ms.get_min())   # 2\nms.pop()\nprint(ms.get_min())   # 3\n\n# Next Greater Element\ndef next_greater(nums):\n    result = [-1] * len(nums)\n    stack  = []   # stores indices\n    for i, num in enumerate(nums):\n        # pop all elements smaller than current\n        while stack and nums[stack[-1]] < num:\n            idx         = stack.pop()\n            result[idx] = num   # current num is the NGE\n        stack.append(i)\n    return result\n\nprint(next_greater([4, 5, 2, 10, 8]))\n# [5, 10, 10, -1, -1]"
+        },
+        {
+          "description": "Queue using two stacks and sliding window maximum",
+          "code": "# Queue using two stacks\nclass QueueUsingStacks:\n    def __init__(self):\n        self.in_stack  = []   # for enqueue\n        self.out_stack = []   # for dequeue\n\n    def enqueue(self, val):\n        self.in_stack.append(val)\n\n    def dequeue(self):\n        if not self.out_stack:   # transfer when out is empty\n            while self.in_stack:\n                self.out_stack.append(self.in_stack.pop())\n        if not self.out_stack:\n            raise IndexError('Queue is empty')\n        return self.out_stack.pop()\n\n    def front(self):\n        if not self.out_stack:\n            while self.in_stack:\n                self.out_stack.append(self.in_stack.pop())\n        return self.out_stack[-1]\n\nq = QueueUsingStacks()\nq.enqueue(1); q.enqueue(2); q.enqueue(3)\nprint(q.dequeue())   # 1\nprint(q.front())     # 2\n\n# Sliding Window Maximum — monotonic deque\nfrom collections import deque\n\ndef sliding_window_max(nums, k):\n    dq     = deque()   # stores indices, front is max\n    result = []\n    for i, num in enumerate(nums):\n        # Remove indices outside window\n        while dq and dq[0] < i - k + 1:\n            dq.popleft()\n        # Remove smaller elements from rear\n        while dq and nums[dq[-1]] < num:\n            dq.pop()\n        dq.append(i)\n        if i >= k - 1:\n            result.append(nums[dq[0]])  # front is max\n    return result\n\nprint(sliding_window_max([1,3,-1,-3,5,3,6,7], 3))\n# [3, 3, 5, 5, 6, 7]"
+        }
+      ],
+      "important_points": [
+        "Monotonic stack maintains elements in strictly increasing or decreasing order",
+        "Next Greater Element: pop when a larger element is found — O(n) total",
+        "Min Stack: parallel min_stack tracks running minimum at each level",
+        "Queue from two stacks: amortized O(1) per operation — each element moves once",
+        "Sliding window max: monotonic deque gives O(n) vs O(nk) brute force",
+        "Largest rectangle in histogram: classic monotonic stack — O(n)"
+      ],
+      "exam_questions": [
+        "Design a MinStack that supports push, pop, top, and getMin in O(1).",
+        "What is a monotonic stack? Solve the Next Greater Element problem.",
+        "Implement a queue using two stacks. What is the amortized time complexity?",
+        "Solve the sliding window maximum problem using a deque.",
+        "Explain the Stock Span problem and solve it using a stack."
+      ],
+      "explanation": "Stack and queue problems test mastery of LIFO/FIFO and monotonic data structures. The MinStack uses a parallel tracking stack for O(1) minimum. Queue from two stacks achieves amortized O(1) by lazy transfer. Monotonic stacks solve Next Greater Element and sliding window maximum in O(n) — a common interview pattern."
+    },
+    {
+      "topic": "Deque and Applications",
+      "definition": "A deque (double-ended queue) is a linear data structure that supports O(1) insertion and deletion at both the front and rear. from from python_source.content._source.content.'s collections.deque is the standard implementation. A deque generalises both stacks and queues and is the basis for several advanced algorithms including the sliding window maximum.",
+      "key_concepts": [
+        "Deque: supports append/appendleft (O(1)) and pop/popleft (O(1))",
+        "Generalises stack (LIFO) and queue (FIFO)",
+        "maxlen parameter: fixed-size deque that auto-discards oldest elements",
+        "Rotating: deque.rotate(k) rotates elements right by k positions",
+        "Thread-safe for append and popleft from opposite ends",
+        "O(n) for index access — not optimised for random access",
+        "Implemented as a doubly linked list of fixed-size blocks",
+        "Use cases: sliding window, BFS, palindrome check, job scheduling"
+      ],
+      "code_examples": [
+        {
+          "description": "Deque operations and practical applications",
+          "code": "from collections import deque\n\n# All deque operations\nd = deque([1, 2, 3])\nd.append(4)        # rear:  [1,2,3,4]\nd.appendleft(0)    # front: [0,1,2,3,4]\nprint(d)           # deque([0,1,2,3,4])\nd.pop()            # remove from rear  → 4\nd.popleft()        # remove from front → 0\nprint(d)           # deque([1,2,3])\nprint(d[0], d[-1]) # 1 3  (index access O(n))\nd.rotate(1)        # rotate right by 1\nprint(d)           # deque([3,1,2])\nd.rotate(-1)       # rotate left by 1\nprint(d)           # deque([1,2,3])\n\n# Fixed-size deque — auto-discard\nbuffer = deque(maxlen=3)\nfor i in range(6):\n    buffer.append(i)\n    print(list(buffer))\n# [0]  [0,1]  [0,1,2]  [1,2,3]  [2,3,4]  [3,4,5]\n# Oldest element auto-discarded when maxlen exceeded\n\n# Palindrome check using deque\ndef is_palindrome(s):\n    d = deque(s.lower().replace(' ',''))\n    while len(d) > 1:\n        if d.popleft() != d.pop():\n            return False\n    return True\n\nprint(is_palindrome('racecar'))    # True\nprint(is_palindrome('A man a plan a canal Panama'))  # True"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Operation",
+          "Stack (list)",
+          "Queue (deque)",
+          "Deque"
+        ],
+        "rows": [
+          [
+            "Add to rear",
+            "append() O(1)",
+            "append() O(1)",
+            "append() O(1)"
+          ],
+          [
+            "Add to front",
+            "insert(0) O(n)",
+            "appendleft() O(1)",
+            "appendleft() O(1)"
+          ],
+          [
+            "Remove rear",
+            "pop() O(1)",
+            "pop() O(1)",
+            "pop() O(1)"
+          ],
+          [
+            "Remove front",
+            "pop(0) O(n)",
+            "popleft() O(1)",
+            "popleft() O(1)"
+          ],
+          [
+            "Index access",
+            "O(1)",
+            "O(n)",
+            "O(n)"
+          ],
+          [
+            "Best for",
+            "LIFO",
+            "FIFO",
+            "Both ends"
+          ]
+        ]
+      },
+      "important_points": [
+        "collections.deque is the most versatile sequential data structure in from from python_source.content._source.content.",
+        "maxlen deque is perfect for moving windows — auto-removes old elements",
+        "deque.rotate(k) is useful for round-robin scheduling simulations",
+        "Use deque when you need O(1) operations at BOTH ends",
+        "deque is NOT O(1) for index access — use list if random access needed"
+      ],
+      "exam_questions": [
+        "What is a deque? How does it differ from a stack and queue?",
+        "What is the time complexity of appendleft() and popleft() on a deque?",
+        "What does the maxlen parameter do in collections.deque?",
+        "Write a palindrome checker using a deque.",
+        "When would you use a deque instead of a list?"
+      ],
+      "explanation": "The deque is from from python_source.content._source.content.'s most versatile sequential data structure, offering O(1) operations at both ends. It generalises stacks and queues. The maxlen parameter creates a fixed-size sliding buffer. Rotating the deque simulates circular structures. For BFS, palindrome checking, and sliding window problems, deque is the ideal tool."
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+{
+  "unit_id": "UNIT4_ArraysLists",
+  "unit_title": "Arrays & Lists",
+  "topics": [
+    {
+      "topic": "Lists",
+      "definition": "A list is a built-in from from python_source.content._source.content. data structure that stores an ordered, mutable collection of items. Items can be of any data type and can be mixed. Lists are the most commonly used sequence type in from from python_source.content._source.content. and serve as from from python_source.content._source.content.'s dynamic array.",
+      "key_concepts": [
+        "Ordered — elements maintain insertion order",
+        "Mutable — elements can be added, removed, or changed after creation",
+        "Allows duplicates — same value can appear multiple times",
+        "Zero-indexed — first element is at index 0",
+        "Negative indexing — s[-1] is the last element",
+        "Heterogeneous — can hold mixed types: [1, 'a', 3.14, True]",
+        "Dynamic size — grows and shrinks automatically",
+        "Internally implemented as a dynamic array (contiguous memory block)"
+      ],
+      "code_examples": [
+        {
+          "description": "Creating lists, indexing, and basic operations",
+          "code": "# Creating lists\nempty  = []\nnums   = [1, 2, 3, 4, 5]\nmixed  = [1, 'hello', 3.14, True, None]\nnested = [[1, 2], [3, 4], [5, 6]]\n\n# Indexing\nprint(nums[0])       # 1   (first)\nprint(nums[-1])      # 5   (last)\nprint(nested[1][0])  # 3   (nested access)\n\n# Basic operations\nprint(len(nums))          # 5\nprint(nums + [6, 7])      # [1,2,3,4,5,6,7]  (concatenation)\nprint([0] * 5)            # [0,0,0,0,0]  (repetition)\nprint(3 in nums)          # True\nprint(min(nums), max(nums), sum(nums))  # 1 5 15"
+        },
+        {
+          "description": "List mutability — modifying elements",
+          "code": "nums = [10, 20, 30, 40, 50]\n\n# Modify single element\nnums[2] = 99\nprint(nums)          # [10, 20, 99, 40, 50]\n\n# Modify a slice\nnums[1:3] = [200, 300]\nprint(nums)          # [10, 200, 300, 40, 50]\n\n# Delete element\ndel nums[0]\nprint(nums)          # [200, 300, 40, 50]\n\n# Delete slice\ndel nums[1:3]\nprint(nums)          # [200, 50]"
+        }
+      ],
+      "important_points": [
+        "Lists are mutable — unlike strings and tuples",
+        "list() converts any iterable to a list: list('abc') → ['a','b','c']",
+        "Copying: b = a copies the reference; b = a.copy() or b = a[:] makes a shallow copy",
+        "Deep copy requires: import copy; b = copy.deepcopy(a)",
+        "Checking membership: in operator is O(n) for lists",
+        "Lists support all sequence operations: len, min, max, sum, sorted, reversed"
+      ],
+      "exam_questions": [
+        "What is the difference between a list and a tuple?",
+        "What is the difference between a shallow copy and a deep copy of a list?",
+        "What is the output of: a=[1,2,3]; b=a; b[0]=99; print(a)?",
+        "How do you create a list of 10 zeros?",
+        "What is the time complexity of the in operator on a list?"
+      ],
+      "explanation": "Lists are from from python_source.content._source.content.'s most versatile built-in sequence. They are dynamic arrays under the hood — mutable, ordered, and allowing duplicates. Understanding reference semantics (a = b does not copy) is critical for avoiding bugs."
+    },
+    {
+      "topic": "List Methods",
+      "definition": "from from python_source.content._source.content. lists come with a rich set of built-in methods for adding, removing, searching, sorting, and transforming elements. All mutating methods modify the list in place and return None.",
+      "key_concepts": [
+        "append(x) — add x to the end: O(1) amortized",
+        "insert(i, x) — insert x at index i: O(n)",
+        "extend(iterable) — add all elements of iterable to end: O(k)",
+        "remove(x) — remove first occurrence of x: O(n)",
+        "pop(i) — remove and return element at index i (default last): O(1) for last, O(n) otherwise",
+        "clear() — remove all elements",
+        "index(x) — return index of first x: O(n)",
+        "count(x) — count occurrences of x: O(n)",
+        "sort() — sort list in place (modifies list, returns None)",
+        "sorted() — returns new sorted list (original unchanged)",
+        "reverse() — reverse list in place",
+        "copy() — return shallow copy"
+      ],
+      "code_examples": [
+        {
+          "description": "All major list methods with examples",
+          "code": "lst = [3, 1, 4, 1, 5, 9, 2, 6]\n\n# Adding elements\nlst.append(7)           # [3,1,4,1,5,9,2,6,7]\nlst.insert(0, 0)        # [0,3,1,4,1,5,9,2,6,7]\nlst.extend([8, 8])      # [0,3,1,4,1,5,9,2,6,7,8,8]\n\n# Removing elements\nlst.remove(1)           # removes FIRST 1\nprint(lst.pop())        # 8  (removes last)\nprint(lst.pop(0))       # 0  (removes index 0)\n\n# Searching\nprint(lst.index(9))     # finds index of 9\nprint(lst.count(8))     # count of 8s\n\n# Sorting\nnums = [3, 1, 4, 1, 5, 9]\nnums.sort()              # in-place: [1,1,3,4,5,9]\nnums.sort(reverse=True)  # descending: [9,5,4,3,1,1]\n\nnew = sorted([3,1,2])    # returns new list, original unchanged\nprint(new)               # [1, 2, 3]\n\n# Reversing\nnums.reverse()           # in-place reversal"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Method",
+          "Modifies list?",
+          "Returns",
+          "Time Complexity"
+        ],
+        "rows": [
+          [
+            "append(x)",
+            "Yes",
+            "None",
+            "O(1) amortized"
+          ],
+          [
+            "insert(i,x)",
+            "Yes",
+            "None",
+            "O(n)"
+          ],
+          [
+            "extend(iter)",
+            "Yes",
+            "None",
+            "O(k)"
+          ],
+          [
+            "remove(x)",
+            "Yes",
+            "None",
+            "O(n)"
+          ],
+          [
+            "pop()",
+            "Yes",
+            "Removed item",
+            "O(1)"
+          ],
+          [
+            "pop(i)",
+            "Yes",
+            "Removed item",
+            "O(n)"
+          ],
+          [
+            "sort()",
+            "Yes",
+            "None",
+            "O(n log n)"
+          ],
+          [
+            "sorted()",
+            "No",
+            "New list",
+            "O(n log n)"
+          ],
+          [
+            "reverse()",
+            "Yes",
+            "None",
+            "O(n)"
+          ],
+          [
+            "index(x)",
+            "No",
+            "int",
+            "O(n)"
+          ],
+          [
+            "count(x)",
+            "No",
+            "int",
+            "O(n)"
+          ],
+          [
+            "copy()",
+            "No",
+            "New list",
+            "O(n)"
+          ]
+        ]
+      },
+      "important_points": [
+        "append() is O(1) amortized — from from python_source.content._source.content. over-allocates memory for efficiency",
+        "insert(0, x) is O(n) — all elements must shift right",
+        "sort() modifies in place and returns None — do NOT write lst = lst.sort()",
+        "sorted() is safe for immutables — it returns a new list",
+        "remove() raises ValueError if element not found",
+        "pop() with no argument removes the last element (O(1))"
+      ],
+      "exam_questions": [
+        "What is the difference between append() and extend()?",
+        "What is the difference between sort() and sorted()?",
+        "What is the output of: lst=[1,2,3]; x=lst.sort(); print(x)?",
+        "What is the time complexity of insert(0, x) on a list?",
+        "What happens when remove() is called on an element not in the list?"
+      ],
+      "explanation": "List methods are the primary tools for list manipulation. The key distinction is between mutating methods (append, insert, sort, reverse — return None) and non-mutating functions (sorted, len, min, max — return a value). Mixing these up is the most common exam mistake."
+    },
+    {
+      "topic": "Slicing",
+      "definition": "Slicing is a powerful from from python_source.content._source.content. feature that extracts a sub-sequence from a list, string, or tuple using the syntax sequence[start:stop:step]. The start is inclusive, stop is exclusive, and step determines the direction and stride.",
+      "key_concepts": [
+        "Syntax: lst[start:stop:step]",
+        "start: index to begin (inclusive) — default 0",
+        "stop: index to end (exclusive) — default len(lst)",
+        "step: stride and direction — default 1; negative reverses direction",
+        "Slicing never raises IndexError — out-of-range indices are clipped",
+        "Slicing returns a NEW list — original is not modified",
+        "lst[::-1] reverses the list",
+        "lst[::2] selects every second element",
+        "Slice assignment: lst[1:3] = [10, 20] modifies in place"
+      ],
+      "code_examples": [
+        {
+          "description": "Slicing examples — extraction, reversal, stride, assignment",
+          "code": "lst = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\n# Basic slicing\nprint(lst[2:6])      # [2, 3, 4, 5]\nprint(lst[:4])       # [0, 1, 2, 3]\nprint(lst[6:])       # [6, 7, 8, 9]\nprint(lst[:])        # [0,1,2,3,4,5,6,7,8,9]  (full copy)\n\n# Step\nprint(lst[::2])      # [0, 2, 4, 6, 8]  every 2nd\nprint(lst[1::2])     # [1, 3, 5, 7, 9]  odd indices\nprint(lst[::3])      # [0, 3, 6, 9]\n\n# Negative step — reverse\nprint(lst[::-1])     # [9,8,7,6,5,4,3,2,1,0]\nprint(lst[7:2:-1])   # [7, 6, 5, 4, 3]\n\n# Slice assignment — modifies in place\nlst[2:5] = [20, 30, 40]\nprint(lst)           # [0,1,20,30,40,5,6,7,8,9]\n\nlst[::2] = [0]*5     # replace all even-index elements\nprint(lst)"
+        }
+      ],
+      "important_points": [
+        "stop index is EXCLUSIVE: lst[0:3] returns indices 0, 1, 2 — NOT 3",
+        "Slicing returns a new list — it is a shallow copy",
+        "lst[:] is the idiomatic way to shallow-copy a list",
+        "Negative step: start must be greater than stop for non-empty result",
+        "lst[::-1] does NOT modify lst — it returns a reversed copy; use lst.reverse() for in-place"
+      ],
+      "exam_questions": [
+        "What is the output of: lst=[1,2,3,4,5]; print(lst[1:4])?",
+        "How do you reverse a list using slicing? Does it modify the original?",
+        "What is the difference between lst[::-1] and lst.reverse()?",
+        "What is the output of: lst=list(range(10)); print(lst[::3])?",
+        "Write a slice to extract every second element starting from index 1."
+      ],
+      "explanation": "Slicing is one of from from python_source.content._source.content.'s most powerful sequence operations. The start:stop:step syntax provides flexible extraction with no risk of IndexError. Negative step reverses direction. Slice assignment allows in-place replacement of sub-sequences."
+    },
+    {
+      "topic": "List Comprehensions",
+      "definition": "A list comprehension is a concise, readable way to create a new list by applying an expression to each item in an iterable, with an optional filter condition. It replaces verbose for-loop patterns with a single-line expression.",
+      "key_concepts": [
+        "Syntax: [expression for item in iterable]",
+        "With filter: [expression for item in iterable if condition]",
+        "With transformation and filter: [f(x) for x in iterable if g(x)]",
+        "Nested comprehension: [expr for x in outer for y in inner]",
+        "Faster than equivalent for loop — optimised at the bytecode level",
+        "Returns a new list — original iterable is unchanged",
+        "Can be used with any iterable: list, range, string, dict, set, file",
+        "Dict comprehension: {k: v for k, v in items}",
+        "Set comprehension: {expr for item in iterable}",
+        "Generator expression: (expr for item in iterable) — lazy evaluation"
+      ],
+      "code_examples": [
+        {
+          "description": "List comprehensions — basic, filtered, nested",
+          "code": "# Basic — square each number\nsquares = [x**2 for x in range(1, 6)]\nprint(squares)          # [1, 4, 9, 16, 25]\n\n# With filter — even numbers only\nevens = [x for x in range(20) if x % 2 == 0]\nprint(evens)            # [0,2,4,6,8,10,12,14,16,18]\n\n# Transform and filter\nresult = [x**2 for x in range(10) if x % 3 == 0]\nprint(result)           # [0, 9, 36, 81]\n\n# String operations\nwords = ['hello', 'world', 'from from python_source.content._source.content.']\nupper = [w.upper() for w in words]\nprint(upper)            # ['HELLO','WORLD','from from python_source.content._source.content.']\n\nlengths = [len(w) for w in words]\nprint(lengths)          # [5, 5, 6]\n\n# Nested comprehension — 3x3 matrix\nmatrix = [[i*3+j for j in range(1,4)] for i in range(3)]\nprint(matrix)           # [[1,2,3],[4,5,6],[7,8,9]]\n\n# Flatten a 2D list\nflat = [x for row in matrix for x in row]\nprint(flat)             # [1,2,3,4,5,6,7,8,9]"
+        },
+        {
+          "description": "Dict, set comprehensions and generator expressions",
+          "code": "# Dict comprehension\nsquare_dict = {x: x**2 for x in range(1, 6)}\nprint(square_dict)   # {1:1, 2:4, 3:9, 4:16, 5:25}\n\n# Invert a dict\noriginal = {'a': 1, 'b': 2, 'c': 3}\ninverted = {v: k for k, v in original.items()}\nprint(inverted)      # {1:'a', 2:'b', 3:'c'}\n\n# Set comprehension — unique lengths\nwords = ['hi','hello','hey','world']\nunique_lens = {len(w) for w in words}\nprint(unique_lens)   # {2, 5}\n\n# Generator expression — memory efficient\ngen = (x**2 for x in range(1000000))  # no list created\nprint(next(gen))     # 0\nprint(next(gen))     # 1\nprint(sum(x**2 for x in range(10)))  # 285"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Style",
+          "Syntax",
+          "Returns",
+          "When to use"
+        ],
+        "rows": [
+          [
+            "For loop",
+            "for x in …: lst.append(…)",
+            "None (builds list)",
+            "Complex logic, side effects"
+          ],
+          [
+            "List comprehension",
+            "[f(x) for x in …]",
+            "list",
+            "Simple transformation/filter"
+          ],
+          [
+            "Generator expr",
+            "(f(x) for x in …)",
+            "generator",
+            "Large data, memory efficiency"
+          ],
+          [
+            "Dict comprehension",
+            "{k:v for …}",
+            "dict",
+            "Building dicts from iterables"
+          ],
+          [
+            "Set comprehension",
+            "{f(x) for x in …}",
+            "set",
+            "Unique transformed values"
+          ]
+        ]
+      },
+      "important_points": [
+        "List comprehensions are faster than equivalent for loops",
+        "Keep comprehensions simple — complex logic belongs in a regular loop",
+        "Generator expressions are memory-efficient — they compute lazily",
+        "Nested comprehensions: outer loop comes first, inner loop second",
+        "Walrus operator (:=) can be used inside comprehensions (from from python_source.content._source.content. 3.8+)"
+      ],
+      "exam_questions": [
+        "What is a list comprehension? Write the syntax.",
+        "Rewrite using a list comprehension: squares = []; for i in range(10): squares.append(i**2)",
+        "Write a list comprehension to extract all vowels from a string.",
+        "What is the difference between a list comprehension and a generator expression?",
+        "Write a dict comprehension to map numbers 1–5 to their cubes."
+      ],
+      "explanation": "List comprehensions are a from from python_source.content._source.content.ic way to build lists from iterables. They are more readable and faster than equivalent for loops. Dict and set comprehensions follow the same pattern. Generator expressions are the memory-efficient alternative when you don't need the full list at once."
+    },
+    {
+      "topic": "Array Operations",
+      "definition": "Array operations cover the fundamental algorithms performed on list-based arrays: traversal, insertion, deletion, searching, and sorting. Understanding the time complexity of each operation is essential for writing efficient code.",
+      "key_concepts": [
+        "Traversal: visiting each element once — O(n)",
+        "Access by index: O(1) — direct memory address calculation",
+        "Search (linear): O(n) — scan each element",
+        "Search (binary): O(log n) — requires sorted array",
+        "Insertion at end: O(1) amortized (append)",
+        "Insertion at arbitrary position: O(n) — elements must shift",
+        "Deletion at end: O(1) (pop())",
+        "Deletion at arbitrary position: O(n) — elements must shift",
+        "Two-pointer technique: efficient for sorted arrays",
+        "Sliding window: efficient for subarray problems"
+      ],
+      "code_examples": [
+        {
+          "description": "Traversal, linear search, binary search, insertion, deletion",
+          "code": "# Traversal\ndef traverse(arr):\n    for i, val in enumerate(arr):\n        print(f\"Index {i}: {val}\")\n\n# Linear search — O(n)\ndef linear_search(arr, target):\n    for i, val in enumerate(arr):\n        if val == target:\n            return i\n    return -1\n\n# Binary search — O(log n) — requires sorted array\ndef binary_search(arr, target):\n    lo, hi = 0, len(arr) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -1\n\narr = [1, 3, 5, 7, 9, 11, 13]\nprint(binary_search(arr, 7))    # 3\nprint(binary_search(arr, 6))    # -1\n\n# Insertion at index — O(n)\ndef insert_at(arr, index, val):\n    arr.insert(index, val)\n    return arr\n\n# Deletion by value — O(n)\ndef delete_val(arr, val):\n    if val in arr:\n        arr.remove(val)\n    return arr"
+        },
+        {
+          "description": "Two-pointer and sliding window techniques",
+          "code": "# Two-pointer — find pair with given sum in sorted array\ndef two_sum_sorted(arr, target):\n    left, right = 0, len(arr) - 1\n    while left < right:\n        s = arr[left] + arr[right]\n        if s == target:\n            return (left, right)\n        elif s < target:\n            left += 1\n        else:\n            right -= 1\n    return None\n\nprint(two_sum_sorted([1,2,3,4,6], 6))  # (1, 3) → 2+4\n\n# Sliding window — max sum subarray of size k\ndef max_sum_window(arr, k):\n    window = sum(arr[:k])\n    max_sum = window\n    for i in range(k, len(arr)):\n        window += arr[i] - arr[i-k]\n        max_sum = max(max_sum, window)\n    return max_sum\n\nprint(max_sum_window([2,1,5,1,3,2], 3))  # 9 (5+1+3)"
+        }
+      ],
+      "complexity_summary": {
+        "Access": "O(1)",
+        "Search (linear)": "O(n)",
+        "Search (binary)": "O(log n) — sorted only",
+        "Insert at end": "O(1) amortized",
+        "Insert at index i": "O(n)",
+        "Delete at end": "O(1)",
+        "Delete at index i": "O(n)",
+        "Traversal": "O(n)"
+      },
+      "important_points": [
+        "Random access (arr[i]) is O(1) — a key advantage of arrays over linked lists",
+        "Insertion/deletion in the middle is O(n) — elements must shift",
+        "Binary search requires the array to be sorted first",
+        "Two-pointer technique reduces O(n²) brute force to O(n) for many problems",
+        "Sliding window avoids recomputing the sum from scratch at each position"
+      ],
+      "exam_questions": [
+        "What is the time complexity of accessing an element by index in a list?",
+        "Implement binary search on a sorted list.",
+        "What is the two-pointer technique? Give an example.",
+        "What is the time complexity of inserting an element at the beginning of a list?",
+        "What is the sliding window technique? When is it used?"
+      ],
+      "explanation": "Array operations are the foundation of algorithm design. Random access in O(1) is the key advantage. Insertion and deletion are O(n) due to element shifting. Binary search reduces search time to O(log n) on sorted arrays. Two-pointer and sliding window patterns efficiently solve many subarray problems."
+    },
+    {
+      "topic": "List Complexity",
+      "definition": "Understanding the time and space complexity of list operations is essential for writing efficient from from python_source.content._source.content. programs. from from python_source.content._source.content. lists are implemented as dynamic arrays — they over-allocate memory to keep amortized O(1) append performance.",
+      "key_concepts": [
+        "Dynamic array: from from python_source.content._source.content. lists resize automatically when capacity is exceeded",
+        "Over-allocation: from from python_source.content._source.content. allocates more space than needed to avoid frequent resizing",
+        "Amortized O(1) append: occasional O(n) resize is spread over many operations",
+        "Space complexity: O(n) for a list of n elements",
+        "Sorting: O(n log n) using Timsort (hybrid merge + insertion sort)",
+        "Timsort is stable — equal elements preserve their original order",
+        "list vs array module: list stores references; array module stores raw typed values",
+        "numpy arrays are more memory-efficient for numeric computation"
+      ],
+      "complexity_comparison": {
+        "append(x)": "O(1) amortized",
+        "pop()": "O(1)",
+        "pop(i)": "O(n)",
+        "insert(i, x)": "O(n)",
+        "remove(x)": "O(n)",
+        "x in list": "O(n)",
+        "list[i]": "O(1)",
+        "list[i:j]": "O(k) where k = j-i",
+        "len(list)": "O(1)",
+        "sort()": "O(n log n)",
+        "reverse()": "O(n)",
+        "list * k": "O(nk)",
+        "list + list": "O(n+m)"
+      },
+      "code_examples": [
+        {
+          "description": "Demonstrating dynamic resizing and memory usage",
+          "code": "import sys\n\n# Check memory size at different capacities\nlst = []\nsizes = []\nfor i in range(20):\n    sizes.append(sys.getsizeof(lst))\n    lst.append(i)\n\nprint(sizes[:10])  # Shows memory jumps at resize points\n# [56, 88, 88, 88, 88, 120, 120, 120, 120, 184]\n\n# Demonstrate O(1) vs O(n) operations\nimport time\n\nn = 100000\nlst = list(range(n))\n\n# O(1) — access by index\nstart = time.time()\n_ = lst[n//2]\nprint(f\"Index access: {time.time()-start:.8f}s\")\n\n# O(n) — search\nstart = time.time()\n_ = (n-1) in lst\nprint(f\"Linear search: {time.time()-start:.6f}s\")"
+        }
+      ],
+      "important_points": [
+        "len() is O(1) — from from python_source.content._source.content. caches the length as a separate attribute",
+        "Slicing lst[i:j] is O(k) where k = j - i, not O(n)",
+        "Timsort is from from python_source.content._source.content.'s built-in sort — stable, O(n log n) worst case",
+        "For membership testing with O(1) lookups, use a set or dict instead of a list",
+        "Avoid repeated insert(0, x) — each is O(n); use collections.deque for O(1) front insert"
+      ],
+      "exam_questions": [
+        "What is amortized O(1) complexity? Explain for list append.",
+        "Why is in operator O(n) for lists but O(1) for sets?",
+        "What sorting algorithm does from from python_source.content._source.content. use internally? What are its properties?",
+        "What is the space complexity of a from from python_source.content._source.content. list?",
+        "When should you use a deque instead of a list?"
+      ],
+      "explanation": "from from python_source.content._source.content. lists are dynamic arrays with amortized O(1) append due to over-allocation. The key insight is that O(1) index access makes lists ideal for random access, but O(n) insertion/deletion and O(n) membership testing can be bottlenecks. Use sets for fast lookup and deque for fast front insertion."
+    }
+  ]
+}

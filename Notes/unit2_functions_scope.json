@@ -1,0 +1,318 @@
+{
+  "unit_id": "UNIT2_FunctionsScope",
+  "unit_title": "Functions & Scope",
+  "topics": [
+    {
+      "topic": "Defining Functions",
+      "definition": "A function is a named, reusable block of code that performs a specific task. Functions are defined using the def keyword followed by the function name, parentheses, and a colon. The body is indented. Functions promote code reuse, modularity, and readability.",
+      "key_concepts": [
+        "def keyword defines a function",
+        "Function name follows the same rules as variable names (snake_case recommended)",
+        "Parameters are variables listed in the function definition",
+        "Arguments are the actual values passed when calling the function",
+        "return statement sends a value back to the caller",
+        "A function without return implicitly returns None",
+        "Functions are first-class objects — can be assigned to variables, passed as arguments",
+        "Docstrings (triple-quoted strings) document functions: accessible via help() and __doc__"
+      ],
+      "code_examples": [
+        {
+          "description": "Basic function definition, return, and docstring",
+          "code": "# Basic function\ndef greet(name):\n    \"\"\"Return a greeting string for the given name.\"\"\"\n    return f\"Hello, {name}!\"\n\nprint(greet(\"Alice\"))   # Hello, Alice!\n\n# Function returning multiple values (as tuple)\ndef min_max(numbers):\n    return min(numbers), max(numbers)\n\nlo, hi = min_max([3, 1, 7, 2, 9])\nprint(lo, hi)           # 1 9\n\n# Function with no return → returns None\ndef say_hi():\n    print(\"Hi!\")\n\nresult = say_hi()       # Hi!\nprint(result)           # None"
+        },
+        {
+          "description": "Functions as first-class objects",
+          "code": "def square(x):\n    return x ** 2\n\n# Assign function to variable\nf = square\nprint(f(5))             # 25\n\n# Pass function as argument\ndef apply(func, value):\n    return func(value)\n\nprint(apply(square, 4)) # 16\n\n# Store functions in a list\nops = [square, abs, str]\nfor op in ops:\n    print(op(-3))       # 9, 3, '-3'"
+        }
+      ],
+      "important_points": [
+        "Parameters vs Arguments: parameters are in the definition, arguments are passed at the call",
+        "return exits the function immediately — code after return is unreachable",
+        "A function can return multiple values as a tuple: return a, b",
+        "Functions without return implicitly return None",
+        "Docstrings are the first statement of a function body in triple quotes",
+        "Functions are objects — they can be passed, returned, and stored"
+      ],
+      "exam_questions": [
+        "What is the difference between a parameter and an argument?",
+        "What does a function return if there is no return statement?",
+        "Write a function to check if a number is prime.",
+        "Explain with an example that functions are first-class objects in from from python_source.content._source.content..",
+        "What is a docstring? How do you access it?"
+      ],
+      "explanation": "Functions are the fundamental building block of modular from from python_source.content._source.content. code. They are defined with def, optionally documented with docstrings, and can return any value including tuples for multiple return values. Since functions are first-class objects, they can be passed and stored like any other value."
+    },
+    {
+      "topic": "Function Arguments",
+      "definition": "from from python_source.content._source.content. supports five types of function arguments: positional, keyword, default, *args (variable positional), and **kwargs (variable keyword). This flexibility allows functions to handle a wide range of calling conventions.",
+      "key_concepts": [
+        "Positional arguments: matched by position, order matters",
+        "Keyword arguments: matched by name, order does not matter",
+        "Default arguments: have a preset value used when argument is omitted",
+        "Default arguments must come AFTER non-default arguments",
+        "Mutable default arguments (list, dict) are shared across calls — use None instead",
+        "*args: collects extra positional arguments into a tuple",
+        "**kwargs: collects extra keyword arguments into a dict",
+        "Argument order in definition: positional, *args, keyword-only, **kwargs"
+      ],
+      "code_examples": [
+        {
+          "description": "Positional, keyword, and default arguments",
+          "code": "def power(base, exponent=2):   # default exponent = 2\n    return base ** exponent\n\nprint(power(3))          # 9   (exponent defaults to 2)\nprint(power(3, 3))       # 27  (positional)\nprint(power(base=2, exponent=10))  # 1024 (keyword)\nprint(power(exponent=3, base=2))   # 8    (order doesn't matter)\n\n# COMMON MISTAKE — mutable default\ndef bad_append(val, lst=[]):   # lst is shared!\n    lst.append(val)\n    return lst\n\nprint(bad_append(1))   # [1]\nprint(bad_append(2))   # [1, 2]  ← surprise!\n\n# CORRECT\ndef good_append(val, lst=None):\n    if lst is None:\n        lst = []\n    lst.append(val)\n    return lst"
+        },
+        {
+          "description": "*args and **kwargs",
+          "code": "# *args — variable positional\ndef total(*args):\n    print(type(args))     # <class 'tuple'>\n    return sum(args)\n\nprint(total(1, 2, 3))      # 6\nprint(total(1, 2, 3, 4, 5))# 15\n\n# **kwargs — variable keyword\ndef profile(**kwargs):\n    print(type(kwargs))   # <class 'dict'>\n    for k, v in kwargs.items():\n        print(f\"{k}: {v}\")\n\nprofile(name=\"Alice\", age=21, city=\"Delhi\")\n\n# Combined\ndef combined(a, b, *args, **kwargs):\n    print(a, b)       # positional\n    print(args)       # extra positionals as tuple\n    print(kwargs)     # extra keywords as dict\n\ncombined(1, 2, 3, 4, x=10, y=20)\n# 1 2\n# (3, 4)\n# {'x': 10, 'y': 20}"
+        }
+      ],
+      "important_points": [
+        "Default parameters must come after non-default ones: def f(a, b=1) ✔ def f(a=1, b) ✗",
+        "Never use mutable objects (list, dict) as default argument values",
+        "*args collects into a tuple; **kwargs collects into a dict",
+        "Keyword arguments can be passed in any order",
+        "Argument order: positional → *args → keyword-only → **kwargs",
+        "Unpacking: func(*list) or func(**dict) at the call site"
+      ],
+      "exam_questions": [
+        "What is the difference between *args and **kwargs?",
+        "Why should mutable objects not be used as default arguments?",
+        "What is the output of: def f(a, b=2, c=3): return a+b+c; print(f(1, c=10))?",
+        "Write a function using **kwargs to print a person's profile.",
+        "Explain keyword-only arguments with an example."
+      ],
+      "explanation": "from from python_source.content._source.content.'s flexible argument system covers positional, keyword, default, *args, and **kwargs. The most common exam traps are the mutable default argument pitfall and the required order of argument types in a function signature."
+    },
+    {
+      "topic": "Scope Rules",
+      "definition": "Scope defines the region of a program where a variable is accessible. from from python_source.content._source.content. resolves variable names using the LEGB rule: Local → Enclosing → Global → Built-in. The scope is determined at definition time, not call time.",
+      "key_concepts": [
+        "Local scope: variables defined inside a function",
+        "Enclosing scope: variables in the enclosing (outer) function for nested functions",
+        "Global scope: variables defined at module level",
+        "Built-in scope: from from python_source.content._source.content.'s built-in names (print, len, range, etc.)",
+        "global keyword: declare that a variable refers to the global scope inside a function",
+        "nonlocal keyword: declare that a variable refers to the enclosing function's scope",
+        "A local variable shadows a global variable of the same name",
+        "Reading a global inside a function is allowed without global keyword; writing requires it"
+      ],
+      "code_examples": [
+        {
+          "description": "LEGB rule — Local, Enclosing, Global, Built-in",
+          "code": "x = \"global\"\n\ndef outer():\n    x = \"enclosing\"\n\n    def inner():\n        x = \"local\"\n        print(x)    # local    (L)\n\n    inner()\n    print(x)        # enclosing (E)\n\nouter()\nprint(x)            # global    (G)"
+        },
+        {
+          "description": "global and nonlocal keywords",
+          "code": "count = 0\n\ndef increment():\n    global count          # refer to module-level count\n    count += 1\n\nincrement()\nincrement()\nprint(count)          # 2\n\n# nonlocal — modify enclosing variable\ndef make_counter():\n    n = 0\n    def counter():\n        nonlocal n        # refer to make_counter's n\n        n += 1\n        return n\n    return counter\n\nc = make_counter()\nprint(c())   # 1\nprint(c())   # 2\nprint(c())   # 3"
+        }
+      ],
+      "important_points": [
+        "LEGB lookup order: Local → Enclosing → Global → Built-in",
+        "global keyword needed to WRITE to a global variable from inside a function",
+        "nonlocal keyword needed to WRITE to an enclosing variable from a nested function",
+        "Without global, assigning to a name inside a function creates a new local variable",
+        "Built-in names like print, len can be shadowed — avoid naming variables print or list",
+        "UnboundLocalError: assigning to x inside a function before referencing the global x"
+      ],
+      "exam_questions": [
+        "Explain the LEGB rule in from from python_source.content._source.content. with an example.",
+        "What is the difference between global and nonlocal?",
+        "What is the output of: x=10; def f(): x=20; f(); print(x)?",
+        "What error occurs if you read a variable before assigning it locally?",
+        "Write a counter function using nonlocal."
+      ],
+      "explanation": "from from python_source.content._source.content. uses lexical (static) scoping with the LEGB rule. Variables are first looked up locally, then in enclosing functions, then globally, then in built-ins. The global and nonlocal keywords allow functions to modify variables in outer scopes."
+    },
+    {
+      "topic": "Lambda Expressions",
+      "definition": "A lambda expression is an anonymous, single-expression function defined using the lambda keyword. It can take any number of arguments but can only contain a single expression (no statements, no assignments). The result of the expression is implicitly returned.",
+      "key_concepts": [
+        "Syntax: lambda arguments: expression",
+        "Returns the result of the expression implicitly — no return keyword",
+        "Anonymous — has no name unless assigned to a variable",
+        "Can take zero or more arguments",
+        "Cannot contain statements (if blocks, loops, assignments)",
+        "Commonly used with map(), filter(), sorted(), and reduce()",
+        "Can use ternary expression for conditional logic",
+        "Equivalent to a def function but limited to one expression"
+      ],
+      "lambda_vs_def": {
+        "headers": [
+          "Feature",
+          "lambda",
+          "def"
+        ],
+        "rows": [
+          [
+            "Name",
+            "Anonymous",
+            "Named"
+          ],
+          [
+            "Body",
+            "Single expression",
+            "Multiple statements"
+          ],
+          [
+            "return",
+            "Implicit",
+            "Explicit"
+          ],
+          [
+            "Docstring",
+            "Not possible",
+            "Possible"
+          ],
+          [
+            "Reusability",
+            "Low",
+            "High"
+          ],
+          [
+            "Use case",
+            "Short callbacks",
+            "General purpose"
+          ]
+        ]
+      },
+      "code_examples": [
+        {
+          "description": "Lambda basics and comparison with def",
+          "code": "# Basic lambda\nsquare = lambda x: x ** 2\nprint(square(5))          # 25\n\nadd = lambda a, b: a + b\nprint(add(3, 4))          # 7\n\n# Equivalent def\ndef square_def(x):\n    return x ** 2\n\n# Lambda with ternary\neven_odd = lambda n: \"even\" if n % 2 == 0 else \"odd\"\nprint(even_odd(7))        # odd\n\n# Immediately invoked\nprint((lambda x, y: x * y)(3, 4))  # 12"
+        },
+        {
+          "description": "Lambda with map(), filter(), sorted()",
+          "code": "nums = [1, 2, 3, 4, 5, 6]\n\n# map — apply function to every element\nsquares = list(map(lambda x: x**2, nums))\nprint(squares)    # [1, 4, 9, 16, 25, 36]\n\n# filter — keep elements where function returns True\nevens = list(filter(lambda x: x % 2 == 0, nums))\nprint(evens)      # [2, 4, 6]\n\n# sorted with key\nwords = [\"banana\", \"apple\", \"cherry\", \"date\"]\nsorted_words = sorted(words, key=lambda w: len(w))\nprint(sorted_words)   # ['date', 'apple', 'banana', 'cherry']\n\n# sorted with multiple criteria\nstudents = [(\"Alice\", 85), (\"Bob\", 92), (\"Carol\", 85)]\nstudents.sort(key=lambda s: (-s[1], s[0]))\nprint(students)   # [('Bob',92),('Alice',85),('Carol',85)]"
+        }
+      ],
+      "important_points": [
+        "lambda can only contain a single expression — no loops, no assignments",
+        "Use def for anything complex — lambda is for short one-liners",
+        "map() and filter() return iterators — wrap in list() to see values",
+        "sorted() with key= is more from from python_source.content._source.content.ic than cmp= (removed in from from python_source.content._source.content. 3)",
+        "Lambda functions have access to enclosing scope (closure)"
+      ],
+      "exam_questions": [
+        "What is a lambda function? How does it differ from def?",
+        "Write a lambda to return the square of a number.",
+        "Use map() and lambda to double all elements of a list.",
+        "Use filter() and lambda to extract all even numbers from a list.",
+        "Sort a list of tuples by the second element using lambda."
+      ],
+      "explanation": "Lambda expressions provide a concise way to create small anonymous functions. They are most useful as arguments to higher-order functions like map(), filter(), and sorted(). For anything more complex than a single expression, a regular def function is preferred."
+    },
+    {
+      "topic": "Recursion",
+      "definition": "Recursion is a programming technique where a function calls itself to solve a smaller instance of the same problem. Every recursive function must have a base case (termination condition) and a recursive case (self-call with a simpler input).",
+      "key_concepts": [
+        "Base case: the condition under which the function stops calling itself",
+        "Recursive case: the function calls itself with a simpler/smaller input",
+        "Call stack: each recursive call adds a stack frame",
+        "Stack overflow: too many recursive calls exceed from from python_source.content._source.content.'s recursion limit (default 1000)",
+        "sys.setrecursionlimit(n) can increase the limit",
+        "Tail recursion: recursive call is the last operation (from from python_source.content._source.content. does NOT optimize this)",
+        "Every recursive solution can be rewritten iteratively",
+        "Time/Space complexity depends on the depth of recursion"
+      ],
+      "code_examples": [
+        {
+          "description": "Factorial and Fibonacci using recursion",
+          "code": "# Factorial — n! = n * (n-1)!\ndef factorial(n):\n    if n == 0 or n == 1:   # base case\n        return 1\n    return n * factorial(n - 1)  # recursive case\n\nprint(factorial(5))    # 120\nprint(factorial(0))    # 1\n\n# Fibonacci — fib(n) = fib(n-1) + fib(n-2)\ndef fibonacci(n):\n    if n <= 1:             # base cases: fib(0)=0, fib(1)=1\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)\n\nprint(fibonacci(10))   # 55\n\n# Print call trace for factorial(4)\n# factorial(4)\n#   factorial(3)\n#     factorial(2)\n#       factorial(1) → 1\n#     → 2\n#   → 6\n# → 24"
+        },
+        {
+          "description": "Sum of digits, power, and binary search using recursion",
+          "code": "# Sum of digits\ndef sum_digits(n):\n    if n < 10:            # base case\n        return n\n    return n % 10 + sum_digits(n // 10)\n\nprint(sum_digits(1234))  # 10\n\n# Power — x^n\ndef power(x, n):\n    if n == 0:            # base case\n        return 1\n    if n % 2 == 0:        # even exponent\n        half = power(x, n // 2)\n        return half * half\n    return x * power(x, n - 1)\n\nprint(power(2, 10))   # 1024\n\n# Recursive binary search\ndef binary_search(arr, target, lo, hi):\n    if lo > hi:\n        return -1\n    mid = (lo + hi) // 2\n    if arr[mid] == target:\n        return mid\n    elif arr[mid] < target:\n        return binary_search(arr, target, mid+1, hi)\n    else:\n        return binary_search(arr, target, lo, mid-1)"
+        }
+      ],
+      "recursion_trace": "factorial(4) call stack:\n  factorial(4) → 4 * factorial(3)\n    factorial(3) → 3 * factorial(2)\n      factorial(2) → 2 * factorial(1)\n        factorial(1) → 1   [BASE CASE]\n      returns 2 * 1 = 2\n    returns 3 * 2 = 6\n  returns 4 * 6 = 24",
+      "recursion_vs_iteration": {
+        "headers": [
+          "Aspect",
+          "Recursion",
+          "Iteration"
+        ],
+        "rows": [
+          [
+            "Readability",
+            "High for tree/divide problems",
+            "High for simple loops"
+          ],
+          [
+            "Memory",
+            "O(n) stack frames",
+            "O(1) usually"
+          ],
+          [
+            "Speed",
+            "Slower (function call overhead)",
+            "Faster"
+          ],
+          [
+            "Stack overflow",
+            "Possible (limit ~1000)",
+            "Not possible"
+          ],
+          [
+            "Use case",
+            "Tree, graph, divide & conquer",
+            "Simple repetition"
+          ]
+        ]
+      },
+      "important_points": [
+        "Every recursive function MUST have a base case or it causes infinite recursion",
+        "from from python_source.content._source.content.'s default recursion limit is 1000 — use sys.setrecursionlimit() to change",
+        "Naive Fibonacci is O(2^n) — use memoization or iteration for efficiency",
+        "Recursion uses O(depth) stack space — can cause MemoryError on deep calls",
+        "from from python_source.content._source.content. does NOT perform tail-call optimization"
+      ],
+      "exam_questions": [
+        "What are the two essential components of a recursive function?",
+        "Write a recursive function to compute n! (factorial).",
+        "Write a recursive function to compute the nth Fibonacci number.",
+        "What is a stack overflow? How does it relate to recursion?",
+        "Compare recursion and iteration — advantages and disadvantages.",
+        "What is the output of: def f(n): return 1 if n<=1 else n+f(n-1); print(f(5))?"
+      ],
+      "explanation": "Recursion solves problems by breaking them into smaller subproblems of the same type. A base case prevents infinite recursion. from from python_source.content._source.content.'s call stack has a limit of ~1000 frames, so deep recursion requires either iteration or memoization. Recursive solutions are elegant for tree and divide-and-conquer problems."
+    },
+    {
+      "topic": "Higher Order Functions",
+      "definition": "A higher-order function is a function that takes one or more functions as arguments, or returns a function as its result, or both. from from python_source.content._source.content.'s built-in higher-order functions include map(), filter(), sorted(), and functools.reduce().",
+      "key_concepts": [
+        "map(func, iterable) — applies func to every element, returns iterator",
+        "filter(func, iterable) — keeps elements where func returns True, returns iterator",
+        "sorted(iterable, key=func) — sorts by the value returned by key function",
+        "functools.reduce(func, iterable) — applies func cumulatively (fold left)",
+        "zip(iter1, iter2) — pairs elements from multiple iterables",
+        "any(iterable) — True if at least one element is truthy",
+        "all(iterable) — True if all elements are truthy",
+        "Closures: functions that capture variables from their enclosing scope"
+      ],
+      "code_examples": [
+        {
+          "description": "map(), filter(), reduce(), zip()",
+          "code": "from functools import reduce\n\nnums = [1, 2, 3, 4, 5]\n\n# map — square each element\nprint(list(map(lambda x: x**2, nums)))   # [1,4,9,16,25]\n\n# filter — keep only even numbers\nprint(list(filter(lambda x: x%2==0, nums)))  # [2,4]\n\n# reduce — sum all elements\nprint(reduce(lambda a, b: a + b, nums))  # 15\nprint(reduce(lambda a, b: a * b, nums))  # 120\n\n# zip — pair two lists\nnames  = [\"Alice\", \"Bob\", \"Carol\"]\nscores = [85, 92, 78]\nfor name, score in zip(names, scores):\n    print(f\"{name}: {score}\")"
+        },
+        {
+          "description": "Closures — functions that remember their enclosing scope",
+          "code": "# Closure: inner function captures outer variable\ndef multiplier(factor):\n    def multiply(x):         # multiply captures 'factor'\n        return x * factor\n    return multiply          # return the inner function\n\ndouble = multiplier(2)\ntriple = multiplier(3)\n\nprint(double(5))    # 10\nprint(triple(5))    # 15\n\n# Practical closure: make_adder\ndef make_adder(n):\n    return lambda x: x + n\n\nadd5  = make_adder(5)\nadd10 = make_adder(10)\nprint(add5(3))      # 8\nprint(add10(3))     # 13"
+        }
+      ],
+      "important_points": [
+        "map() and filter() return lazy iterators — wrap in list() to materialise",
+        "reduce() is in functools module — must import it",
+        "sorted() returns a new list; list.sort() sorts in place",
+        "Closures capture variables by reference, not by value",
+        "any([]) returns False; all([]) returns True (vacuous truth)"
+      ],
+      "exam_questions": [
+        "What is a higher-order function? Give two examples.",
+        "What is the difference between map() and filter()?",
+        "Use reduce() to find the product of all elements in a list.",
+        "What is a closure? Write a make_counter() closure.",
+        "What is the difference between sorted() and list.sort()?"
+      ],
+      "explanation": "Higher-order functions treat functions as values — passing them as arguments or returning them as results. map(), filter(), and reduce() are the classic functional programming tools. Closures are functions that remember variables from their enclosing scope, enabling factory functions and stateful callbacks."
+    }
+  ]
+}

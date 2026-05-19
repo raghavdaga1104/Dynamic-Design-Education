@@ -1,0 +1,202 @@
+{
+  "unit_id": "UNIT7_RecursionBacktracking",
+  "unit_title": "Recursion & Backtracking",
+  "topics": [
+    {
+      "topic": "Recursive Thinking",
+      "definition": "Recursive thinking is the ability to solve a problem by breaking it into smaller instances of the same problem. A recursive solution expresses the answer to a problem in terms of the answer to a simpler version of the same problem. This requires identifying the base case (smallest solvable instance) and the recursive case (how to reduce the problem).",
+      "key_concepts": [
+        "Base case: the simplest input that can be solved directly without further recursion",
+        "Recursive case: breaks the problem into a smaller sub-problem and calls itself",
+        "Trust the recursion: assume the recursive call correctly solves the smaller problem",
+        "Every recursive call must move closer to the base case",
+        "Recursive problems have an optimal substructure — solution built from sub-solutions",
+        "The call stack stores the state of each recursive call",
+        "from from python_source.content._source.content. default recursion limit is 1000 — sys.setrecursionlimit(n) to change",
+        "Recursive solutions are often cleaner but may be slower than iterative"
+      ],
+      "code_examples": [
+        {
+          "description": "Recursive thinking — sum, countdown, and power",
+          "code": "# Sum of list — recursive thinking\n# 'sum of list = first element + sum of rest'\ndef rec_sum(lst):\n    if not lst:              # base case: empty list\n        return 0\n    return lst[0] + rec_sum(lst[1:])  # recursive case\n\nprint(rec_sum([1, 2, 3, 4, 5]))  # 15\n\n# Countdown\ndef countdown(n):\n    if n <= 0:               # base case\n        print('Go!')\n        return\n    print(n)\n    countdown(n - 1)         # recursive case\n\ncountdown(5)  # 5 4 3 2 1 Go!\n\n# Power — x^n\ndef power(x, n):\n    if n == 0:               # base case: x^0 = 1\n        return 1\n    return x * power(x, n - 1)  # x^n = x * x^(n-1)\n\nprint(power(2, 10))   # 1024"
+        }
+      ],
+      "call_stack_trace": "rec_sum([1, 2, 3]):\n  rec_sum([1,2,3]) = 1 + rec_sum([2,3])\n    rec_sum([2,3])  = 2 + rec_sum([3])\n      rec_sum([3])  = 3 + rec_sum([])\n        rec_sum([]) = 0       ← BASE CASE\n      returns 3 + 0 = 3\n    returns 2 + 3 = 5\n  returns 1 + 5 = 6",
+      "important_points": [
+        "Always define the base case first — missing base case causes infinite recursion",
+        "Each recursive call must make the problem strictly smaller",
+        "from from python_source.content._source.content. raises RecursionError after ~1000 nested calls",
+        "Recursive solutions map naturally to mathematical induction",
+        "Tail recursion: recursive call is the last operation — from from python_source.content._source.content. does NOT optimise this"
+      ],
+      "exam_questions": [
+        "What are the two essential components of a recursive function?",
+        "Write a recursive function to compute the sum of digits of a number.",
+        "What happens if a recursive function has no base case?",
+        "Trace the call stack for factorial(4).",
+        "Write a recursive function to reverse a string."
+      ],
+      "explanation": "Recursive thinking is a fundamental programming skill. The key is to trust the recursion — assume the smaller call works correctly and just define how to combine its result with the current step. Every recursive solution needs a clear base case and a step that moves toward it."
+    },
+    {
+      "topic": "Base Cases and Recursive Cases",
+      "definition": "The base case is the condition under which a recursive function returns a result without making any further recursive calls. The recursive case reduces the problem to a smaller instance. Correctly identifying both is essential for writing correct and terminating recursive functions.",
+      "key_concepts": [
+        "Base case must handle the simplest possible input directly",
+        "Recursive case must call the function with strictly smaller/simpler input",
+        "Multiple base cases are sometimes needed (e.g. Fibonacci: fib(0)=0, fib(1)=1)",
+        "Mutual recursion: function A calls B, B calls A — both need base cases",
+        "Guard clause pattern: check base case first, return immediately",
+        "Every execution path must eventually reach a base case",
+        "Incorrect base case leads to wrong answers; missing base case causes infinite recursion"
+      ],
+      "code_examples": [
+        {
+          "description": "Multiple base cases — Fibonacci, GCD, string palindrome",
+          "code": "# Fibonacci — two base cases\ndef fib(n):\n    if n == 0: return 0     # base case 1\n    if n == 1: return 1     # base case 2\n    return fib(n-1) + fib(n-2)  # recursive case\n\nprint([fib(i) for i in range(8)])  # [0,1,1,2,3,5,8,13]\n\n# GCD — Euclidean algorithm\ndef gcd(a, b):\n    if b == 0:              # base case\n        return a\n    return gcd(b, a % b)    # recursive case\n\nprint(gcd(48, 18))   # 6\nprint(gcd(100, 75))  # 25\n\n# Palindrome check\ndef is_palindrome(s):\n    if len(s) <= 1:         # base case: 0 or 1 chars\n        return True\n    if s[0] != s[-1]:       # mismatch — not palindrome\n        return False\n    return is_palindrome(s[1:-1])  # check inner string\n\nprint(is_palindrome('racecar'))  # True\nprint(is_palindrome('hello'))    # False\nprint(is_palindrome('a'))        # True"
+        },
+        {
+          "description": "Tower of Hanoi — classic multi-step recursion",
+          "code": "# Tower of Hanoi\n# Move n disks from source to destination using auxiliary\ndef hanoi(n, source='A', dest='C', aux='B'):\n    if n == 1:              # base case: move single disk\n        print(f'Move disk 1 from {source} to {dest}')\n        return\n    hanoi(n-1, source, aux, dest)  # move n-1 disks to aux\n    print(f'Move disk {n} from {source} to {dest}')\n    hanoi(n-1, aux, dest, source)  # move n-1 disks to dest\n\nhanoi(3)\n# Move disk 1 from A to C\n# Move disk 2 from A to B\n# Move disk 1 from C to B\n# Move disk 3 from A to C\n# Move disk 1 from B to A\n# Move disk 2 from B to C\n# Move disk 1 from A to C\n# Total moves for n disks = 2^n - 1"
+        }
+      ],
+      "recursive_tree": "fib(4):\n        fib(4)\n       /      \\\n    fib(3)   fib(2)\n    /    \\   /    \\\n  fib(2) fib(1) fib(1) fib(0)\n  /    \\\nfib(1) fib(0)\nNote: fib(2) computed TWICE — leads to exponential time O(2^n)",
+      "important_points": [
+        "Fibonacci naive recursion is O(2^n) — exponential due to repeated subproblems",
+        "Tower of Hanoi requires exactly 2^n - 1 moves for n disks",
+        "GCD recurrence terminates because a % b < b always",
+        "Multiple base cases are fine — just ensure ALL paths terminate",
+        "Use a recursion tree to visualise overlapping subproblems"
+      ],
+      "exam_questions": [
+        "Write the recursive solution for Tower of Hanoi. How many moves are needed for n disks?",
+        "What is the time complexity of naive recursive Fibonacci? Why?",
+        "Write a recursive function to check if a string is a palindrome.",
+        "Trace the recursion tree for fib(5).",
+        "What is mutual recursion? Write an example using is_even and is_odd."
+      ],
+      "explanation": "Correct base cases are the foundation of every recursive function. Multiple base cases handle edge inputs. The Tower of Hanoi is the classic multi-step recursion example — each call spawns two more, giving 2^n - 1 total moves. The Fibonacci recursion tree reveals the overlapping subproblem problem that memoisation solves."
+    },
+    {
+      "topic": "Call Stack",
+      "definition": "The call stack is a data structure that tracks the active function calls in a program. Each time a function is called, a new stack frame is pushed onto the call stack containing the function's local variables, parameters, and return address. When the function returns, its frame is popped. In recursion, each recursive call adds a new frame — deep recursion can exhaust the stack.",
+      "key_concepts": [
+        "Stack frame: contains local variables, parameters, and return address for one call",
+        "LIFO structure: last call in is first to return",
+        "Each recursive call pushes a new frame onto the call stack",
+        "When base case is reached, frames are popped in reverse order",
+        "from from python_source.content._source.content.'s default stack limit is ~1000 frames",
+        "RecursionError: maximum recursion depth exceeded — stack overflow",
+        "sys.getrecursionlimit() returns current limit",
+        "sys.setrecursionlimit(n) sets a new limit — use carefully",
+        "Iterative solutions avoid stack overflow by using the heap instead"
+      ],
+      "code_examples": [
+        {
+          "description": "Visualising the call stack and handling RecursionError",
+          "code": "import sys\n\n# Check and set recursion limit\nprint(sys.getrecursionlimit())    # 1000 (default)\nsys.setrecursionlimit(2000)       # increase if needed\n\n# Visualise call stack depth\ndef depth_demo(n, depth=0):\n    print('  ' * depth + f'depth_demo({n})')\n    if n == 0:\n        print('  ' * depth + 'BASE CASE → returning 0')\n        return 0\n    result = n + depth_demo(n-1, depth+1)\n    print('  ' * depth + f'returning {result}')\n    return result\n\ndepth_demo(3)\n# depth_demo(3)\n#   depth_demo(2)\n#     depth_demo(1)\n#       depth_demo(0)\n#       BASE CASE → returning 0\n#     returning 1\n#   returning 3\n# returning 6\n\n# Handle RecursionError gracefully\ndef safe_factorial(n):\n    try:\n        if n < 0: raise ValueError('Negative input')\n        if n == 0: return 1\n        return n * safe_factorial(n - 1)\n    except RecursionError:\n        print(f'Stack overflow for n={n}')\n        return None"
+        },
+        {
+          "description": "Convert recursion to iteration using explicit stack",
+          "code": "# Iterative factorial using explicit stack\ndef factorial_iterative(n):\n    result = 1\n    while n > 1:\n        result *= n\n        n -= 1\n    return result\n\n# Simulate recursive DFS with explicit stack\ndef dfs_iterative(graph, start):\n    visited = set()\n    stack   = [start]          # explicit stack replaces call stack\n    order   = []\n    while stack:\n        node = stack.pop()     # LIFO — mimics recursion\n        if node not in visited:\n            visited.add(node)\n            order.append(node)\n            for neighbour in reversed(graph[node]):\n                if neighbour not in visited:\n                    stack.append(neighbour)\n    return order\n\ngraph = {0:[1,2], 1:[3], 2:[3], 3:[]}\nprint(dfs_iterative(graph, 0))  # [0, 1, 3, 2]"
+        }
+      ],
+      "call_stack_trace": "factorial(4) — call stack frames:\n┌─────────────────────┐  ← TOP (active)\n│ factorial(1) n=1    │\n├─────────────────────┤\n│ factorial(2) n=2    │\n├─────────────────────┤\n│ factorial(3) n=3    │\n├─────────────────────┤\n│ factorial(4) n=4    │\n└─────────────────────┘  ← BOTTOM\nWhen factorial(1) returns 1:\n  factorial(2) returns 2*1=2\n  factorial(3) returns 3*2=6\n  factorial(4) returns 4*6=24",
+      "important_points": [
+        "Each recursive call consumes O(1) stack space — n calls use O(n) space total",
+        "RecursionError is from from python_source.content._source.content.'s stack overflow — not a program bug, it is a limit",
+        "Deep recursion (n > 1000) should be converted to iteration",
+        "An explicit stack data structure can simulate any recursion iteratively",
+        "Tail recursive functions are the easiest to convert to iteration"
+      ],
+      "exam_questions": [
+        "What is a call stack? How does it relate to recursion?",
+        "What is a stack frame? What does it contain?",
+        "What error does from from python_source.content._source.content. raise when the recursion depth is exceeded?",
+        "Convert recursive factorial to iterative using a while loop.",
+        "What is the space complexity of a recursive function that makes n calls?"
+      ],
+      "explanation": "The call stack is the memory mechanism that makes recursion work. Each call gets its own frame with local state. Deep recursion fills the stack — from from python_source.content._source.content. limits this to ~1000 frames. Converting recursion to iteration using an explicit stack avoids this limit and reduces space from O(n) to O(1) for tail-recursive functions."
+    },
+    {
+      "topic": "Backtracking",
+      "definition": "Backtracking is a systematic algorithmic technique for solving constraint satisfaction and combinatorial problems. It builds a solution incrementally, one step at a time, and abandons (backtracks) a partial solution as soon as it determines that this path cannot lead to a valid complete solution. It is essentially a depth-first search with pruning.",
+      "key_concepts": [
+        "Build solution incrementally — make a choice at each step",
+        "Check constraint: if current partial solution violates constraints, backtrack",
+        "Backtrack: undo the last choice and try the next option",
+        "Pruning: eliminating invalid paths early avoids unnecessary work",
+        "Uses recursion + a mutable state (or immutable path passed as argument)",
+        "DFS exploration of the solution space tree",
+        "Base case: complete valid solution found — add to results",
+        "Common problems: N-Queens, Sudoku, permutations, combinations, subset sum"
+      ],
+      "code_examples": [
+        {
+          "description": "Backtracking template and permutations",
+          "code": "# ── General Backtracking Template ──────────────────────\n# def backtrack(state, choices):\n#     if is_solution(state):      # base case\n#         record(state)\n#         return\n#     for choice in choices:\n#         if is_valid(state, choice):\n#             make_choice(state, choice)\n#             backtrack(state, updated_choices)\n#             undo_choice(state, choice)  # BACKTRACK\n\n# Generate all permutations of a list\ndef permutations(nums):\n    result = []\n\n    def backtrack(current, remaining):\n        if not remaining:           # base case: no choices left\n            result.append(current[:])\n            return\n        for i in range(len(remaining)):\n            current.append(remaining[i])          # choose\n            backtrack(current, remaining[:i] + remaining[i+1:])  # explore\n            current.pop()                         # unchoose (backtrack)\n\n    backtrack([], nums)\n    return result\n\nprint(permutations([1, 2, 3]))\n# [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]"
+        },
+        {
+          "description": "Subsets, combination sum, and N-Queens",
+          "code": "# All subsets (power set)\ndef subsets(nums):\n    result = []\n    def backtrack(start, current):\n        result.append(current[:])   # every partial solution is valid\n        for i in range(start, len(nums)):\n            current.append(nums[i])          # choose\n            backtrack(i + 1, current)        # explore\n            current.pop()                    # unchoose\n    backtrack(0, [])\n    return result\n\nprint(subsets([1, 2, 3]))\n# [[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]\n\n# N-Queens — place N queens on NxN board, no two attack each other\ndef n_queens(n):\n    solutions = []\n    board = [-1] * n   # board[i] = column of queen in row i\n\n    def is_safe(row, col):\n        for r in range(row):\n            c = board[r]\n            if c == col or abs(c - col) == abs(r - row):\n                return False   # same column or diagonal\n        return True\n\n    def backtrack(row):\n        if row == n:            # all queens placed\n            solutions.append(board[:])\n            return\n        for col in range(n):\n            if is_safe(row, col):\n                board[row] = col         # place queen\n                backtrack(row + 1)       # next row\n                board[row] = -1          # remove queen (backtrack)\n\n    backtrack(0)\n    return len(solutions)\n\nprint(n_queens(4))   # 2\nprint(n_queens(8))   # 92"
+        }
+      ],
+      "diagram": "Backtracking tree for permutations([1,2,3]):\n[]\n├── [1]\n│   ├── [1,2] → [1,2,3] ✓\n│   └── [1,3] → [1,3,2] ✓\n├── [2]\n│   ├── [2,1] → [2,1,3] ✓\n│   └── [2,3] → [2,3,1] ✓\n└── [3]\n    ├── [3,1] → [3,1,2] ✓\n    └── [3,2] → [3,2,1] ✓",
+      "important_points": [
+        "The three steps: choose, explore, unchoose (backtrack)",
+        "Pruning is the key optimisation — skip invalid branches early",
+        "Backtracking explores all possibilities but prunes dead ends",
+        "Time complexity is exponential in the worst case — O(n!) for permutations",
+        "N-Queens for n=8 has 92 solutions — backtracking finds all of them",
+        "Always undo the choice after the recursive call — restores state"
+      ],
+      "exam_questions": [
+        "What is backtracking? How does it differ from brute force?",
+        "Write a backtracking solution to generate all subsets of a set.",
+        "Explain the N-Queens problem and write a backtracking solution for N=4.",
+        "What is pruning in backtracking? Why is it important?",
+        "Trace the backtracking tree for permutations([1,2])."
+      ],
+      "explanation": "Backtracking is a structured exhaustive search that eliminates invalid paths early through pruning. The pattern is always: choose → explore → unchoose. It is the standard approach for constraint satisfaction problems like N-Queens, Sudoku, and combination/permutation generation. While exponential in the worst case, pruning makes it practical."
+    },
+    {
+      "topic": "Backtracking Problems",
+      "definition": "Common backtracking problems include combination sum, word search, Sudoku solver, and rat in a maze. Each follows the same template: build incrementally, check constraints, backtrack on violation. Mastering the template allows solving any backtracking problem by plugging in the specific constraint check.",
+      "key_concepts": [
+        "Combination Sum: find all combinations that sum to target (elements can repeat)",
+        "Word Search: find if a word exists in a grid of characters",
+        "Sudoku Solver: fill 9x9 grid satisfying row/column/box constraints",
+        "Rat in a Maze: find path from top-left to bottom-right in a grid",
+        "Graph Coloring: colour graph nodes with k colours such that no adjacent nodes share colour",
+        "Hamiltonian Path: visit every vertex exactly once",
+        "State representation: path list, grid marking (visited), or position tracking"
+      ],
+      "code_examples": [
+        {
+          "description": "Combination sum and word search in a grid",
+          "code": "# Combination Sum — numbers can be reused\ndef combination_sum(candidates, target):\n    result = []\n    candidates.sort()\n\n    def backtrack(start, current, remaining):\n        if remaining == 0:          # found valid combination\n            result.append(current[:])\n            return\n        for i in range(start, len(candidates)):\n            if candidates[i] > remaining:   # pruning\n                break\n            current.append(candidates[i])\n            backtrack(i, current, remaining - candidates[i])  # i not i+1 (reuse)\n            current.pop()\n\n    backtrack(0, [], target)\n    return result\n\nprint(combination_sum([2, 3, 6, 7], 7))\n# [[2,2,3], [7]]\n\n# Word Search in a 2D grid\ndef word_search(board, word):\n    rows, cols = len(board), len(board[0])\n\n    def backtrack(r, c, idx):\n        if idx == len(word):\n            return True             # all chars matched\n        if not (0 <= r < rows and 0 <= c < cols):\n            return False            # out of bounds\n        if board[r][c] != word[idx]:\n            return False            # char mismatch\n\n        temp = board[r][c]\n        board[r][c] = '#'           # mark visited\n        found = (backtrack(r+1,c,idx+1) or backtrack(r-1,c,idx+1) or\n                 backtrack(r,c+1,idx+1) or backtrack(r,c-1,idx+1))\n        board[r][c] = temp          # restore (backtrack)\n        return found\n\n    for r in range(rows):\n        for c in range(cols):\n            if backtrack(r, c, 0):\n                return True\n    return False\n\nboard = [['A','B','C','E'],['S','F','C','S'],['A','D','E','E']]\nprint(word_search(board, 'ABCCED'))  # True\nprint(word_search(board, 'SEE'))     # True\nprint(word_search(board, 'ABCB'))    # False"
+        },
+        {
+          "description": "Rat in a maze — find path from (0,0) to (n-1,n-1)",
+          "code": "def rat_in_maze(maze):\n    n = len(maze)\n    path = []\n    visited = [[False]*n for _ in range(n)]\n\n    def backtrack(r, c):\n        if r == n-1 and c == n-1:   # reached destination\n            path.append((r, c))\n            return True\n        if not (0<=r<n and 0<=c<n): # out of bounds\n            return False\n        if maze[r][c] == 0:         # wall\n            return False\n        if visited[r][c]:           # already visited\n            return False\n\n        visited[r][c] = True\n        path.append((r, c))\n\n        # Try all 4 directions: down, right, up, left\n        if (backtrack(r+1,c) or backtrack(r,c+1) or\n            backtrack(r-1,c) or backtrack(r,c-1)):\n            return True\n\n        path.pop()                  # backtrack\n        visited[r][c] = False\n        return False\n\n    if backtrack(0, 0):\n        return path\n    return []\n\nmaze = [\n    [1, 0, 0, 0],\n    [1, 1, 0, 1],\n    [0, 1, 0, 0],\n    [1, 1, 1, 1]\n]\nprint(rat_in_maze(maze))\n# [(0,0),(1,0),(1,1),(2,1),(3,1),(3,2),(3,3)]"
+        }
+      ],
+      "important_points": [
+        "Always sort candidates before backtracking to enable early pruning",
+        "Mark visited cells/nodes to avoid revisiting in path problems",
+        "Always unmark/restore state after the recursive call (backtrack)",
+        "Combination sum with reuse: pass i (not i+1) to allow repeated use",
+        "Combination sum without reuse: pass i+1 to move to next element",
+        "Word search marks visited with a sentinel (#) and restores after backtrack"
+      ],
+      "exam_questions": [
+        "Write a backtracking solution for combination sum where elements can repeat.",
+        "Explain word search backtracking — how do you avoid revisiting cells?",
+        "Write a backtracking solution for the rat in a maze problem.",
+        "What is the difference between permutation and combination backtracking?",
+        "How does sorting the input improve backtracking performance?"
+      ],
+      "explanation": "All backtracking problems follow the same template with problem-specific constraint checks and state representations. Combination sum uses sorting + pruning for efficiency. Word search marks visited cells to prevent reuse. Rat in a maze uses a visited matrix and tries all four directions. Mastering the template makes any new problem approachable."
+    }
+  ]
+}

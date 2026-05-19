@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+ai-ml/venv/
+
+# Environment variables
+.env
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Data / DB
+ai-ml/python_source/data/chroma_db/
+
+# OS / misc
+.DS_Store
+Thumbs.db
+

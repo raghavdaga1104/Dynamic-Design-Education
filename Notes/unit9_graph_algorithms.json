@@ -1,0 +1,313 @@
+{
+  "unit_id": "UNIT9_GraphAlgorithms",
+  "unit_title": "Graph Algorithms",
+  "topics": [
+    {
+      "topic": "Graph Representations",
+      "definition": "A graph G = (V, E) is a set of vertices (nodes) V connected by edges E. Graphs model relationships between objects. They can be directed (edges have direction) or undirected, weighted (edges have costs) or unweighted, cyclic or acyclic. The two primary representations are adjacency matrix and adjacency list.",
+      "key_concepts": [
+        "Vertex (Node): fundamental unit of a graph",
+        "Edge: connection between two vertices",
+        "Directed graph (digraph): edges have direction — (u→v) ≠ (v→u)",
+        "Undirected graph: edges are bidirectional — (u,v) = (v,u)",
+        "Weighted graph: each edge has an associated cost or weight",
+        "Degree: number of edges connected to a vertex",
+        "In-degree / Out-degree: for directed graphs — edges coming in / going out",
+        "Path: sequence of vertices connected by edges",
+        "Cycle: path that starts and ends at the same vertex",
+        "Connected graph: there is a path between every pair of vertices",
+        "Adjacency Matrix: 2D array where matrix[u][v] = 1 (or weight) if edge exists",
+        "Adjacency List: dict/list where each vertex maps to its list of neighbours"
+      ],
+      "code_examples": [
+        {
+          "description": "Graph representations — adjacency matrix and adjacency list",
+          "code": "# ── Adjacency List (most common in from from python_source.content._source.content.) ──────────────\nfrom collections import defaultdict\n\n# Undirected unweighted graph\ngraph = defaultdict(list)\nedges = [(0,1),(0,2),(1,3),(2,3),(3,4)]\nfor u, v in edges:\n    graph[u].append(v)\n    graph[v].append(u)   # undirected — add both directions\n\nprint(dict(graph))\n# {0:[1,2], 1:[0,3], 2:[0,3], 3:[1,2,4], 4:[3]}\n\n# Weighted directed graph\nwgraph = defaultdict(list)\nwedges = [(0,1,4),(0,2,1),(1,3,1),(2,1,2),(2,3,5),(3,4,3)]\nfor u, v, w in wedges:\n    wgraph[u].append((v, w))   # (neighbour, weight)\n\n# ── Adjacency Matrix ─────────────────────────────────────\nn = 5   # number of vertices\nmatrix = [[0]*n for _ in range(n)]\nfor u, v in edges:\n    matrix[u][v] = 1\n    matrix[v][u] = 1   # undirected\n\nfor row in matrix:\n    print(row)"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Property",
+          "Adjacency Matrix",
+          "Adjacency List"
+        ],
+        "rows": [
+          [
+            "Space",
+            "O(V²)",
+            "O(V + E)"
+          ],
+          [
+            "Edge lookup",
+            "O(1)",
+            "O(degree)"
+          ],
+          [
+            "All neighbours",
+            "O(V)",
+            "O(degree)"
+          ],
+          [
+            "Add edge",
+            "O(1)",
+            "O(1)"
+          ],
+          [
+            "Best for",
+            "Dense graphs",
+            "Sparse graphs"
+          ],
+          [
+            "Used in",
+            "Floyd-Warshall",
+            "BFS, DFS, Dijkstra"
+          ]
+        ]
+      },
+      "important_points": [
+        "Adjacency list is preferred for sparse graphs (most real-world graphs)",
+        "Adjacency matrix wastes O(V²) space when graph is sparse",
+        "For weighted graphs, store (neighbour, weight) tuples in adjacency list",
+        "defaultdict(list) is the cleanest from from python_source.content._source.content. adjacency list representation",
+        "Dense graph: E ≈ V²; Sparse graph: E ≈ V"
+      ],
+      "exam_questions": [
+        "What is the difference between a directed and undirected graph?",
+        "Compare adjacency matrix and adjacency list — space and time complexity.",
+        "How do you represent a weighted graph in from from python_source.content._source.content. using an adjacency list?",
+        "What is the degree of a vertex? How is it different in directed vs undirected graphs?",
+        "When would you prefer adjacency matrix over adjacency list?"
+      ],
+      "explanation": "Graphs model relationships between entities. The adjacency list is the standard from from python_source.content._source.content. representation — it is memory-efficient for sparse graphs and gives O(degree) neighbour access. The adjacency matrix gives O(1) edge lookup but costs O(V²) space. Most graph algorithms (BFS, DFS, Dijkstra) work best with the adjacency list."
+    },
+    {
+      "topic": "Breadth First Search",
+      "definition": "Breadth First Search (BFS) is a graph traversal algorithm that explores all vertices at the current depth level before moving to the next level. It uses a queue (FIFO) data structure. BFS finds the shortest path (minimum number of edges) between two vertices in an unweighted graph.",
+      "key_concepts": [
+        "Uses a queue (FIFO) — collections.deque for O(1) operations",
+        "Visits vertices level by level — closest vertices first",
+        "Tracks visited set to avoid revisiting vertices",
+        "Finds shortest path in unweighted graphs",
+        "Time complexity: O(V + E) — visits every vertex and edge once",
+        "Space complexity: O(V) — queue and visited set",
+        "BFS tree: edges used by BFS form a tree rooted at the start vertex",
+        "Level of a vertex = shortest distance from source"
+      ],
+      "code_examples": [
+        {
+          "description": "BFS traversal and shortest path in unweighted graph",
+          "code": "from collections import deque\n\n# BFS Traversal\ndef bfs(graph, start):\n    visited = set([start])\n    queue   = deque([start])\n    order   = []\n    while queue:\n        node = queue.popleft()    # FIFO — dequeue from front\n        order.append(node)\n        for neighbour in graph[node]:\n            if neighbour not in visited:\n                visited.add(neighbour)\n                queue.append(neighbour)\n    return order\n\ngraph = {0:[1,2], 1:[0,3,4], 2:[0,4], 3:[1], 4:[1,2]}\nprint(bfs(graph, 0))   # [0, 1, 2, 3, 4]\n\n# BFS Shortest Path — returns distance from source to all vertices\ndef bfs_shortest(graph, start):\n    dist    = {start: 0}\n    queue   = deque([start])\n    while queue:\n        node = queue.popleft()\n        for nb in graph[node]:\n            if nb not in dist:\n                dist[nb] = dist[node] + 1\n                queue.append(nb)\n    return dist\n\nprint(bfs_shortest(graph, 0))  # {0:0, 1:1, 2:1, 3:2, 4:2}\n\n# BFS Path Reconstruction\ndef bfs_path(graph, start, end):\n    parent = {start: None}\n    queue  = deque([start])\n    while queue:\n        node = queue.popleft()\n        if node == end:\n            break\n        for nb in graph[node]:\n            if nb not in parent:\n                parent[nb] = node\n                queue.append(nb)\n    if end not in parent: return []\n    path = []\n    node = end\n    while node is not None:\n        path.append(node)\n        node = parent[node]\n    return path[::-1]\n\nprint(bfs_path(graph, 0, 3))   # [0, 1, 3]"
+        }
+      ],
+      "trace_example": "BFS from 0 on graph {0:[1,2], 1:[3], 2:[3], 3:[]}:\nQueue: [0]       visited: {0}    order: []\nDequeue 0: enqueue 1,2  → Queue:[1,2]  order:[0]\nDequeue 1: enqueue 3    → Queue:[2,3]  order:[0,1]\nDequeue 2: 3 already queued → Queue:[3] order:[0,1,2]\nDequeue 3: no unvisited nb  → Queue:[] order:[0,1,2,3]",
+      "important_points": [
+        "BFS uses a queue (deque) — NOT a stack; using a stack gives DFS",
+        "Mark visited WHEN ENQUEUING not when dequeuing — prevents duplicates in queue",
+        "BFS gives shortest path only in UNWEIGHTED graphs",
+        "For weighted shortest path use Dijkstra's algorithm",
+        "BFS level order traversal is the same algorithm used for binary tree level order"
+      ],
+      "exam_questions": [
+        "Trace BFS on the graph: {0:[1,2], 1:[3,4], 2:[4], 3:[], 4:[]} starting from 0.",
+        "What data structure does BFS use? Why?",
+        "Why does BFS give the shortest path in an unweighted graph?",
+        "Write BFS to find the shortest distance between two nodes.",
+        "What is the time and space complexity of BFS?"
+      ],
+      "explanation": "BFS explores vertices level by level using a queue. It guarantees the shortest path (fewest edges) in unweighted graphs because it visits all distance-1 nodes before distance-2 nodes. Time complexity O(V+E) ensures every vertex and edge is processed once. The visited set prevents infinite loops in cyclic graphs."
+    },
+    {
+      "topic": "Depth First Search",
+      "definition": "Depth First Search (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. It uses a stack (explicitly or via recursion). DFS is used for cycle detection, topological sorting, connected components, and solving maze/path problems.",
+      "key_concepts": [
+        "Uses a stack — either explicit or the call stack (recursion)",
+        "Explores deeply along one path before backtracking",
+        "Tracks visited set to avoid infinite loops",
+        "Time complexity: O(V + E)",
+        "Space complexity: O(V) for visited + O(depth) for stack",
+        "DFS tree: edges used form a tree; back edges indicate cycles",
+        "Three vertex states: white (unvisited), grey (in progress), black (done)",
+        "Applications: cycle detection, topological sort, SCC, maze solving"
+      ],
+      "code_examples": [
+        {
+          "description": "DFS recursive, iterative, and cycle detection",
+          "code": "# DFS Recursive\ndef dfs_recursive(graph, node, visited=None, order=None):\n    if visited is None: visited = set()\n    if order   is None: order   = []\n    visited.add(node)\n    order.append(node)\n    for nb in graph[node]:\n        if nb not in visited:\n            dfs_recursive(graph, nb, visited, order)\n    return order\n\ngraph = {0:[1,2], 1:[0,3,4], 2:[0,4], 3:[1], 4:[1,2]}\nprint(dfs_recursive(graph, 0))  # [0, 1, 3, 4, 2]\n\n# DFS Iterative (explicit stack)\ndef dfs_iterative(graph, start):\n    visited = set()\n    stack   = [start]\n    order   = []\n    while stack:\n        node = stack.pop()        # LIFO — pop from top\n        if node not in visited:\n            visited.add(node)\n            order.append(node)\n            for nb in reversed(graph[node]):\n                if nb not in visited:\n                    stack.append(nb)\n    return order\n\n# Cycle Detection in Directed Graph\ndef has_cycle_directed(graph):\n    WHITE, GREY, BLACK = 0, 1, 2\n    colour = {v: WHITE for v in graph}\n\n    def dfs(v):\n        colour[v] = GREY          # mark as in-progress\n        for nb in graph.get(v, []):\n            if colour[nb] == GREY:  # back edge = cycle!\n                return True\n            if colour[nb] == WHITE and dfs(nb):\n                return True\n        colour[v] = BLACK         # fully processed\n        return False\n\n    return any(dfs(v) for v in graph if colour[v] == WHITE)\n\nprint(has_cycle_directed({0:[1], 1:[2], 2:[0]}))  # True  (cycle)\nprint(has_cycle_directed({0:[1], 1:[2], 2:[3]}))  # False"
+        },
+        {
+          "description": "Topological sort and connected components",
+          "code": "# Topological Sort using DFS (for DAGs)\ndef topological_sort(graph):\n    visited = set()\n    order   = []\n\n    def dfs(v):\n        visited.add(v)\n        for nb in graph.get(v, []):\n            if nb not in visited:\n                dfs(nb)\n        order.append(v)           # add AFTER visiting all descendants\n\n    for v in graph:\n        if v not in visited:\n            dfs(v)\n    return order[::-1]            # reverse for topological order\n\ndag = {0:[1,2], 1:[3], 2:[3], 3:[4], 4:[]}\nprint(topological_sort(dag))   # [0, 2, 1, 3, 4] or similar valid order\n\n# Count Connected Components\ndef count_components(n, edges):\n    graph = defaultdict(list)\n    for u, v in edges:\n        graph[u].append(v)\n        graph[v].append(u)\n\n    visited    = set()\n    components = 0\n\n    def dfs(v):\n        visited.add(v)\n        for nb in graph[v]:\n            if nb not in visited:\n                dfs(nb)\n\n    for v in range(n):\n        if v not in visited:\n            dfs(v)\n            components += 1\n    return components\n\nprint(count_components(5, [(0,1),(1,2),(3,4)]))  # 2"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Property",
+          "BFS",
+          "DFS"
+        ],
+        "rows": [
+          [
+            "Data structure",
+            "Queue (FIFO)",
+            "Stack (LIFO) / Recursion"
+          ],
+          [
+            "Traversal order",
+            "Level by level",
+            "Deep first"
+          ],
+          [
+            "Shortest path",
+            "Yes (unweighted)",
+            "No"
+          ],
+          [
+            "Memory",
+            "O(V) — wide graphs heavy",
+            "O(depth) — deep graphs heavy"
+          ],
+          [
+            "Cycle detection",
+            "Yes",
+            "Yes (back edge)"
+          ],
+          [
+            "Topological sort",
+            "Kahn's algorithm",
+            "DFS post-order"
+          ],
+          [
+            "Applications",
+            "Shortest path, levels",
+            "Topo sort, SCC, cycles"
+          ]
+        ]
+      },
+      "important_points": [
+        "DFS uses a stack (recursive call stack or explicit) — BFS uses a queue",
+        "Back edge in DFS = cycle in directed graph",
+        "Topological sort only works on DAGs (directed acyclic graphs)",
+        "DFS post-order reversed = topological order",
+        "For disconnected graphs, call DFS from every unvisited vertex"
+      ],
+      "exam_questions": [
+        "Trace DFS on graph {0:[1,2],1:[3],2:[3],3:[]} starting from 0.",
+        "What is the difference between BFS and DFS?",
+        "How do you detect a cycle in a directed graph using DFS?",
+        "Explain topological sort with an example.",
+        "What is a back edge? What does it indicate?"
+      ],
+      "explanation": "DFS dives deep before backtracking, using a stack or recursion. It is the foundation for cycle detection (back edges), topological sorting (post-order reversal), and finding strongly connected components. Unlike BFS, DFS does not guarantee shortest paths but is more memory-efficient for deep graphs."
+    },
+    {
+      "topic": "Shortest Paths",
+      "definition": "Shortest path algorithms find the minimum-cost path between vertices in a weighted graph. Dijkstra's algorithm handles non-negative weights in O((V+E) log V). Bellman-Ford handles negative weights in O(VE). Floyd-Warshall finds all-pairs shortest paths in O(V³).",
+      "key_concepts": [
+        "Dijkstra's: greedy + min-heap, non-negative weights only, O((V+E) log V)",
+        "Bellman-Ford: relaxes all edges V-1 times, handles negative weights, O(VE)",
+        "Floyd-Warshall: all-pairs shortest paths, O(V³), uses DP",
+        "Relaxation: update dist[v] if dist[u] + weight(u,v) < dist[v]",
+        "Priority queue (min-heap): heapq module in from from python_source.content._source.content. for Dijkstra",
+        "Negative cycle: Bellman-Ford detects if a V-th relaxation still improves a path",
+        "Single-source: Dijkstra and Bellman-Ford from one source to all vertices",
+        "All-pairs: Floyd-Warshall finds shortest path between every pair"
+      ],
+      "code_examples": [
+        {
+          "description": "Dijkstra's algorithm with min-heap",
+          "code": "import heapq\nfrom collections import defaultdict\n\ndef dijkstra(graph, start):\n    dist = defaultdict(lambda: float('inf'))\n    dist[start] = 0\n    heap = [(0, start)]     # (distance, vertex)\n\n    while heap:\n        d, u = heapq.heappop(heap)\n        if d > dist[u]:\n            continue         # stale entry — skip\n        for v, w in graph[u]:\n            if dist[u] + w < dist[v]:\n                dist[v] = dist[u] + w\n                heapq.heappush(heap, (dist[v], v))\n    return dict(dist)\n\n# Weighted directed graph: (neighbour, weight)\ngraph = {\n    0: [(1,4),(2,1)],\n    1: [(3,1)],\n    2: [(1,2),(3,5)],\n    3: [(4,3)],\n    4: []\n}\nprint(dijkstra(graph, 0))\n# {0:0, 1:3, 2:1, 3:4, 4:7}"
+        },
+        {
+          "description": "Bellman-Ford and Floyd-Warshall",
+          "code": "# Bellman-Ford — handles negative weights\ndef bellman_ford(vertices, edges, start):\n    dist = {v: float('inf') for v in range(vertices)}\n    dist[start] = 0\n    # Relax all edges V-1 times\n    for _ in range(vertices - 1):\n        for u, v, w in edges:\n            if dist[u] + w < dist[v]:\n                dist[v] = dist[u] + w\n    # Check for negative cycle\n    for u, v, w in edges:\n        if dist[u] + w < dist[v]:\n            return None   # negative cycle detected\n    return dist\n\nedges = [(0,1,4),(0,2,5),(1,2,-3),(2,3,2)]\nprint(bellman_ford(4, edges, 0))  # {0:0,1:4,2:1,3:3}\n\n# Floyd-Warshall — all-pairs shortest paths\ndef floyd_warshall(n, edges):\n    INF = float('inf')\n    dp  = [[INF]*n for _ in range(n)]\n    for i in range(n): dp[i][i] = 0\n    for u, v, w in edges: dp[u][v] = w\n\n    for k in range(n):           # intermediate vertex\n        for i in range(n):       # source\n            for j in range(n):   # destination\n                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j])\n    return dp\n\nedges = [(0,1,3),(0,3,7),(1,0,8),(1,2,2),(2,3,1),(3,0,2)]\nresult = floyd_warshall(4, edges)\nfor row in result: print(row)"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Algorithm",
+          "Type",
+          "Time",
+          "Space",
+          "Negative Weights",
+          "Negative Cycles"
+        ],
+        "rows": [
+          [
+            "Dijkstra",
+            "Single-source",
+            "O((V+E)logV)",
+            "O(V)",
+            "No",
+            "No"
+          ],
+          [
+            "Bellman-Ford",
+            "Single-source",
+            "O(VE)",
+            "O(V)",
+            "Yes",
+            "Detects"
+          ],
+          [
+            "Floyd-Warshall",
+            "All-pairs",
+            "O(V³)",
+            "O(V²)",
+            "Yes",
+            "Detects"
+          ]
+        ]
+      },
+      "important_points": [
+        "Dijkstra fails with negative weights — use Bellman-Ford instead",
+        "heapq in from from python_source.content._source.content. is a min-heap — always pops smallest element",
+        "Lazy deletion: skip stale heap entries when d > dist[u]",
+        "Floyd-Warshall: dp[i][j] = min(dp[i][j], dp[i][k]+dp[k][j]) for all k",
+        "Bellman-Ford runs V-1 iterations — a path can have at most V-1 edges"
+      ],
+      "exam_questions": [
+        "Trace Dijkstra's algorithm on a small weighted graph.",
+        "What is the difference between Dijkstra and Bellman-Ford?",
+        "Why does Dijkstra fail with negative edge weights?",
+        "Explain the Floyd-Warshall algorithm. What is its time complexity?",
+        "How does Bellman-Ford detect a negative cycle?"
+      ],
+      "explanation": "Shortest path algorithms choose based on graph properties. Dijkstra is fastest for non-negative weights. Bellman-Ford handles negative weights but is slower. Floyd-Warshall finds all-pairs shortest paths in O(V³) using DP. The relaxation step — updating a distance if a shorter path is found — is common to all three."
+    },
+    {
+      "topic": "Graph Algorithms Applications",
+      "definition": "Graph algorithms solve a wide range of real-world problems. Key applications include Minimum Spanning Tree (connecting all vertices with minimum total edge cost), cycle detection, bipartite checking, and network flow. These algorithms are standard exam and interview topics.",
+      "key_concepts": [
+        "Minimum Spanning Tree (MST): tree connecting all V vertices with minimum total weight",
+        "Kruskal's MST: sort edges by weight, add edge if it does not create a cycle (Union-Find)",
+        "Prim's MST: grow tree greedily from a start vertex using a min-heap",
+        "Union-Find (Disjoint Set Union): efficient data structure for cycle detection in Kruskal's",
+        "Bipartite graph: can be coloured with 2 colours — no odd-length cycles",
+        "Bipartite check: BFS/DFS with 2-colouring",
+        "Strongly Connected Components (SCC): Kosaraju's or Tarjan's algorithm",
+        "A* search: BFS + heuristic for fastest path finding"
+      ],
+      "code_examples": [
+        {
+          "description": "Kruskal's MST with Union-Find and bipartite checking",
+          "code": "# Union-Find for Kruskal's MST\nclass UnionFind:\n    def __init__(self, n):\n        self.parent = list(range(n))\n        self.rank   = [0] * n\n\n    def find(self, x):\n        if self.parent[x] != x:\n            self.parent[x] = self.find(self.parent[x])  # path compression\n        return self.parent[x]\n\n    def union(self, x, y):\n        px, py = self.find(x), self.find(y)\n        if px == py: return False    # already connected — would form cycle\n        if self.rank[px] < self.rank[py]: px, py = py, px\n        self.parent[py] = px\n        if self.rank[px] == self.rank[py]: self.rank[px] += 1\n        return True\n\ndef kruskal(n, edges):\n    edges.sort(key=lambda e: e[2])   # sort by weight\n    uf  = UnionFind(n)\n    mst = []\n    for u, v, w in edges:\n        if uf.union(u, v):           # add if no cycle\n            mst.append((u, v, w))\n            if len(mst) == n - 1:\n                break\n    return mst\n\nedges = [(0,1,4),(0,2,3),(1,2,1),(1,3,2),(2,3,4)]\nprint(kruskal(4, edges))  # [(1,2,1),(1,3,2),(0,2,3)]\n\n# Bipartite Check using BFS 2-colouring\ndef is_bipartite(graph, n):\n    colour = [-1] * n\n    for start in range(n):\n        if colour[start] != -1: continue\n        queue = deque([start])\n        colour[start] = 0\n        while queue:\n            u = queue.popleft()\n            for v in graph[u]:\n                if colour[v] == -1:\n                    colour[v] = 1 - colour[u]  # alternate colour\n                    queue.append(v)\n                elif colour[v] == colour[u]:   # same colour = not bipartite\n                    return False\n    return True"
+        }
+      ],
+      "important_points": [
+        "MST has exactly V-1 edges for a graph with V vertices",
+        "Kruskal's is better for sparse graphs; Prim's for dense graphs",
+        "Union-Find with path compression + rank is nearly O(1) per operation",
+        "A graph is bipartite if and only if it contains no odd-length cycle",
+        "Topological sort only exists for DAGs — cyclic graphs cannot be topologically sorted"
+      ],
+      "exam_questions": [
+        "What is a Minimum Spanning Tree? How does Kruskal's algorithm work?",
+        "Explain Union-Find with path compression.",
+        "What is a bipartite graph? How do you check if a graph is bipartite?",
+        "What is the difference between Kruskal's and Prim's MST algorithms?",
+        "What is topological sorting? Write the algorithm."
+      ],
+      "explanation": "Graph algorithm applications solve fundamental network problems. MST algorithms (Kruskal's, Prim's) minimise connection costs. Union-Find efficiently detects cycles. Bipartite checking uses 2-colouring with BFS. Topological sort orders tasks respecting dependencies. These are essential algorithms for both exams and real-world system design."
+    }
+  ]
+}

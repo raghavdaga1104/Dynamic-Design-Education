@@ -1,0 +1,276 @@
+{
+  "unit_id": "UNIT8_DynamicProgramming",
+  "unit_title": "Dynamic Programming",
+  "topics": [
+    {
+      "topic": "Introduction to Dynamic Programming",
+      "definition": "Dynamic Programming (DP) is an algorithmic technique for solving optimization and counting problems by breaking them into overlapping subproblems and storing their results to avoid redundant computation. A problem is suitable for DP if it has two properties: Optimal Substructure (optimal solution built from optimal solutions of subproblems) and Overlapping Subproblems (same subproblems are solved multiple times).",
+      "key_concepts": [
+        "Optimal Substructure: optimal solution to the problem contains optimal solutions to subproblems",
+        "Overlapping Subproblems: same subproblems are recomputed multiple times in naive recursion",
+        "Memoisation (Top-Down): cache results of recursive calls in a dict or array",
+        "Tabulation (Bottom-Up): fill a table iteratively starting from the smallest subproblem",
+        "State: a minimal set of variables that uniquely describes a subproblem",
+        "Transition: the recurrence relation that defines how to compute dp[i] from smaller states",
+        "Base case: the smallest subproblem(s) with known answers",
+        "DP converts exponential time to polynomial time by eliminating redundant computation"
+      ],
+      "code_examples": [
+        {
+          "description": "Naive vs memoised Fibonacci — demonstrating overlapping subproblems",
+          "code": "import time\n\n# Naive recursion — O(2^n) — recomputes same values repeatedly\ndef fib_naive(n):\n    if n <= 1: return n\n    return fib_naive(n-1) + fib_naive(n-2)\n\n# Memoised — O(n) — each subproblem solved once\ndef fib_memo(n, memo={}):\n    if n <= 1: return n\n    if n in memo: return memo[n]    # return cached result\n    memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)\n    return memo[n]\n\n# Tabulation — O(n) — bottom-up, no recursion\ndef fib_tab(n):\n    if n <= 1: return n\n    dp = [0] * (n + 1)\n    dp[1] = 1\n    for i in range(2, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]\n    return dp[n]\n\n# Space-optimised tabulation — O(1) space\ndef fib_opt(n):\n    if n <= 1: return n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n\nprint(fib_memo(50))   # 12586269025  — instant\nprint(fib_tab(50))    # 12586269025  — instant\nprint(fib_opt(50))    # 12586269025  — instant"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Approach",
+          "Method",
+          "Space",
+          "Time",
+          "Ease"
+        ],
+        "rows": [
+          [
+            "Naive Recursion",
+            "Recursive, no cache",
+            "O(n) stack",
+            "O(2^n)",
+            "Easy to write"
+          ],
+          [
+            "Memoisation",
+            "Recursive + cache dict",
+            "O(n)",
+            "O(n)",
+            "Easy — add cache to recursion"
+          ],
+          [
+            "Tabulation",
+            "Iterative DP table",
+            "O(n)",
+            "O(n)",
+            "Requires knowing order"
+          ],
+          [
+            "Space-optimised",
+            "Rolling variables",
+            "O(1)",
+            "O(n)",
+            "Problem-specific"
+          ]
+        ]
+      },
+      "important_points": [
+        "DP = recursion + memoisation OR iteration + tabulation",
+        "Identify state first: what variables uniquely define a subproblem?",
+        "Write the recurrence relation before coding",
+        "Tabulation avoids recursion overhead and stack overflow",
+        "Memoisation is easier to derive — start with recursion, add cache",
+        "functools.lru_cache is from from python_source.content._source.content.'s built-in memoisation decorator"
+      ],
+      "exam_questions": [
+        "What are the two properties a problem must have for DP to apply?",
+        "What is the difference between memoisation and tabulation?",
+        "Why is naive recursive Fibonacci O(2^n)? Draw the recursion tree.",
+        "Write the DP solution for Fibonacci using both top-down and bottom-up.",
+        "What is the state in a DP problem? Give an example."
+      ],
+      "explanation": "Dynamic Programming transforms exponential-time recursive solutions into polynomial-time solutions by caching subproblem results. The two approaches are memoisation (top-down: add a cache to recursion) and tabulation (bottom-up: fill a table iteratively). The key steps are: identify overlapping subproblems, define the state, write the recurrence, handle base cases."
+    },
+    {
+      "topic": "Memoisation",
+      "definition": "Memoisation is the top-down DP technique where a recursive function stores its results in a cache (dictionary or array) so that if the same subproblem is encountered again, the cached result is returned immediately without recomputation. It is the simplest way to optimise a recursive solution.",
+      "key_concepts": [
+        "Top-down approach: start from the original problem, recurse down to base cases",
+        "Cache: store results in a dict (for arbitrary keys) or array (for integer indices)",
+        "On each call: check cache first; if hit, return cached value; otherwise compute and store",
+        "functools.lru_cache: from from python_source.content._source.content.'s built-in decorator for automatic memoisation",
+        "functools.cache: simpler unlimited-size cache (from from python_source.content._source.content. 3.9+)",
+        "Time complexity: O(number of unique subproblems × work per subproblem)",
+        "Space complexity: O(number of unique subproblems) for cache + O(depth) for call stack",
+        "Memoisation is lazy: only computes subproblems actually needed"
+      ],
+      "code_examples": [
+        {
+          "description": "Memoisation with dict, lru_cache, and coin change",
+          "code": "from functools import lru_cache\n\n# Manual memoisation with dict\ndef fib(n, memo=None):\n    if memo is None: memo = {}\n    if n <= 1: return n\n    if n in memo: return memo[n]\n    memo[n] = fib(n-1, memo) + fib(n-2, memo)\n    return memo[n]\n\n# Using @lru_cache decorator — automatic memoisation\n@lru_cache(maxsize=None)\ndef fib_cached(n):\n    if n <= 1: return n\n    return fib_cached(n-1) + fib_cached(n-2)\n\nprint(fib_cached(100))  # 354224848179261915075\n\n# Coin Change — minimum coins to make amount\n# State: min_coins(amount)\n# Recurrence: min_coins(a) = 1 + min(min_coins(a - c) for c in coins if c <= a)\n@lru_cache(maxsize=None)\ndef min_coins(amount, coins):\n    if amount == 0: return 0          # base case\n    if amount < 0:  return float('inf')\n    return 1 + min(min_coins(amount - c, coins)\n                   for c in coins if c <= amount)\n\ncoins = (1, 5, 10, 25)\nprint(min_coins(41, coins))   # 4  (25+10+5+1)\nprint(min_coins(11, coins))   # 2  (10+1)"
+        },
+        {
+          "description": "Grid path memoisation and longest common subsequence",
+          "code": "from functools import lru_cache\n\n# Unique paths in m×n grid (only right or down moves)\n@lru_cache(maxsize=None)\ndef unique_paths(m, n):\n    if m == 1 or n == 1: return 1   # base: only one path along edge\n    return unique_paths(m-1, n) + unique_paths(m, n-1)\n\nprint(unique_paths(3, 7))   # 28\nprint(unique_paths(3, 3))   # 6\n\n# Longest Common Subsequence (LCS)\n@lru_cache(maxsize=None)\ndef lcs(s1, s2, i=0, j=0):\n    if i == len(s1) or j == len(s2):   # base case\n        return 0\n    if s1[i] == s2[j]:                  # chars match\n        return 1 + lcs(s1, s2, i+1, j+1)\n    return max(lcs(s1, s2, i+1, j),    # skip s1[i]\n               lcs(s1, s2, i, j+1))    # skip s2[j]\n\nprint(lcs('ABCBDAB', 'BDCAB'))  # 4 (BCAB or BDAB)"
+        }
+      ],
+      "important_points": [
+        "@lru_cache(maxsize=None) is the cleanest way to memoise in from from python_source.content._source.content.",
+        "Clear cache with function.cache_clear() when needed",
+        "Use tuple for hashable arguments — lists cannot be dict keys",
+        "Memoisation only helps when subproblems truly overlap",
+        "lru_cache does not work with mutable arguments (lists, dicts)",
+        "Manual memo={} as default arg is an antipattern — use None and initialise inside"
+      ],
+      "exam_questions": [
+        "What is memoisation? How does it differ from plain recursion?",
+        "How does @lru_cache work in from from python_source.content._source.content.? Write an example.",
+        "Write a memoised solution for the coin change problem.",
+        "What is the time complexity of memoised Fibonacci?",
+        "Why must arguments to @lru_cache be hashable?"
+      ],
+      "explanation": "Memoisation adds a cache to an existing recursive solution with minimal code change. from from python_source.content._source.content.'s @lru_cache decorator makes this trivial. The time complexity drops from exponential to O(unique subproblems). The trade-off is O(n) space for the cache. Memoisation is the easiest DP approach — start with recursion, add cache, done."
+    },
+    {
+      "topic": "Tabulation",
+      "definition": "Tabulation is the bottom-up DP technique where a table (array or 2D matrix) is filled iteratively starting from the smallest subproblems (base cases) up to the original problem. It avoids recursion entirely, eliminating call stack overhead and the risk of RecursionError.",
+      "key_concepts": [
+        "Bottom-up: solve smallest subproblems first, build up to the answer",
+        "Fill a DP table (1D array or 2D matrix) in a specific order",
+        "Each cell dp[i] stores the answer to subproblem i",
+        "The order of filling must ensure all dependencies are computed before they are needed",
+        "No recursion — no call stack overhead, no RecursionError risk",
+        "Often more space-efficient — can use rolling array to reduce to O(1) space",
+        "Typically faster than memoisation in practice — no function call overhead",
+        "2D DP: dp[i][j] when state depends on two variables (string problems, grid problems)"
+      ],
+      "code_examples": [
+        {
+          "description": "Tabulation for Fibonacci, climbing stairs, and coin change",
+          "code": "# Fibonacci — tabulation\ndef fib_tab(n):\n    if n <= 1: return n\n    dp = [0] * (n + 1)\n    dp[1] = 1\n    for i in range(2, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]\n    return dp[n]\n\nprint(fib_tab(10))   # 55\n\n# Climbing Stairs — n steps, take 1 or 2 at a time\n# dp[i] = number of ways to reach step i\ndef climb_stairs(n):\n    if n <= 2: return n\n    dp = [0] * (n + 1)\n    dp[1] = 1\n    dp[2] = 2\n    for i in range(3, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]  # same as Fibonacci!\n    return dp[n]\n\nprint(climb_stairs(5))   # 8\nprint(climb_stairs(10))  # 89\n\n# Coin Change — minimum coins (tabulation)\ndef coin_change(coins, amount):\n    dp = [float('inf')] * (amount + 1)\n    dp[0] = 0             # base case: 0 coins needed for amount 0\n    for a in range(1, amount + 1):\n        for c in coins:\n            if c <= a:\n                dp[a] = min(dp[a], 1 + dp[a - c])\n    return dp[amount] if dp[amount] != float('inf') else -1\n\nprint(coin_change([1,5,10,25], 41))  # 4\nprint(coin_change([2], 3))           # -1  (impossible)"
+        },
+        {
+          "description": "2D tabulation — LCS and 0/1 Knapsack",
+          "code": "# Longest Common Subsequence — 2D DP\ndef lcs_tab(s1, s2):\n    m, n = len(s1), len(s2)\n    dp = [[0]*(n+1) for _ in range(m+1)]\n    for i in range(1, m+1):\n        for j in range(1, n+1):\n            if s1[i-1] == s2[j-1]:          # chars match\n                dp[i][j] = 1 + dp[i-1][j-1]\n            else:                            # take best of skipping either\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n    return dp[m][n]\n\nprint(lcs_tab('ABCBDAB', 'BDCAB'))  # 4\n\n# 0/1 Knapsack\n# weights[i], values[i] = weight and value of item i\n# capacity = max weight the knapsack can hold\ndef knapsack(weights, values, capacity):\n    n  = len(weights)\n    dp = [[0]*(capacity+1) for _ in range(n+1)]\n    for i in range(1, n+1):\n        for w in range(capacity+1):\n            # Don't take item i\n            dp[i][w] = dp[i-1][w]\n            # Take item i (if it fits)\n            if weights[i-1] <= w:\n                dp[i][w] = max(dp[i][w],\n                               values[i-1] + dp[i-1][w - weights[i-1]])\n    return dp[n][capacity]\n\nprint(knapsack([1,3,4,5], [1,4,5,7], 7))  # 9"
+        }
+      ],
+      "important_points": [
+        "Fill order matters — dp[i] must be computed after all its dependencies",
+        "Initialise dp array with base cases before the loop",
+        "float('inf') is commonly used for minimisation problems (coin change)",
+        "0 is used for maximisation problems (LCS, knapsack) base cases",
+        "2D DP: always use (m+1) x (n+1) to handle empty string/zero capacity base cases",
+        "Space optimisation: if dp[i] only depends on dp[i-1], use two variables or rolling array"
+      ],
+      "exam_questions": [
+        "What is tabulation? How does it differ from memoisation?",
+        "Write the tabulation solution for the coin change problem.",
+        "Solve the 0/1 knapsack problem using tabulation. Trace for small input.",
+        "Write the tabulation solution for LCS of two strings.",
+        "How can you reduce the space complexity of the knapsack DP from O(n*W) to O(W)?"
+      ],
+      "explanation": "Tabulation fills a DP table from the bottom up, avoiding recursion entirely. It is generally faster and more space-efficient than memoisation. The key steps are: define the state, initialise the table with base cases, fill in order of increasing subproblem size using the recurrence. 2D DP handles problems with two varying parameters like LCS and knapsack."
+    },
+    {
+      "topic": "Overlapping Subproblems and Optimal Substructure",
+      "definition": "Overlapping Subproblems means the same subproblems appear multiple times during recursive computation. Optimal Substructure means the optimal solution to the problem can be constructed from optimal solutions to its subproblems. Both properties must hold for DP to be applicable. These two properties distinguish DP from divide-and-conquer.",
+      "key_concepts": [
+        "Overlapping Subproblems: subproblems recur — the same computation is needed multiple times",
+        "Optimal Substructure: the problem's optimal solution is built from its subproblems' optimal solutions",
+        "Divide and Conquer (Merge Sort): subproblems do NOT overlap — each is unique",
+        "DP vs Greedy: DP considers all options; greedy makes the locally optimal choice at each step",
+        "Problems WITHOUT optimal substructure: longest path in a graph (cycle detection needed)",
+        "Proving optimal substructure: cut-and-paste argument — if solution is optimal, each part must be optimal",
+        "State space: total number of unique subproblems",
+        "DP is essentially a DAG traversal over the subproblem dependency graph"
+      ],
+      "code_examples": [
+        {
+          "description": "Demonstrating overlapping subproblems and optimal substructure",
+          "code": "# Overlapping subproblems — count how many times fib(3) is computed\ncall_count = {}\n\ndef fib_count(n):\n    call_count[n] = call_count.get(n, 0) + 1\n    if n <= 1: return n\n    return fib_count(n-1) + fib_count(n-2)\n\nfib_count(6)\nprint(call_count)\n# {0:5, 1:8, 2:5, 3:3, 4:2, 5:1, 6:1}\n# fib(3) called 3 times! Overlapping subproblems confirmed.\n\n# Optimal substructure — shortest path\n# If shortest path A→C goes through B, then:\n#   path A→B must be the shortest A→B path\n#   path B→C must be the shortest B→C path\nimport heapq\n\ndef dijkstra(graph, start):\n    dist = {node: float('inf') for node in graph}\n    dist[start] = 0\n    heap = [(0, start)]\n    while heap:\n        d, u = heapq.heappop(heap)\n        if d > dist[u]: continue\n        for v, w in graph[u]:\n            if dist[u] + w < dist[v]:\n                dist[v] = dist[u] + w\n                heapq.heappush(heap, (dist[v], v))\n    return dist\n\ngraph = {\n    'A': [('B',1),('C',4)],\n    'B': [('C',2),('D',5)],\n    'C': [('D',1)],\n    'D': []\n}\nprint(dijkstra(graph, 'A'))  # {'A':0,'B':1,'C':3,'D':4}"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Property",
+          "Dynamic Programming",
+          "Divide & Conquer",
+          "Greedy"
+        ],
+        "rows": [
+          [
+            "Overlapping subproblems",
+            "Yes — cache results",
+            "No — unique subproblems",
+            "N/A"
+          ],
+          [
+            "Optimal substructure",
+            "Required",
+            "Required",
+            "Required"
+          ],
+          [
+            "Approach",
+            "All options considered",
+            "Split and combine",
+            "Locally optimal choice"
+          ],
+          [
+            "Examples",
+            "Knapsack, LCS, DP",
+            "Merge sort, FFT",
+            "Dijkstra, Huffman"
+          ],
+          [
+            "Time complexity",
+            "Polynomial (typical)",
+            "O(n log n) typical",
+            "Often O(n log n)"
+          ]
+        ]
+      },
+      "important_points": [
+        "Both properties must hold for DP — one alone is not enough",
+        "Merge sort has optimal substructure but no overlapping subproblems → D&C not DP",
+        "DP over greedy: greedy can fail when local optimum ≠ global optimum",
+        "The number of unique states determines DP time complexity",
+        "Cut-and-paste proof: if a subpart of an optimal solution is suboptimal, replace it"
+      ],
+      "exam_questions": [
+        "What are overlapping subproblems? Give an example.",
+        "What is optimal substructure? Give an example.",
+        "What is the difference between DP and divide-and-conquer?",
+        "Why does Fibonacci have overlapping subproblems? Show with a recursion tree.",
+        "Does the longest path problem have optimal substructure? Why or why not?"
+      ],
+      "explanation": "Overlapping subproblems and optimal substructure are the two pillars of DP. Overlapping subproblems justify caching — without them, memoisation adds space overhead with no benefit. Optimal substructure justifies building the solution from subproblem solutions. Together they enable polynomial-time solutions to problems that would otherwise require exponential brute force."
+    },
+    {
+      "topic": "Classic DP Problems",
+      "definition": "Classic DP problems form the foundation of dynamic programming study. Each has a well-known recurrence relation and state definition. Mastering these problems builds the pattern recognition needed to solve new DP problems in exams and interviews.",
+      "key_concepts": [
+        "Fibonacci: dp[i] = dp[i-1] + dp[i-2]",
+        "Climbing Stairs: same as Fibonacci — dp[i] = dp[i-1] + dp[i-2]",
+        "Coin Change (min coins): dp[a] = 1 + min(dp[a-c] for c in coins)",
+        "Coin Change (ways): dp[a] += dp[a-c] for each coin c",
+        "0/1 Knapsack: dp[i][w] = max(dp[i-1][w], val[i] + dp[i-1][w-wt[i]])",
+        "LCS: dp[i][j] = 1+dp[i-1][j-1] if match, else max(dp[i-1][j], dp[i][j-1])",
+        "Longest Increasing Subsequence (LIS): dp[i] = 1 + max(dp[j] for j<i if arr[j]<arr[i])",
+        "Matrix Chain Multiplication, Edit Distance, Rod Cutting"
+      ],
+      "code_examples": [
+        {
+          "description": "Longest Increasing Subsequence and Edit Distance",
+          "code": "# Longest Increasing Subsequence — O(n²)\ndef lis(arr):\n    n  = len(arr)\n    dp = [1] * n   # every element is LIS of length 1\n    for i in range(1, n):\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + 1)\n    return max(dp)\n\nprint(lis([10, 9, 2, 5, 3, 7, 101, 18]))  # 4  (2,3,7,18 or 2,5,7,18)\nprint(lis([0, 1, 0, 3, 2, 3]))             # 4  (0,1,2,3)\n\n# Edit Distance (Levenshtein) — min operations to convert s1 to s2\n# Operations: insert, delete, replace\ndef edit_distance(s1, s2):\n    m, n = len(s1), len(s2)\n    dp = [[0]*(n+1) for _ in range(m+1)]\n    # Base cases: convert to/from empty string\n    for i in range(m+1): dp[i][0] = i  # delete all chars\n    for j in range(n+1): dp[0][j] = j  # insert all chars\n    for i in range(1, m+1):\n        for j in range(1, n+1):\n            if s1[i-1] == s2[j-1]:           # chars match\n                dp[i][j] = dp[i-1][j-1]\n            else:                             # min of 3 operations\n                dp[i][j] = 1 + min(\n                    dp[i-1][j],    # delete from s1\n                    dp[i][j-1],    # insert into s1\n                    dp[i-1][j-1]   # replace\n                )\n    return dp[m][n]\n\nprint(edit_distance('horse', 'ros'))    # 3\nprint(edit_distance('intention','execution'))  # 5"
+        },
+        {
+          "description": "Maximum subarray (Kadane's), Rod cutting, and House Robber",
+          "code": "# Maximum Subarray Sum — Kadane's Algorithm O(n)\ndef max_subarray(nums):\n    max_sum = curr_sum = nums[0]\n    for num in nums[1:]:\n        curr_sum = max(num, curr_sum + num)  # extend or restart\n        max_sum  = max(max_sum, curr_sum)\n    return max_sum\n\nprint(max_subarray([-2,1,-3,4,-1,2,1,-5,4]))  # 6  ([4,-1,2,1])\n\n# House Robber — cannot rob adjacent houses\n# dp[i] = max money from first i houses\ndef rob(nums):\n    if not nums: return 0\n    if len(nums) == 1: return nums[0]\n    dp = [0] * len(nums)\n    dp[0] = nums[0]\n    dp[1] = max(nums[0], nums[1])\n    for i in range(2, len(nums)):\n        dp[i] = max(dp[i-1],          # skip house i\n                    nums[i] + dp[i-2]) # rob house i\n    return dp[-1]\n\nprint(rob([1,2,3,1]))    # 4  (rob 1 and 3)\nprint(rob([2,7,9,3,1]))  # 12 (rob 2,9,1)\n\n# Rod Cutting — max revenue cutting rod of length n\ndef rod_cut(prices, n):\n    dp = [0] * (n + 1)\n    for length in range(1, n + 1):\n        for cut in range(1, length + 1):\n            dp[length] = max(dp[length], prices[cut-1] + dp[length-cut])\n    return dp[n]\n\nprices = [1, 5, 8, 9, 10, 17, 17, 20]  # price[i] = revenue for length i+1\nprint(rod_cut(prices, 8))   # 22"
+        }
+      ],
+      "important_points": [
+        "Climbing stairs and Fibonacci have identical recurrences — same DP solution",
+        "Kadane's algorithm is a DP in O(n) with O(1) space — a classic greedy-DP hybrid",
+        "Edit distance dp[i][j] depends on dp[i-1][j-1], dp[i-1][j], dp[i][j-1]",
+        "0/1 Knapsack: each item used at most once; Unbounded Knapsack: items can repeat",
+        "LIS O(n log n) solution exists using patience sorting + binary search",
+        "House Robber dp[i] = max(dp[i-1], nums[i]+dp[i-2])"
+      ],
+      "exam_questions": [
+        "Write the DP solution for the 0/1 knapsack problem with a trace.",
+        "What is Kadane's algorithm? Write it and explain why it works.",
+        "Write the DP solution for edit distance. What are the three operations?",
+        "Solve the House Robber problem using DP. Trace for [2,7,9,3,1].",
+        "What is the recurrence for LIS? What is its time complexity?"
+      ],
+      "explanation": "Classic DP problems share common patterns: 1D DP (Fibonacci, climbing stairs, house robber), 2D DP (LCS, knapsack, edit distance), and interval DP (rod cutting). Learning to identify the state, write the recurrence, and handle base cases for these problems gives the toolkit to solve novel DP problems in exams."
+    }
+  ]
+}

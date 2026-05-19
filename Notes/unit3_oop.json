@@ -1,0 +1,300 @@
+{
+  "unit_id": "UNIT3_OOP",
+  "unit_title": "OOP Concepts",
+  "topics": [
+    {
+      "topic": "Classes and Objects",
+      "definition": "A class is a blueprint or template that defines the attributes (data) and methods (behaviour) of a category of objects. An object is a specific instance of a class created using the class constructor. Classes enable bundling of data and functions together into a single logical unit.",
+      "key_concepts": [
+        "class keyword defines a class",
+        "__init__() is the constructor — called automatically when an object is created",
+        "self refers to the current instance of the class",
+        "Instance attributes: unique to each object, defined inside __init__",
+        "Class attributes: shared across all instances, defined directly in the class body",
+        "Instance methods: functions defined inside a class that operate on self",
+        "Object creation (instantiation): obj = ClassName(args)",
+        "__str__() defines the string representation returned by print() and str()",
+        "__repr__() defines the developer-facing representation"
+      ],
+      "code_examples": [
+        {
+          "description": "Defining a class, creating objects, instance vs class attributes",
+          "code": "class Student:\n    # Class attribute — shared by all instances\n    institution = \"MIT\"\n\n    def __init__(self, name, age, gpa):\n        # Instance attributes — unique to each object\n        self.name = name\n        self.age  = age\n        self.gpa  = gpa\n\n    def introduce(self):\n        return f\"I am {self.name}, age {self.age}, GPA {self.gpa}\"\n\n    def __str__(self):\n        return f\"Student({self.name}, {self.gpa})\"\n\n    def __repr__(self):\n        return f\"Student(name={self.name!r}, age={self.age}, gpa={self.gpa})\"\n\n# Instantiation\ns1 = Student(\"Alice\", 21, 8.9)\ns2 = Student(\"Bob\",   22, 7.5)\n\nprint(s1.introduce())       # I am Alice, age 21, GPA 8.9\nprint(s2.name)              # Bob\nprint(Student.institution)  # MIT  (class attribute)\nprint(s1.institution)       # MIT  (accessible via instance too)\nprint(s1)                   # Student(Alice, 8.9)  via __str__"
+        },
+        {
+          "description": "Class methods, static methods, and deleting attributes",
+          "code": "class Circle:\n    pi = 3.14159          # class attribute\n\n    def __init__(self, radius):\n        self.radius = radius\n\n    def area(self):                        # instance method\n        return Circle.pi * self.radius ** 2\n\n    @classmethod\n    def from_diameter(cls, diameter):      # class method\n        return cls(diameter / 2)\n\n    @staticmethod\n    def is_valid_radius(r):               # static method\n        return r > 0\n\nc1 = Circle(5)\nprint(c1.area())                   # 78.53975\n\nc2 = Circle.from_diameter(10)\nprint(c2.radius)                   # 5.0\n\nprint(Circle.is_valid_radius(3))   # True\nprint(Circle.is_valid_radius(-1))  # False"
+        }
+      ],
+      "important_points": [
+        "self must be the first parameter of every instance method",
+        "__init__ is not the constructor — __new__ is; __init__ is the initialiser",
+        "Class attributes are shared — modifying via instance creates a new instance attribute",
+        "@classmethod receives cls (the class itself) as first argument",
+        "@staticmethod receives no implicit first argument — behaves like a plain function",
+        "del obj.attr deletes an instance attribute",
+        "isinstance(obj, Class) checks if obj is an instance of Class"
+      ],
+      "exam_questions": [
+        "What is the difference between a class and an object?",
+        "What is the purpose of __init__() and self?",
+        "What is the difference between a class attribute and an instance attribute?",
+        "What is the difference between @classmethod and @staticmethod?",
+        "Write a class BankAccount with deposit() and withdraw() methods."
+      ],
+      "explanation": "A class is the blueprint; an object is the instance built from that blueprint. __init__ initialises instance attributes when an object is created. self refers to the specific object being operated on. Class attributes are shared; instance attributes are unique to each object."
+    },
+    {
+      "topic": "Inheritance",
+      "definition": "Inheritance is an OOP mechanism where a child (derived) class acquires the attributes and methods of a parent (base) class. It promotes code reuse and establishes an IS-A relationship. from from python_source.content._source.content. supports single, multiple, multilevel, and hierarchical inheritance.",
+      "key_concepts": [
+        "Syntax: class Child(Parent):",
+        "Child class inherits all public and protected attributes/methods of the parent",
+        "super() calls the parent class's method from the child class",
+        "Method overriding: child redefines a method inherited from the parent",
+        "isinstance(obj, Parent) returns True for child instances",
+        "issubclass(Child, Parent) checks class hierarchy",
+        "MRO (Method Resolution Order): order from from python_source.content._source.content. searches for methods in multiple inheritance",
+        "C3 linearisation algorithm determines MRO — accessible via ClassName.__mro__",
+        "Types: Single, Multiple, Multilevel, Hierarchical, Hybrid"
+      ],
+      "types_of_inheritance": [
+        "Single Inheritance: one child inherits from one parent — class B(A)",
+        "Multiple Inheritance: one child inherits from multiple parents — class C(A, B)",
+        "Multilevel Inheritance: chain of inheritance — class C(B) where class B(A)",
+        "Hierarchical Inheritance: multiple children inherit from one parent",
+        "Hybrid Inheritance: combination of two or more types"
+      ],
+      "code_examples": [
+        {
+          "description": "Single inheritance, super(), and method overriding",
+          "code": "class Animal:\n    def __init__(self, name, sound):\n        self.name  = name\n        self.sound = sound\n\n    def speak(self):\n        return f\"{self.name} says {self.sound}\"\n\n    def __str__(self):\n        return f\"Animal({self.name})\"\n\nclass Dog(Animal):              # Dog IS-A Animal\n    def __init__(self, name):\n        super().__init__(name, \"Woof\")   # call parent __init__\n        self.tricks = []\n\n    def learn_trick(self, trick):\n        self.tricks.append(trick)\n\n    def speak(self):            # METHOD OVERRIDING\n        return f\"{self.name} barks: Woof! Woof!\"\n\nclass Cat(Animal):\n    def __init__(self, name):\n        super().__init__(name, \"Meow\")\n\nd = Dog(\"Rex\")\nd.learn_trick(\"sit\")\nprint(d.speak())               # Rex barks: Woof! Woof!\nprint(d.tricks)                # ['sit']\nprint(isinstance(d, Animal))  # True\nprint(isinstance(d, Dog))     # True"
+        },
+        {
+          "description": "Multiple inheritance and MRO",
+          "code": "class A:\n    def hello(self):\n        return \"Hello from A\"\n\nclass B(A):\n    def hello(self):\n        return \"Hello from B\"\n\nclass C(A):\n    def hello(self):\n        return \"Hello from C\"\n\nclass D(B, C):                # Multiple inheritance\n    pass\n\nd = D()\nprint(d.hello())              # Hello from B  (MRO: D→B→C→A)\nprint(D.__mro__)              # (<class 'D'>,<class 'B'>,<class 'C'>,<class 'A'>,...)\nprint(issubclass(D, A))      # True"
+        }
+      ],
+      "method_resolution_order": "MRO for class D(B, C) where B(A) and C(A):\nD → B → C → A → object\nfrom from python_source.content._source.content. uses C3 linearisation to determine this order.\nAlways check ClassName.__mro__ or ClassName.mro() to verify.",
+      "important_points": [
+        "super() without arguments works in from from python_source.content._source.content. 3 — no need to pass class and self",
+        "Method overriding replaces the parent's method in the child class",
+        "Use super().method() to call the parent's original method from a child",
+        "MRO determines which method is called in multiple inheritance",
+        "All from from python_source.content._source.content. classes implicitly inherit from object",
+        "issubclass(Child, Parent) checks class relationship without creating an object"
+      ],
+      "exam_questions": [
+        "What is inheritance? What are its types?",
+        "What is method overriding? How is it different from method overloading?",
+        "Explain super() with an example.",
+        "What is MRO? How does from from python_source.content._source.content. resolve method calls in multiple inheritance?",
+        "Write a class hierarchy: Shape → Rectangle → Square with area() methods."
+      ],
+      "explanation": "Inheritance lets child classes reuse and extend parent class functionality. super() provides clean access to the parent class. Method overriding lets the child customize inherited behaviour. MRO (C3 linearisation) determines which method gets called in complex inheritance hierarchies."
+    },
+    {
+      "topic": "Encapsulation",
+      "definition": "Encapsulation is the OOP principle of bundling data (attributes) and the methods that operate on that data within a single unit (class), and restricting direct access to some components. It protects the internal state of an object and exposes only what is necessary through a controlled interface.",
+      "key_concepts": [
+        "Public attributes: accessible from anywhere — name (no underscore)",
+        "Protected attributes: convention — single underscore _name (should not access outside class)",
+        "Private attributes: name mangled — double underscore __name (not directly accessible outside)",
+        "Name mangling: __name becomes _ClassName__name — still accessible but discouraged",
+        "Getter method: returns the value of a private attribute",
+        "Setter method: validates and sets the value of a private attribute",
+        "@property decorator: creates a managed attribute with getter/setter/deleter",
+        "Encapsulation hides implementation details and exposes a clean interface"
+      ],
+      "access_modifiers": [
+        "Public (name): accessible everywhere — inside class, outside class, in subclasses",
+        "Protected (_name): accessible inside class and subclasses — convention only, not enforced",
+        "Private (__name): name-mangled to _ClassName__name — not directly accessible outside class"
+      ],
+      "code_examples": [
+        {
+          "description": "Public, protected, private attributes and name mangling",
+          "code": "class BankAccount:\n    def __init__(self, owner, balance):\n        self.owner    = owner        # public\n        self._branch  = \"Main\"       # protected (convention)\n        self.__balance = balance      # private (name mangled)\n\n    def deposit(self, amount):\n        if amount > 0:\n            self.__balance += amount\n\n    def withdraw(self, amount):\n        if 0 < amount <= self.__balance:\n            self.__balance -= amount\n        else:\n            print(\"Insufficient funds\")\n\n    def get_balance(self):           # getter\n        return self.__balance\n\nacc = BankAccount(\"Alice\", 1000)\nacc.deposit(500)\nprint(acc.get_balance())      # 1500\nprint(acc.owner)              # Alice  (public)\nprint(acc._branch)            # Main   (protected — accessible but discouraged)\n# print(acc.__balance)        # AttributeError!\nprint(acc._BankAccount__balance)  # 1500  (name mangling)"
+        },
+        {
+          "description": "@property decorator — from from python_source.content._source.content.ic getters and setters",
+          "code": "class Temperature:\n    def __init__(self, celsius):\n        self._celsius = celsius\n\n    @property\n    def celsius(self):              # getter\n        return self._celsius\n\n    @celsius.setter\n    def celsius(self, value):       # setter with validation\n        if value < -273.15:\n            raise ValueError(\"Temperature below absolute zero!\")\n        self._celsius = value\n\n    @property\n    def fahrenheit(self):           # computed property\n        return self._celsius * 9/5 + 32\n\nt = Temperature(25)\nprint(t.celsius)        # 25      (calls getter)\nprint(t.fahrenheit)     # 77.0   (computed)\nt.celsius = 100         # calls setter\nprint(t.fahrenheit)     # 212.0\n# t.celsius = -300      # ValueError!"
+        }
+      ],
+      "important_points": [
+        "from from python_source.content._source.content. does not enforce access control — it relies on naming conventions",
+        "Single underscore _name is a hint: 'for internal use only'",
+        "Double underscore __name triggers name mangling: _ClassName__name",
+        "@property makes attribute access look like a simple variable read",
+        "Use @property instead of explicit get_x()/set_x() methods for from from python_source.content._source.content.ic code",
+        "Encapsulation prevents accidental modification of internal state"
+      ],
+      "exam_questions": [
+        "What is encapsulation? Why is it important?",
+        "What is the difference between public, protected, and private attributes in from from python_source.content._source.content.?",
+        "What is name mangling? Give an example.",
+        "Explain the @property decorator with a getter and setter example.",
+        "Write a class Person with a private __age attribute and validation in the setter."
+      ],
+      "explanation": "Encapsulation bundles data and methods together while restricting direct access to internals. from from python_source.content._source.content. uses naming conventions (_protected, __private) rather than strict enforcement. The @property decorator provides a clean from from python_source.content._source.content.ic way to add validation and computed attributes."
+    },
+    {
+      "topic": "Polymorphism",
+      "definition": "Polymorphism means 'many forms'. In OOP, it is the ability of different objects to respond to the same method call in their own way. from from python_source.content._source.content. supports polymorphism through method overriding, duck typing, and operator overloading.",
+      "key_concepts": [
+        "Method overriding: child class redefines a parent method",
+        "Duck typing: 'If it walks like a duck and quacks like a duck, it is a duck' — from from python_source.content._source.content. checks behaviour, not type",
+        "Operator overloading: redefining built-in operators for custom classes using dunder methods",
+        "Dunder (magic) methods: __add__, __sub__, __mul__, __len__, __eq__, __lt__, __str__, __repr__",
+        "isinstance() checks type but duck typing avoids the need for explicit type checks",
+        "Polymorphism allows writing generic code that works with different object types",
+        "Abstract base classes (ABC) enforce polymorphism by requiring subclasses to implement methods"
+      ],
+      "code_examples": [
+        {
+          "description": "Method overriding polymorphism and duck typing",
+          "code": "class Shape:\n    def area(self):\n        raise NotImplementedError(\"Subclass must implement area()\")\n\n    def describe(self):\n        return f\"I am a {type(self).__name__} with area {self.area():.2f}\"\n\nclass Circle(Shape):\n    def __init__(self, r):\n        self.r = r\n    def area(self):              # override\n        return 3.14159 * self.r ** 2\n\nclass Rectangle(Shape):\n    def __init__(self, w, h):\n        self.w, self.h = w, h\n    def area(self):              # override\n        return self.w * self.h\n\nclass Triangle(Shape):\n    def __init__(self, b, h):\n        self.b, self.h = b, h\n    def area(self):              # override\n        return 0.5 * self.b * self.h\n\n# Polymorphic behaviour — same call, different results\nshapes = [Circle(5), Rectangle(4, 6), Triangle(3, 8)]\nfor s in shapes:\n    print(s.describe())\n# I am a Circle with area 78.54\n# I am a Rectangle with area 24.00\n# I am a Triangle with area 12.00"
+        },
+        {
+          "description": "Operator overloading with dunder methods",
+          "code": "class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\n    def __add__(self, other):          # v1 + v2\n        return Vector(self.x + other.x, self.y + other.y)\n\n    def __sub__(self, other):          # v1 - v2\n        return Vector(self.x - other.x, self.y - other.y)\n\n    def __mul__(self, scalar):         # v * 3\n        return Vector(self.x * scalar, self.y * scalar)\n\n    def __len__(self):                 # len(v)\n        return int((self.x**2 + self.y**2) ** 0.5)\n\n    def __eq__(self, other):           # v1 == v2\n        return self.x == other.x and self.y == other.y\n\n    def __str__(self):\n        return f\"Vector({self.x}, {self.y})\"\n\nv1 = Vector(2, 3)\nv2 = Vector(1, 4)\nprint(v1 + v2)     # Vector(3, 7)\nprint(v1 - v2)     # Vector(1, -1)\nprint(v1 * 3)      # Vector(6, 9)\nprint(len(v1))     # 3\nprint(v1 == v2)    # False"
+        },
+        {
+          "description": "Abstract Base Classes enforcing polymorphism",
+          "code": "from abc import ABC, abstractmethod\n\nclass Animal(ABC):             # abstract class\n    @abstractmethod\n    def speak(self):           # must be implemented by subclasses\n        pass\n\n    @abstractmethod\n    def move(self):\n        pass\n\nclass Dog(Animal):\n    def speak(self):\n        return \"Woof!\"\n    def move(self):\n        return \"Runs on four legs\"\n\nclass Bird(Animal):\n    def speak(self):\n        return \"Tweet!\"\n    def move(self):\n        return \"Flies with wings\"\n\n# Animal()   # TypeError — cannot instantiate abstract class\nd = Dog()\nb = Bird()\nfor animal in [d, b]:\n    print(animal.speak(), \"|\", animal.move())"
+        }
+      ],
+      "important_points": [
+        "from from python_source.content._source.content. polymorphism is achieved mainly through duck typing — no interfaces needed",
+        "Dunder methods allow operator overloading for custom classes",
+        "Abstract classes (ABC) cannot be instantiated — they only serve as interfaces",
+        "@abstractmethod forces subclasses to implement the method or raise TypeError",
+        "type(obj).__name__ gives the class name as a string",
+        "Common dunder methods: __str__, __repr__, __len__, __add__, __eq__, __lt__, __getitem__"
+      ],
+      "exam_questions": [
+        "What is polymorphism? Explain with an example.",
+        "What is duck typing? How does it relate to polymorphism in from from python_source.content._source.content.?",
+        "What is operator overloading? Overload + for a Fraction class.",
+        "What is an abstract class? How is it different from a regular class?",
+        "Explain method overriding with a Shape hierarchy example."
+      ],
+      "explanation": "Polymorphism allows different objects to be used interchangeably through a common interface. from from python_source.content._source.content. achieves this primarily via duck typing — checking behaviour rather than type. Operator overloading uses dunder methods to give natural syntax to custom objects. Abstract base classes enforce a common interface across subclasses."
+    },
+    {
+      "topic": "Dunder Methods",
+      "definition": "Dunder (double underscore) methods, also called magic methods or special methods, are predefined methods in from from python_source.content._source.content. that start and end with double underscores. They allow custom classes to integrate with from from python_source.content._source.content.'s built-in syntax and functions.",
+      "key_concepts": [
+        "__init__(self, ...): initialiser — called when object is created",
+        "__str__(self): string for end users — called by print() and str()",
+        "__repr__(self): string for developers — called by repr() and in REPL",
+        "__len__(self): called by len()",
+        "__add__(self, other): called by +",
+        "__sub__(self, other): called by -",
+        "__mul__(self, other): called by *",
+        "__eq__(self, other): called by ==",
+        "__lt__(self, other): called by <",
+        "__getitem__(self, key): called by obj[key]",
+        "__setitem__(self, key, value): called by obj[key] = value",
+        "__contains__(self, item): called by in operator",
+        "__iter__(self) and __next__(self): make object iterable",
+        "__del__(self): destructor — called when object is garbage collected"
+      ],
+      "code_examples": [
+        {
+          "description": "Common dunder methods in a custom Stack class",
+          "code": "class Stack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, item):\n        self._data.append(item)\n\n    def pop(self):\n        if self._data:\n            return self._data.pop()\n        raise IndexError(\"Stack is empty\")\n\n    def __len__(self):              # len(stack)\n        return len(self._data)\n\n    def __str__(self):              # print(stack)\n        return f\"Stack{self._data}\"\n\n    def __repr__(self):\n        return f\"Stack({self._data!r})\"\n\n    def __contains__(self, item):   # item in stack\n        return item in self._data\n\n    def __getitem__(self, index):   # stack[index]\n        return self._data[index]\n\ns = Stack()\ns.push(1); s.push(2); s.push(3)\nprint(len(s))        # 3\nprint(s)             # Stack[1, 2, 3]\nprint(2 in s)        # True\nprint(s[0])          # 1\nprint(s.pop())       # 3"
+        }
+      ],
+      "important_points": [
+        "__str__ is for end users; __repr__ is for developers/debugging",
+        "If __str__ is not defined, from from python_source.content._source.content. falls back to __repr__",
+        "Define both __eq__ and __hash__ together — if __eq__ is defined, __hash__ is set to None",
+        "__lt__, __le__, __gt__, __ge__ can all be derived from __lt__ and __eq__ using @functools.total_ordering",
+        "Dunder methods should never be called directly — use the operator or built-in instead"
+      ],
+      "exam_questions": [
+        "What are dunder methods? List five with their purposes.",
+        "What is the difference between __str__ and __repr__?",
+        "Implement __add__ and __str__ for a Fraction class.",
+        "What dunder method is called by the len() function?",
+        "What happens if you define __eq__ but not __hash__?"
+      ],
+      "explanation": "Dunder methods are from from python_source.content._source.content.'s mechanism for operator overloading and integration with built-in functions. They make custom classes feel like native from from python_source.content._source.content. types. __str__ and __repr__ control string representation; __add__, __eq__ etc. overload operators; __len__, __getitem__, __iter__ make classes behave like containers."
+    },
+    {
+      "topic": "Class Methods and Static Methods",
+      "definition": "from from python_source.content._source.content. provides three types of methods in a class: instance methods (operate on self), class methods (operate on the class itself via cls), and static methods (neither self nor cls — behave like plain functions inside a class namespace).",
+      "key_concepts": [
+        "Instance method: first parameter is self — has access to instance and class",
+        "@classmethod: first parameter is cls — has access to class but not instance",
+        "@staticmethod: no implicit first parameter — no access to instance or class",
+        "Class methods are commonly used as alternative constructors (factory methods)",
+        "Static methods are used for utility functions logically related to the class",
+        "Class methods can be called on the class or on an instance",
+        "Static methods can be called on the class or on an instance"
+      ],
+      "code_examples": [
+        {
+          "description": "Instance, class, and static methods compared",
+          "code": "class Date:\n    def __init__(self, day, month, year):\n        self.day   = day\n        self.month = month\n        self.year  = year\n\n    def display(self):                      # instance method\n        return f\"{self.day:02d}/{self.month:02d}/{self.year}\"\n\n    @classmethod\n    def from_string(cls, date_str):         # class method — factory\n        day, month, year = map(int, date_str.split('-'))\n        return cls(day, month, year)\n\n    @classmethod\n    def today(cls):                         # another factory\n        import datetime\n        d = datetime.date.today()\n        return cls(d.day, d.month, d.year)\n\n    @staticmethod\n    def is_leap_year(year):                 # static utility\n        return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)\n\nd1 = Date(15, 8, 2024)\nprint(d1.display())                  # 15/08/2024\n\nd2 = Date.from_string('25-12-2025')  # factory constructor\nprint(d2.display())                  # 25/12/2025\n\nprint(Date.is_leap_year(2024))       # True\nprint(Date.is_leap_year(2023))       # False"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Feature",
+          "Instance Method",
+          "Class Method",
+          "Static Method"
+        ],
+        "rows": [
+          [
+            "Decorator",
+            "None",
+            "@classmethod",
+            "@staticmethod"
+          ],
+          [
+            "First parameter",
+            "self",
+            "cls",
+            "None"
+          ],
+          [
+            "Access instance",
+            "Yes",
+            "No",
+            "No"
+          ],
+          [
+            "Access class",
+            "Yes",
+            "Yes",
+            "No"
+          ],
+          [
+            "Use case",
+            "Object behaviour",
+            "Factory/alt constructor",
+            "Utility function"
+          ]
+        ]
+      },
+      "important_points": [
+        "@classmethod receives the class as first argument — useful for alternative constructors",
+        "@staticmethod is just a regular function in the class namespace — no self or cls",
+        "Use @classmethod when you need to create instances in different ways",
+        "Use @staticmethod for helper functions that don't need class or instance data",
+        "Both can be called on the class directly: Class.method() or on instance: obj.method()"
+      ],
+      "exam_questions": [
+        "What is the difference between an instance method, class method, and static method?",
+        "When would you use a @classmethod over a regular __init__?",
+        "Write a class with a @staticmethod to validate an email address.",
+        "What is a factory method? Implement one using @classmethod.",
+        "Can a static method access instance attributes? Why or why not?"
+      ],
+      "explanation": "Instance methods are the standard — they operate on object data via self. Class methods use cls and are perfect for alternative constructors (factory pattern). Static methods are utility functions grouped logically inside the class but needing no access to class or instance state."
+    }
+  ]
+}

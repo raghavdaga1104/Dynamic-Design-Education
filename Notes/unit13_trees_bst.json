@@ -1,0 +1,246 @@
+{
+  "unit_id": "UNIT13_TreesBST",
+  "unit_title": "Trees & BST",
+  "topics": [
+    {
+      "topic": "Binary Trees",
+      "definition": "A binary tree is a hierarchical data structure where each node has at most two children — left and right. Unlike linear structures, trees represent hierarchical relationships. The topmost node is the root. Nodes with no children are leaves. Binary trees are the foundation for BSTs, heaps, expression trees, and many algorithms.",
+      "key_concepts": [
+        "Root: topmost node with no parent",
+        "Leaf: node with no children",
+        "Height: longest path from root to any leaf — empty tree has height -1",
+        "Depth: distance from root to a node",
+        "Level: depth + 1 (root is at level 1)",
+        "Full binary tree: every node has 0 or 2 children",
+        "Complete binary tree: all levels filled except possibly last, filled left to right",
+        "Perfect binary tree: all internal nodes have 2 children, all leaves at same level",
+        "Balanced binary tree: height is O(log n)",
+        "Skewed tree: all nodes on one side — degenerates to a linked list"
+      ],
+      "code_examples": [
+        {
+          "description": "TreeNode class and binary tree construction",
+          "code": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val   = val\n        self.left  = left\n        self.right = right\n    def __repr__(self):\n        return f'TreeNode({self.val})'\n\n# Build tree manually\n#        1\n#       / \\\n#      2   3\n#     / \\ / \\\n#    4  5 6  7\n\nroot = TreeNode(1)\nroot.left          = TreeNode(2)\nroot.right         = TreeNode(3)\nroot.left.left     = TreeNode(4)\nroot.left.right    = TreeNode(5)\nroot.right.left    = TreeNode(6)\nroot.right.right   = TreeNode(7)\n\n# Tree properties\ndef height(node):\n    if not node: return -1   # empty tree\n    return 1 + max(height(node.left), height(node.right))\n\ndef count_nodes(node):\n    if not node: return 0\n    return 1 + count_nodes(node.left) + count_nodes(node.right)\n\ndef count_leaves(node):\n    if not node: return 0\n    if not node.left and not node.right: return 1\n    return count_leaves(node.left) + count_leaves(node.right)\n\ndef is_balanced(node):\n    def check(n):\n        if not n: return 0\n        lh = check(n.left)\n        rh = check(n.right)\n        if lh == -1 or rh == -1 or abs(lh-rh) > 1:\n            return -1   # unbalanced\n        return 1 + max(lh, rh)\n    return check(node) != -1\n\nprint(height(root))        # 2\nprint(count_nodes(root))   # 7\nprint(count_leaves(root))  # 4\nprint(is_balanced(root))   # True"
+        },
+        {
+          "description": "Build tree from list (level order) and pretty print",
+          "code": "from collections import deque\n\ndef build_tree(values):\n    \"\"\"Build binary tree from level-order list. None = missing node.\"\"\"\n    if not values or values[0] is None:\n        return None\n    root  = TreeNode(values[0])\n    queue = deque([root])\n    i     = 1\n    while queue and i < len(values):\n        node = queue.popleft()\n        if i < len(values) and values[i] is not None:\n            node.left = TreeNode(values[i])\n            queue.append(node.left)\n        i += 1\n        if i < len(values) and values[i] is not None:\n            node.right = TreeNode(values[i])\n            queue.append(node.right)\n        i += 1\n    return root\n\ndef print_tree(root, level=0, prefix='Root: '):\n    if root:\n        print(' ' * (level * 4) + prefix + str(root.val))\n        if root.left or root.right:\n            if root.left:\n                print_tree(root.left,  level+1, 'L: ')\n            if root.right:\n                print_tree(root.right, level+1, 'R: ')\n\ntree = build_tree([1, 2, 3, 4, 5, 6, 7])\nprint_tree(tree)\n# Root: 1\n#     L: 2\n#         L: 4\n#         R: 5\n#     R: 3\n#         L: 6\n#         R: 7"
+        }
+      ],
+      "terminology": [
+        {
+          "term": "Root",
+          "definition": "Topmost node — has no parent"
+        },
+        {
+          "term": "Leaf",
+          "definition": "Node with no children"
+        },
+        {
+          "term": "Height",
+          "definition": "Longest path from root to any leaf"
+        },
+        {
+          "term": "Depth",
+          "definition": "Distance from root to a specific node"
+        },
+        {
+          "term": "Subtree",
+          "definition": "A node and all its descendants"
+        },
+        {
+          "term": "Sibling",
+          "definition": "Nodes that share the same parent"
+        },
+        {
+          "term": "Ancestor",
+          "definition": "Any node on the path from root to a node"
+        },
+        {
+          "term": "Descendant",
+          "definition": "Any node reachable from a given node going down"
+        }
+      ],
+      "important_points": [
+        "Height of a tree with n nodes: minimum O(log n) balanced, maximum O(n) skewed",
+        "A perfect binary tree with height h has 2^(h+1) - 1 nodes",
+        "Number of leaves in a perfect binary tree of height h: 2^h",
+        "Balanced tree guarantees O(log n) operations for BST search/insert/delete",
+        "is_balanced must check heights in ONE pass — not call height() twice (O(n²))"
+      ],
+      "exam_questions": [
+        "What is the difference between a full, complete, and perfect binary tree?",
+        "Write a function to compute the height of a binary tree.",
+        "Write a function to count the number of leaf nodes.",
+        "What is the maximum number of nodes in a binary tree of height h?",
+        "Write a function to check if a binary tree is balanced."
+      ],
+      "explanation": "Binary trees are the foundation of all tree-based data structures. Understanding height, balance, and node types is essential. A balanced tree guarantees O(log n) height which is critical for BST performance. The is_balanced check must be done in O(n) by combining height computation with balance checking in a single recursive pass."
+    },
+    {
+      "topic": "Tree Traversals",
+      "definition": "Tree traversal is the process of visiting every node in a tree exactly once in a specific order. The four main traversals are: Inorder (left-root-right), Preorder (root-left-right), Postorder (left-right-root), and Level Order (BFS, level by level). Each traversal has specific use cases and can be implemented recursively or iteratively.",
+      "key_concepts": [
+        "Inorder (LNR): left → node → right — gives sorted sequence for BST",
+        "Preorder (NLR): node → left → right — used to copy/serialize a tree",
+        "Postorder (LRN): left → right → node — used to delete a tree, evaluate expression trees",
+        "Level Order: BFS — visits nodes level by level using a queue",
+        "All recursive traversals: O(n) time, O(h) space (h = height of tree)",
+        "Level order: O(n) time, O(w) space (w = max width of tree)",
+        "Inorder of BST is always sorted — key BST property",
+        "Morris traversal: O(1) space inorder traversal using threaded tree"
+      ],
+      "code_examples": [
+        {
+          "description": "All four traversals — recursive and iterative",
+          "code": "from collections import deque\n\n# ── Recursive traversals ─────────────────────────────────\ndef inorder(root):\n    if not root: return []\n    return inorder(root.left) + [root.val] + inorder(root.right)\n\ndef preorder(root):\n    if not root: return []\n    return [root.val] + preorder(root.left) + preorder(root.right)\n\ndef postorder(root):\n    if not root: return []\n    return postorder(root.left) + postorder(root.right) + [root.val]\n\ndef level_order(root):\n    if not root: return []\n    result, queue = [], deque([root])\n    while queue:\n        level = []\n        for _ in range(len(queue)):   # process one level\n            node = queue.popleft()\n            level.append(node.val)\n            if node.left:  queue.append(node.left)\n            if node.right: queue.append(node.right)\n        result.append(level)\n    return result\n\n#        4\n#       / \\\n#      2   6\n#     / \\ / \\\n#    1  3 5  7\ntree = build_tree([4, 2, 6, 1, 3, 5, 7])\nprint('Inorder:   ', inorder(tree))      # [1,2,3,4,5,6,7] ← sorted!\nprint('Preorder:  ', preorder(tree))     # [4,2,1,3,6,5,7]\nprint('Postorder: ', postorder(tree))    # [1,3,2,5,7,6,4]\nprint('LevelOrder:', level_order(tree))  # [[4],[2,6],[1,3,5,7]]"
+        },
+        {
+          "description": "Iterative inorder, preorder, and zigzag level order",
+          "code": "# Iterative Inorder — using explicit stack\ndef inorder_iterative(root):\n    result, stack = [], []\n    curr = root\n    while curr or stack:\n        while curr:              # go as left as possible\n            stack.append(curr)\n            curr = curr.left\n        curr = stack.pop()       # visit node\n        result.append(curr.val)\n        curr = curr.right        # move to right subtree\n    return result\n\n# Iterative Preorder\ndef preorder_iterative(root):\n    if not root: return []\n    result, stack = [], [root]\n    while stack:\n        node = stack.pop()\n        result.append(node.val)\n        if node.right: stack.append(node.right)  # right first\n        if node.left:  stack.append(node.left)   # left second (processed first)\n    return result\n\n# Zigzag Level Order (alternating left-right)\ndef zigzag_level_order(root):\n    if not root: return []\n    result, queue = [], deque([root])\n    left_to_right = True\n    while queue:\n        level = deque()\n        for _ in range(len(queue)):\n            node = queue.popleft()\n            if left_to_right: level.append(node.val)\n            else:             level.appendleft(node.val)\n            if node.left:  queue.append(node.left)\n            if node.right: queue.append(node.right)\n        result.append(list(level))\n        left_to_right = not left_to_right\n    return result\n\nprint(inorder_iterative(tree))     # [1,2,3,4,5,6,7]\nprint(zigzag_level_order(tree))    # [[4],[6,2],[1,3,5,7]]"
+        }
+      ],
+      "comparison_table": {
+        "headers": [
+          "Traversal",
+          "Order",
+          "Use Case",
+          "Time",
+          "Space"
+        ],
+        "rows": [
+          [
+            "Inorder",
+            "Left→Node→Right",
+            "BST sorted output, validation",
+            "O(n)",
+            "O(h)"
+          ],
+          [
+            "Preorder",
+            "Node→Left→Right",
+            "Copy tree, serialize, prefix expr",
+            "O(n)",
+            "O(h)"
+          ],
+          [
+            "Postorder",
+            "Left→Right→Node",
+            "Delete tree, postfix expr, size",
+            "O(n)",
+            "O(h)"
+          ],
+          [
+            "Level Order",
+            "Level by level",
+            "BFS, shortest path, tree width",
+            "O(n)",
+            "O(w)"
+          ]
+        ]
+      },
+      "important_points": [
+        "Inorder of a BST always yields a sorted sequence — key exam fact",
+        "Preorder uniquely identifies tree structure (with inorder) for reconstruction",
+        "Postorder processes children before parent — correct for deletion and evaluation",
+        "Level order uses a queue; DFS traversals use a stack (or recursion)",
+        "Iterative inorder is the most commonly asked iterative traversal in interviews"
+      ],
+      "exam_questions": [
+        "Write recursive inorder, preorder, and postorder traversals.",
+        "Write an iterative inorder traversal using an explicit stack.",
+        "What is the output of inorder traversal of a BST? Why?",
+        "Write a level order traversal that returns nodes grouped by level.",
+        "What traversal would you use to evaluate an expression tree? Why?"
+      ],
+      "explanation": "The four traversals visit every node once in different orders. Inorder on a BST gives sorted output — the most important traversal property. Preorder captures structure for serialization. Postorder processes children before parents for bottom-up computation. Level order uses BFS for level-by-level processing. Iterative versions replace the call stack with an explicit stack."
+    },
+    {
+      "topic": "Binary Search Tree",
+      "definition": "A Binary Search Tree (BST) is a binary tree with the ordering property: for every node, all values in the left subtree are less than the node's value, and all values in the right subtree are greater. This property enables O(log n) average-case search, insertion, and deletion — comparable to binary search on sorted arrays but with dynamic insertion.",
+      "key_concepts": [
+        "BST property: left subtree values < node value < right subtree values",
+        "Search: compare target with node, go left if smaller, right if larger — O(h)",
+        "Insertion: search for position, insert as new leaf — O(h)",
+        "Deletion: three cases — leaf, one child, two children (replace with inorder successor)",
+        "Inorder successor: smallest node in the right subtree",
+        "Inorder predecessor: largest node in the left subtree",
+        "Average case: O(log n) for balanced BST",
+        "Worst case: O(n) for skewed BST (sorted input)",
+        "Self-balancing BSTs: AVL tree, Red-Black tree maintain O(log n) always"
+      ],
+      "code_examples": [
+        {
+          "description": "BST insert, search, and delete",
+          "code": "class BST:\n    def __init__(self):\n        self.root = None\n\n    # Insert — O(h)\n    def insert(self, val):\n        self.root = self._insert(self.root, val)\n\n    def _insert(self, node, val):\n        if not node: return TreeNode(val)   # create new node\n        if val < node.val:\n            node.left  = self._insert(node.left,  val)\n        elif val > node.val:\n            node.right = self._insert(node.right, val)\n        # val == node.val: duplicate — ignore\n        return node\n\n    # Search — O(h)\n    def search(self, val):\n        return self._search(self.root, val)\n\n    def _search(self, node, val):\n        if not node: return False\n        if val == node.val: return True\n        if val < node.val: return self._search(node.left,  val)\n        return            self._search(node.right, val)\n\n    # Delete — O(h)\n    def delete(self, val):\n        self.root = self._delete(self.root, val)\n\n    def _delete(self, node, val):\n        if not node: return None\n        if val < node.val:\n            node.left  = self._delete(node.left,  val)\n        elif val > node.val:\n            node.right = self._delete(node.right, val)\n        else:   # found node to delete\n            if not node.left:  return node.right  # case 1 & 2\n            if not node.right: return node.left   # case 2\n            # Case 3: two children — replace with inorder successor\n            successor      = self._min_node(node.right)\n            node.val       = successor.val\n            node.right     = self._delete(node.right, successor.val)\n        return node\n\n    def _min_node(self, node):\n        while node.left: node = node.left\n        return node\n\n    def inorder(self):\n        result = []\n        def dfs(n):\n            if n:\n                dfs(n.left)\n                result.append(n.val)\n                dfs(n.right)\n        dfs(self.root)\n        return result\n\nbst = BST()\nfor v in [5, 3, 7, 1, 4, 6, 8]: bst.insert(v)\nprint(bst.inorder())    # [1, 3, 4, 5, 6, 7, 8]\nprint(bst.search(4))    # True\nprint(bst.search(9))    # False\nbst.delete(3)\nprint(bst.inorder())    # [1, 4, 5, 6, 7, 8]"
+        },
+        {
+          "description": "BST validation, LCA, and kth smallest",
+          "code": "# Validate BST\ndef is_valid_bst(root, lo=float('-inf'), hi=float('inf')):\n    if not root: return True\n    if not (lo < root.val < hi): return False\n    return (is_valid_bst(root.left,  lo, root.val) and\n            is_valid_bst(root.right, root.val, hi))\n\n# Lowest Common Ancestor (LCA) in BST\ndef lca_bst(root, p, q):\n    if not root: return None\n    if p < root.val and q < root.val:\n        return lca_bst(root.left,  p, q)   # both in left\n    if p > root.val and q > root.val:\n        return lca_bst(root.right, p, q)   # both in right\n    return root.val   # split point = LCA\n\n# Kth Smallest in BST — inorder gives sorted order\ndef kth_smallest(root, k):\n    stack, curr = [], root\n    while stack or curr:\n        while curr:\n            stack.append(curr)\n            curr = curr.left\n        curr = stack.pop()\n        k -= 1\n        if k == 0: return curr.val\n        curr = curr.right\n\ntree = build_tree([5, 3, 7, 1, 4, 6, 8])\nprint(is_valid_bst(tree))       # True\nprint(lca_bst(tree, 1, 4))      # 3\nprint(lca_bst(tree, 1, 8))      # 5\nprint(kth_smallest(tree, 3))    # 4  (sorted: 1,3,4,5,6,7,8)"
+        }
+      ],
+      "complexity_summary": {
+        "Search": "O(log n) average, O(n) worst (skewed)",
+        "Insert": "O(log n) average, O(n) worst",
+        "Delete": "O(log n) average, O(n) worst",
+        "Min/Max": "O(h) — go leftmost/rightmost",
+        "Inorder": "O(n) — visits all nodes",
+        "Space": "O(h) for recursion stack"
+      },
+      "important_points": [
+        "BST inorder traversal always produces sorted output",
+        "Deletion of a node with two children: replace val with inorder successor, delete successor",
+        "Worst case O(n) for sorted input — tree becomes a linked list",
+        "is_valid_bst must pass min/max bounds — checking children individually is wrong",
+        "LCA in BST: use the split point property — no traversal needed"
+      ],
+      "exam_questions": [
+        "Write the insert, search, and delete operations for a BST.",
+        "Trace the deletion of node 3 from BST containing [5,3,7,1,4,6,8].",
+        "Write a function to validate if a binary tree is a valid BST.",
+        "What is the inorder successor of a node in a BST?",
+        "Find the Lowest Common Ancestor of two nodes in a BST."
+      ],
+      "explanation": "The BST's ordering property enables O(log n) average-case operations by halving the search space at each step — exactly like binary search. The three deletion cases handle leaves, single-child nodes, and two-child nodes. Two-child deletion replaces the node with its inorder successor. Validation requires tracking allowed ranges (lo, hi) not just comparing with children."
+    },
+    {
+      "topic": "BST Operations and Applications",
+      "definition": "Beyond basic CRUD operations, BSTs support range queries, floor/ceiling operations, rank queries, and serve as the basis for self-balancing trees (AVL, Red-Black). Understanding these operations and their applications completes the BST picture.",
+      "key_concepts": [
+        "Floor: largest value ≤ target in BST",
+        "Ceiling: smallest value ≥ target in BST",
+        "Range query: find all values in [lo, hi]",
+        "Rank: number of elements less than a given value",
+        "Convert sorted array to balanced BST",
+        "Convert BST to sorted doubly linked list",
+        "AVL tree: self-balancing BST — height difference ≤ 1 for all nodes",
+        "Red-Black tree: self-balancing BST used in from from python_source.content._source.content.'s sortedcontainers"
+      ],
+      "code_examples": [
+        {
+          "description": "Floor, ceiling, range query, and sorted array to BST",
+          "code": "# Floor — largest value <= target\ndef floor_bst(root, target):\n    result = None\n    while root:\n        if root.val == target:\n            return root.val\n        elif root.val < target:\n            result = root.val    # potential floor\n            root   = root.right  # try to find larger floor\n        else:\n            root = root.left     # too large, go left\n    return result\n\n# Ceiling — smallest value >= target\ndef ceiling_bst(root, target):\n    result = None\n    while root:\n        if root.val == target:\n            return root.val\n        elif root.val > target:\n            result = root.val    # potential ceiling\n            root   = root.left   # try to find smaller ceiling\n        else:\n            root = root.right\n    return result\n\n# Range query — all values in [lo, hi]\ndef range_query(root, lo, hi):\n    result = []\n    def dfs(node):\n        if not node: return\n        if node.val > lo:  dfs(node.left)   # may have values in range\n        if lo <= node.val <= hi:\n            result.append(node.val)\n        if node.val < hi:  dfs(node.right)  # may have values in range\n    dfs(root)\n    return result\n\n# Sorted array → Balanced BST\ndef sorted_to_bst(nums):\n    if not nums: return None\n    mid  = len(nums) // 2\n    node = TreeNode(nums[mid])\n    node.left  = sorted_to_bst(nums[:mid])\n    node.right = sorted_to_bst(nums[mid+1:])\n    return node\n\ntree = sorted_to_bst([1, 2, 3, 4, 5, 6, 7])\nprint(inorder(tree))         # [1,2,3,4,5,6,7]\nprint(is_valid_bst(tree))    # True\nprint(height(tree))          # 2  (balanced!)\n\nbst_tree = build_tree([5,3,7,1,4,6,8])\nprint(floor_bst(bst_tree, 4))   # 4\nprint(floor_bst(bst_tree, 5.5)) # 5\nprint(ceiling_bst(bst_tree, 5.5)) # 6\nprint(range_query(bst_tree, 3, 6)) # [3,4,5,6]"
+        },
+        {
+          "description": "Diameter, max path sum, and serialize/deserialize binary tree",
+          "code": "# Diameter of Binary Tree — longest path between any two nodes\ndef diameter(root):\n    max_d = [0]\n    def height(node):\n        if not node: return 0\n        lh = height(node.left)\n        rh = height(node.right)\n        max_d[0] = max(max_d[0], lh + rh)  # path through node\n        return 1 + max(lh, rh)\n    height(root)\n    return max_d[0]\n\n# Maximum Path Sum\ndef max_path_sum(root):\n    max_s = [float('-inf')]\n    def gain(node):\n        if not node: return 0\n        l = max(gain(node.left),  0)  # ignore negative paths\n        r = max(gain(node.right), 0)\n        max_s[0] = max(max_s[0], node.val + l + r)\n        return node.val + max(l, r)\n    gain(root)\n    return max_s[0]\n\n# Serialize and Deserialize\ndef serialize(root):\n    if not root: return 'None'\n    return f'{root.val},{serialize(root.left)},{serialize(root.right)}'\n\ndef deserialize(data):\n    vals = iter(data.split(','))\n    def build():\n        val = next(vals)\n        if val == 'None': return None\n        node       = TreeNode(int(val))\n        node.left  = build()\n        node.right = build()\n        return node\n    return build()\n\ntree = build_tree([1, 2, 3, 4, 5])\nprint(diameter(tree))       # 3\nprint(max_path_sum(tree))   # 12 (5+2+1+3 or 4+2+1+5)\ns = serialize(tree)\nprint(s)                    # 1,2,4,None,None,5,None,None,3,None,None\nt = deserialize(s)\nprint(inorder(t))           # [4,2,5,1,3]"
+        }
+      ],
+      "important_points": [
+        "Sorted array → balanced BST: always pick the middle element as root",
+        "Diameter of tree: max of (left_height + right_height) over all nodes",
+        "Max path sum: gain() returns max single-path gain; ignores negative subtrees",
+        "Serialize/deserialize: preorder with None markers enables unique reconstruction",
+        "AVL and Red-Black trees guarantee O(log n) worst case — plain BST does not"
+      ],
+      "exam_questions": [
+        "Write a function to convert a sorted array to a balanced BST.",
+        "What is the diameter of a binary tree? Write the algorithm.",
+        "Write serialize() and deserialize() for a binary tree.",
+        "Write a range query function for a BST.",
+        "What is the difference between a BST and a self-balancing BST?"
+      ],
+      "explanation": "Advanced BST operations exploit the ordering property for efficient range queries, floor/ceiling lookups, and rank computations. Converting a sorted array to a balanced BST by always picking the middle ensures O(log n) height. Diameter and max path sum are classic tree DP problems where each node computes a local answer and updates a global maximum. Serialization enables tree persistence and reconstruction."
+    }
+  ]
+}

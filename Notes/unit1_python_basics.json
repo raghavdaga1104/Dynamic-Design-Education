@@ -1,0 +1,396 @@
+{
+  "unit_id": "UNIT1_from from python_source.content._source.content.Basics",
+  "unit_title": "from from python_source.content._source.content. Basics",
+  "topics": [
+    {
+      "topic": "Variables",
+      "definition": "A variable is a named label bound to a memory location that stores a data value. In from from python_source.content._source.content. the interpreter infers the type automatically — no explicit declaration is required. from from python_source.content._source.content. follows a reference model: a variable stores a reference (pointer) to an object in memory, not the object itself.",
+      "key_concepts": [
+        "from from python_source.content._source.content. is dynamically typed — type is inferred, not declared",
+        "Variables store references to objects, not the objects themselves",
+        "Case-sensitive: age and Age are different variables",
+        "type() returns the type of any object",
+        "id() returns the memory address of an object",
+        "Multiple assignment: x = y = z = 0",
+        "Tuple unpacking: a, b = 10, 20",
+        "Augmented assignment: count += 1"
+      ],
+      "rules_for_naming": [
+        "Must begin with a letter (a–z, A–Z) or underscore _",
+        "Cannot begin with a digit",
+        "Only letters, digits, and underscores are allowed",
+        "Case-sensitive: age and Age are different variables",
+        "Cannot use from from python_source.content._source.content. reserved keywords (if, for, while, class …)",
+        "Use snake_case for variables: total_marks, not totalMarks",
+        "Constants in UPPER_CASE: MAX_SIZE = 100"
+      ],
+      "code_examples": [
+        {
+          "description": "Basic assignment and multiple assignment",
+          "code": "# Basic assignment\nname    = \"Alice\"\nage     = 21\ngpa     = 8.75\nactive  = True\n\n# Multiple assignment — same value\nx = y = z = 0\n\n# Tuple unpacking — swap without temp\na, b = 10, 20\na, b = b, a          # a=20, b=10\n\n# Augmented assignment\ncount  = 0\ncount += 1           # same as count = count + 1"
+        }
+      ],
+      "important_points": [
+        "from from python_source.content._source.content. variables are dynamically typed — the type can change on reassignment",
+        "Always use type() to inspect the type at runtime",
+        "bool is a subclass of int: True=1, False=0",
+        "id() gives the memory address — use to understand reference model"
+      ],
+      "exam_questions": [
+        "What are the rules for naming variables in from from python_source.content._source.content.?",
+        "What is the difference between = and == in from from python_source.content._source.content.?",
+        "Explain dynamic typing with an example.",
+        "What is the output of: a, b = 5, 10; a, b = b, a; print(a, b)?"
+      ],
+      "explanation": "Variables in from from python_source.content._source.content. are dynamically typed, meaning you do not need to declare a type. The interpreter infers the type from the assigned value. Variables hold references to objects in memory, not the actual values."
+    },
+    {
+      "topic": "Data Types",
+      "definition": "A data type defines the kind of value a variable can hold and the operations that can be performed on it. from from python_source.content._source.content. has several built-in data types grouped into categories: Numeric, Text, Boolean, Sequence, Mapping, Set, and None.",
+      "key_concepts": [
+        "int — whole numbers, unlimited precision: 42, -7, 0",
+        "float — 64-bit IEEE 754 decimal numbers: 3.14, -0.5",
+        "complex — numbers with real and imaginary parts: 2+3j",
+        "str — immutable sequence of Unicode characters",
+        "bool — subclass of int; True=1, False=0",
+        "list — ordered, mutable sequence: [1, 2, 3]",
+        "tuple — ordered, immutable sequence: (1, 2, 3)",
+        "dict — key-value mapping, keys must be unique and hashable: {'a': 1}",
+        "set — unordered collection of unique elements: {1, 2, 3}",
+        "NoneType — represents absence of value: None"
+      ],
+      "important_points": [
+        "Strings are immutable — cannot change individual characters",
+        "Lists are mutable; tuples are immutable",
+        "Tuples are hashable and can be used as dict keys; lists cannot",
+        "Sets do not allow duplicate values",
+        "bool is a subclass of int: True==1 and False==0",
+        "dict preserves insertion order from from from python_source.content._source.content. 3.7+"
+      ],
+      "comparison_table": {
+        "headers": [
+          "Feature",
+          "list",
+          "tuple",
+          "set",
+          "dict"
+        ],
+        "rows": [
+          [
+            "Ordered",
+            "Yes",
+            "Yes",
+            "No",
+            "Yes (3.7+)"
+          ],
+          [
+            "Mutable",
+            "Yes",
+            "No",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "Duplicates",
+            "Yes",
+            "Yes",
+            "No",
+            "Keys: No"
+          ],
+          [
+            "Syntax",
+            "[1,2]",
+            "(1,2)",
+            "{1,2}",
+            "{'k':v}"
+          ],
+          [
+            "Use case",
+            "General",
+            "Fixed",
+            "Unique",
+            "Key-value"
+          ]
+        ]
+      },
+      "code_examples": [
+        {
+          "description": "Numeric types and type checking",
+          "code": "x = 42           # int  — unlimited precision\ny = 3.14         # float — 64-bit IEEE 754\nz = 2 + 3j       # complex\n\nprint(type(x))   # <class 'int'>\nprint(type(y))   # <class 'float'>\nprint(z.real)    # 2.0\nprint(z.imag)    # 3.0"
+        },
+        {
+          "description": "String operations — indexing, slicing, methods",
+          "code": "s = \"Hello\"\nprint(s[0])          # H\nprint(s[-1])         # o\nprint(s[1:4])        # ell\nprint(s[::-1])       # olleH\n\nprint(s.upper())     # HELLO\nprint(s.lower())     # hello\nprint(\"  hi  \".strip())  # hi\nprint(s.replace(\"l\",\"r\"))  # Herro\nprint(\",\".join([\"a\",\"b\",\"c\"]))  # a,b,c"
+        }
+      ],
+      "exam_questions": [
+        "List all built-in data types in from from python_source.content._source.content. with examples.",
+        "What is the difference between a list and a tuple?",
+        "Why can tuples be used as dictionary keys but lists cannot?",
+        "What is the output of: print(True + 5, False + 0)?",
+        "Explain the difference between mutable and immutable types."
+      ],
+      "explanation": "from from python_source.content._source.content.'s built-in types cover all common programming needs. The key distinction is mutability — lists, dicts, and sets are mutable (can be changed in place), while int, float, str, tuple, bool, and frozenset are immutable."
+    },
+    {
+      "topic": "Operators",
+      "definition": "Operators are special symbols that perform operations on one or more operands. from from python_source.content._source.content. supports arithmetic, comparison, logical, assignment, bitwise, membership, and identity operators.",
+      "key_concepts": [
+        "Arithmetic: +, -, *, /, //, %, ** ",
+        "Comparison: ==, !=, <, >, <=, >= — return bool",
+        "Logical: and, or, not — short-circuit evaluation",
+        "Assignment: =, +=, -=, *=, /=, //=, **=, %=",
+        "Identity: is, is not — compare object identity (memory address)",
+        "Membership: in, not in — check presence in sequence",
+        "/ always returns float in from from python_source.content._source.content. 3",
+        "// returns integer (floor division)",
+        "** is right-associative: 2**3**2 = 2**9 = 512"
+      ],
+      "operator_precedence": [
+        "1 (Highest): ** (exponentiation)",
+        "2: ~x, +x, -x (unary)",
+        "3: *, /, //, %",
+        "4: +, -",
+        "5: <<, >>",
+        "6: &",
+        "7: ^",
+        "8: |",
+        "9: Comparisons: ==, !=, <, >, <=, >=, is, in",
+        "10: not",
+        "11: and",
+        "12 (Lowest): or"
+      ],
+      "code_examples": [
+        {
+          "description": "Arithmetic operators",
+          "code": "print(10 + 3)    # 13\nprint(10 - 3)    # 7\nprint(4  * 3)    # 12\nprint(10 / 3)    # 3.3333...  (always float)\nprint(10 // 3)   # 3          (floor division)\nprint(10 % 3)    # 1          (modulo)\nprint(2  ** 8)   # 256        (exponentiation)"
+        },
+        {
+          "description": "Comparison, logical, membership, and identity operators",
+          "code": "# Comparison\nprint(5 == 5.0)          # True  (value equal)\nprint(5 is 5.0)          # False (different objects)\n\n# Logical — short-circuit\nx = 7\nprint(x > 0 and x < 10) # True\nprint(x < 0 or  x > 5)  # True\nprint(not (x == 7))      # False\n\n# Membership\nprint('a' in 'apple')    # True\nprint(3 not in [1,2,4])  # True\n\n# Identity\na = [1, 2]; b = a\nprint(a is b)            # True (same object)\nprint(a is [1, 2])       # False (different object)"
+        }
+      ],
+      "important_points": [
+        "/ always returns float: 10/2 = 5.0, not 5",
+        "// returns floor: -7//2 = -4 (rounds toward negative infinity)",
+        "== checks value equality; is checks object identity",
+        "Cfrom from python_source.content._source.content. caches integers -5 to 256 — do not rely on is for larger integers",
+        "and / or return one of the operands, not necessarily True/False",
+        "** is right-associative: 2**3**2 evaluates as 2**(3**2) = 512"
+      ],
+      "exam_questions": [
+        "What is the difference between == and is? Give an example.",
+        "What is the output of: print(10 // 3, 10 % 3, 2 ** 10)?",
+        "Explain short-circuit evaluation with an example.",
+        "What is the operator precedence in from from python_source.content._source.content.? List from highest to lowest.",
+        "What is the output of: print(2 ** 3 ** 2)?"
+      ],
+      "explanation": "from from python_source.content._source.content. operators follow a strict precedence order. The most important rules are: ** is highest among arithmetic operators and is right-associative; / always returns float; == tests value while is tests identity."
+    },
+    {
+      "topic": "Control Flow",
+      "definition": "Control flow statements determine the order in which instructions are executed. from from python_source.content._source.content. uses if/elif/else for conditional execution. Indentation (4 spaces) defines code blocks — there are no braces.",
+      "key_concepts": [
+        "if block executes when condition is True",
+        "elif checks additional conditions in sequence",
+        "else runs when all preceding conditions are False",
+        "Ternary expression: value_if_true if condition else value_if_false",
+        "Conditions can be chained: 0 < x < 10 is valid from from python_source.content._source.content.",
+        "Any non-zero / non-empty value is truthy",
+        "Falsy values: 0, 0.0, '', [], {}, (), None, False"
+      ],
+      "code_examples": [
+        {
+          "description": "if / elif / else and ternary expression",
+          "code": "marks = 75\n\nif marks >= 90:\n    grade = \"A\"\nelif marks >= 75:\n    grade = \"B\"\nelif marks >= 60:\n    grade = \"C\"\nelif marks >= 40:\n    grade = \"D\"\nelse:\n    grade = \"F\"\n\nprint(f\"Grade: {grade}\")   # Grade: B\n\n# Ternary (one-liner)\nresult = \"Pass\" if marks >= 40 else \"Fail\""
+        },
+        {
+          "description": "Nested conditions",
+          "code": "age    = 20\nhas_id = True\n\nif age >= 18:\n    if has_id:\n        print(\"Entry allowed\")\n    else:\n        print(\"Show ID\")\nelse:\n    print(\"Under age\")"
+        }
+      ],
+      "important_points": [
+        "from from python_source.content._source.content. uses indentation — inconsistent indentation causes IndentationError",
+        "elif is short for 'else if' — from from python_source.content._source.content. has no switch statement (match added in 3.10)",
+        "Conditions are evaluated top to bottom — first True block executes",
+        "Ternary: x if condition else y — useful for simple one-line conditions",
+        "Chained comparisons: 0 < x < 10 works and is from from python_source.content._source.content.ic"
+      ],
+      "exam_questions": [
+        "Write a from from python_source.content._source.content. program to find the largest of three numbers.",
+        "What is a ternary operator? Write an example.",
+        "Explain the if-elif-else ladder with a grade calculator example.",
+        "What are falsy values in from from python_source.content._source.content.? List all of them."
+      ],
+      "explanation": "from from python_source.content._source.content.'s control flow uses indentation instead of braces. The if-elif-else ladder evaluates conditions top to bottom and executes the first matching block. The ternary expression provides a concise one-line alternative for simple conditions."
+    },
+    {
+      "topic": "Loops",
+      "definition": "Loops allow repeated execution of a block of code. from from python_source.content._source.content. provides two loop types: for (iterates over a sequence) and while (repeats while a condition is True). Both support break, continue, pass, and an else clause.",
+      "key_concepts": [
+        "for loop iterates over any iterable: list, string, range, dict, tuple, set",
+        "range(start, stop, step) — stop is exclusive",
+        "while loop repeats while condition is True",
+        "break — exits the loop immediately",
+        "continue — skips the rest of the current iteration",
+        "pass — placeholder, does nothing",
+        "for-else / while-else: else runs only if no break occurred",
+        "enumerate() — provides index and value together",
+        "zip() — iterates over multiple iterables simultaneously"
+      ],
+      "code_examples": [
+        {
+          "description": "for loop — range, enumerate, dict iteration",
+          "code": "# range\nfor i in range(1, 6):\n    print(i, end=\" \")      # 1 2 3 4 5\n\n# enumerate\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfor idx, val in enumerate(fruits, start=1):\n    print(f\"{idx}. {val}\")\n\n# dict iteration\nstudent = {\"name\": \"Alice\", \"age\": 21}\nfor key, value in student.items():\n    print(f\"{key}: {value}\")"
+        },
+        {
+          "description": "while loop, break, continue, for-else",
+          "code": "# while loop\nn = 1\nwhile n <= 5:\n    print(n, end=\" \")   # 1 2 3 4 5\n    n += 1\n\n# break — stop at first even\nfor n in range(1, 10):\n    if n % 2 == 0:\n        print(\"First even:\", n)   # 2\n        break\n\n# continue — skip odds\nevens = []\nfor n in range(1, 11):\n    if n % 2 != 0:\n        continue\n    evens.append(n)\nprint(evens)   # [2, 4, 6, 8, 10]\n\n# for-else\nfor n in range(2, 10):\n    if 10 % n == 0:\n        print(\"Factor:\", n)\n        break\nelse:\n    print(\"10 is prime\")   # won't print"
+        }
+      ],
+      "important_points": [
+        "range(stop) — starts at 0; range(start, stop, step)",
+        "for-else else block runs ONLY if loop completed without break",
+        "Avoid modifying a list while iterating over it",
+        "Use enumerate() instead of range(len(list)) for cleaner code",
+        "Infinite loop: while True — always include a break condition"
+      ],
+      "exam_questions": [
+        "What is the difference between break and continue?",
+        "Explain the for-else construct with an example.",
+        "Write a from from python_source.content._source.content. program to print all prime numbers between 1 and 50.",
+        "What is the output of: for i in range(2, 10, 3): print(i)?",
+        "Write a program using a while loop to compute factorial of n."
+      ],
+      "explanation": "from from python_source.content._source.content.'s for loop is used to iterate over sequences. The while loop is used when the number of iterations is not known in advance. The else clause on a loop is a unique from from python_source.content._source.content. feature that executes when the loop completes without a break."
+    },
+    {
+      "topic": "Input Output",
+      "definition": "input() reads a line from standard input (keyboard) and always returns a string. print() sends output to standard output (screen). Type casting is required when numeric input is expected.",
+      "key_concepts": [
+        "input() always returns str — cast explicitly for numbers",
+        "int(input()) for integer input; float(input()) for decimal",
+        "map(int, input().split()) — read multiple integers on one line",
+        "print() parameters: sep (separator), end (line ending)",
+        "f-strings are the recommended formatting method (from from python_source.content._source.content. 3.6+)",
+        "Format specifiers: :.2f (2 decimal places), :d (integer), :<10 (left-align)"
+      ],
+      "code_examples": [
+        {
+          "description": "input(), casting, multiple values, print parameters",
+          "code": "# input always returns str\nname = input(\"Enter your name: \")\nage  = int(input(\"Enter age: \"))       # cast to int\ngpa  = float(input(\"Enter GPA: \"))     # cast to float\n\n# Multiple values on one line\na, b = map(int, input(\"Two numbers: \").split())\nprint(\"Sum =\", a + b)\n\n# print parameters\nprint(\"A\", \"B\", \"C\", sep=\"-\")      # A-B-C\nprint(\"Line 1\", end=\" \")\nprint(\"Line 2\")                    # Line 1 Line 2"
+        },
+        {
+          "description": "f-string formatting with alignment and precision",
+          "code": "name  = \"Alice\"\nscore = 95.678\n\nprint(f\"Name: {name}\")\nprint(f\"Score: {score:.2f}\")       # Score: 95.68\nprint(f\"Doubled: {score * 2:.1f}\") # Doubled: 191.4\n\n# Alignment\nprint(f\"{'left':<10}|\")    # left      |\nprint(f\"{'right':>10}|\")   #      right|\nprint(f\"{'centre':^10}|\")  #   centre  |"
+        }
+      ],
+      "important_points": [
+        "input() ALWAYS returns str — forgetting to cast is the most common beginner bug",
+        "int(input()) raises ValueError if the user enters a non-numeric string",
+        "f-strings support expressions: f'{2**10}' = '1024'",
+        "print(end='') suppresses the newline",
+        "print(sep=',') changes the separator between multiple arguments"
+      ],
+      "exam_questions": [
+        "What does input() return? Why must it be cast for arithmetic?",
+        "Write a program to read two numbers and print their sum, product, and average.",
+        "Explain f-string formatting with three examples.",
+        "What is the output of: print('A','B','C', sep='--', end='!')?"
+      ],
+      "explanation": "input() is the standard way to receive user input in from from python_source.content._source.content.. It always returns a string, so explicit casting with int() or float() is required for numeric operations. f-strings are the modern, preferred formatting method."
+    },
+    {
+      "topic": "Type Casting",
+      "definition": "Type casting (type conversion) is the process of converting a value from one data type to another. from from python_source.content._source.content. supports implicit conversion (automatic, done by interpreter) and explicit conversion (manual, using built-in functions).",
+      "key_concepts": [
+        "Implicit: from from python_source.content._source.content. auto-promotes type to prevent data loss (int + float → float)",
+        "Explicit: programmer uses int(), float(), str(), bool(), list(), tuple(), set()",
+        "int() truncates float — does NOT round: int(3.9) = 3",
+        "int('3.14') raises ValueError — must use int(float('3.14'))",
+        "bool() of any non-zero / non-empty value is True",
+        "Falsy values: 0, 0.0, '', [], {}, (), set(), None, False",
+        "Truthy: everything else including [0], '0', -1"
+      ],
+      "types": [
+        {
+          "name": "Implicit Conversion",
+          "description": "from from python_source.content._source.content. automatically promotes types to avoid data loss in mixed expressions.",
+          "example": "result = 10 + 3.5  # int + float → float = 13.5"
+        },
+        {
+          "name": "Explicit Conversion",
+          "description": "Programmer manually converts using built-in functions: int(), float(), str(), bool(), list(), tuple(), set(), complex()."
+        }
+      ],
+      "code_examples": [
+        {
+          "description": "Implicit and explicit type conversion with falsy values",
+          "code": "# Implicit\nresult = 10 + 3.5    # int + float → float\nprint(result)        # 13.5\nprint(type(result))  # <class 'float'>\n\nresult2 = True + 5   # bool + int → int\nprint(result2)       # 6\n\n# Explicit\nprint(int(3.9))           # 3  — truncates\nprint(int('0b1010', 2))   # 10 — binary string\nprint(int('FF', 16))      # 255 — hex string\nprint(float('3.14'))      # 3.14\nprint(str(100))           # '100'\nprint(list('abc'))        # ['a', 'b', 'c']\nprint(set([1,1,2,3]))     # {1, 2, 3}\n\n# Falsy values\nfalsy = [0, 0.0, '', [], {}, (), None, False]\nfor val in falsy:\n    print(bool(val), end=' ')  # False (all)\n\n# Truthy\nprint(bool(42))    # True\nprint(bool([0]))   # True — non-empty list"
+        }
+      ],
+      "important_points": [
+        "int('3.14') raises ValueError — must do int(float('3.14')) = 3",
+        "int(3.9) = 3 — truncation, not rounding; use round(3.9) = 4 for rounding",
+        "bool(0) = False; bool([]) = False; bool([0]) = True (non-empty list)",
+        "str(None) = 'None' (string); not the same as None",
+        "Implicit conversion only widens type — from from python_source.content._source.content. never silently loses precision"
+      ],
+      "exam_questions": [
+        "What is the difference between implicit and explicit type conversion?",
+        "What is the output of: print(int('3.14'))?  Why?",
+        "List all falsy values in from from python_source.content._source.content..",
+        "What is the output of: print(bool([]), bool([0]), bool(''))?",
+        "How do you convert a binary string '1010' to an integer?"
+      ],
+      "explanation": "from from python_source.content._source.content. performs implicit conversion to prevent precision loss in mixed-type arithmetic. Explicit casting must be done manually using built-in functions. The most common mistake is trying to convert a float string directly to int."
+    },
+    {
+      "topic": "Strings",
+      "definition": "A string is an immutable ordered sequence of Unicode characters. Strings are created using single quotes, double quotes, or triple quotes. They support indexing, slicing, concatenation, repetition, and a rich set of built-in methods.",
+      "key_concepts": [
+        "Immutable — cannot modify characters in place",
+        "Indexing: s[0] first, s[-1] last",
+        "Slicing: s[start:stop:step] — stop is exclusive",
+        "s[::-1] reverses the string",
+        "Concatenation: 'Hello' + ' World'",
+        "Repetition: 'ab' * 3 = 'ababab'",
+        "len(s) returns number of characters",
+        "Strings are iterable: for ch in s"
+      ],
+      "common_methods": [
+        "upper() / lower() — change case",
+        "strip() / lstrip() / rstrip() — remove whitespace",
+        "split(sep) — split into list",
+        "join(iterable) — join list into string",
+        "replace(old, new) — replace substring",
+        "find(sub) — index of first match (-1 if not found)",
+        "startswith(p) / endswith(p) — check prefix/suffix",
+        "count(sub) — count occurrences",
+        "isdigit() / isalpha() / isalnum() — character checks",
+        "format() — string formatting"
+      ],
+      "code_examples": [
+        {
+          "description": "Indexing, slicing, and string methods",
+          "code": "s = 'from from python_source.content._source.content.'\n#    P  y  t  h  o  n\n#    0  1  2  3  4  5   (positive)\n#   -6 -5 -4 -3 -2 -1   (negative)\n\nprint(s[0])       # P\nprint(s[-1])      # n\nprint(s[2:5])     # tho\nprint(s[:3])      # Pyt\nprint(s[3:])      # hon\nprint(s[::2])     # Pto\nprint(s[::-1])    # nohtyP\n\n# Methods\nprint('hello'.upper())         # HELLO\nprint('  hi  '.strip())        # hi\nprint('a,b,c'.split(','))      # ['a','b','c']\nprint('-'.join(['x','y','z'])) # x-y-z\nprint('hello'.replace('l','r'))# herro\nprint('hello'.find('l'))       # 2\nprint('hello'.count('l'))      # 2\nprint('123'.isdigit())         # True"
+        }
+      ],
+      "important_points": [
+        "Strings are immutable — s[0] = 'h' raises TypeError",
+        "String methods return NEW strings — the original is unchanged",
+        "Slicing never raises IndexError — out-of-range indices are clipped",
+        "find() returns -1 if not found; index() raises ValueError",
+        "Use f-strings for formatting (from from python_source.content._source.content. 3.6+): f'Hello {name}'"
+      ],
+      "exam_questions": [
+        "What is the output of: s='from from python_source.content._source.content.'; print(s[1:4], s[::-1])?",
+        "Explain string immutability with an example.",
+        "What is the difference between find() and index()?",
+        "Write a program to count vowels in a given string.",
+        "What is the output of: print('ab' * 3, len('hello'))?"
+      ],
+      "explanation": "Strings are one of the most frequently used data types in from from python_source.content._source.content.. Their immutability means every modification creates a new string object. The slicing syntax s[start:stop:step] is extremely powerful and must be mastered for exams."
+    }
+  ]
+}
