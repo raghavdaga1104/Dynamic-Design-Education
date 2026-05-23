@@ -36,7 +36,7 @@ export const health = {
 // ── Curriculum ────────────────────────────────────────────────
 export const curriculum = {
   getAll: () => apiCall('GET', '/curriculum'),
-  getQuestions: (unitId) => apiCall('GET', `/curriculum/${unitId}/questions`),
+  getQuestions: (unitId, userId) => apiCall('GET', `/curriculum/${unitId}/questions${userId ? `?user_id=${userId}` : ''}`),
   checkAnswer: (unitId, questionId, answerIdx) =>
     apiCall('POST', `/curriculum/${unitId}/questions/${questionId}/check?answer_idx=${answerIdx}`),
   // Fetches notes for a unit from python_course_dataset.json via backend

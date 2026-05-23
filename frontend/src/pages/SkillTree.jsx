@@ -130,7 +130,7 @@ export default function SkillTree() {
             )}
 
             {/* Action */}
-            {node.status === 'unlocked' && (
+            {(node.status === 'unlocked' || node.status === 'completed') && (
               <Button
                 size="sm"
                 className="node-action-btn"

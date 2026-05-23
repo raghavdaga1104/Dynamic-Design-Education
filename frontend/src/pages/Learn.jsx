@@ -51,8 +51,10 @@ export default function Learn() {
   const [flashGate,    setFlashGate]    = useState(null);
   const [error,        setError]        = useState('');
   const [chatOpen,     setChatOpen]     = useState(false);
+  const [quizLock,     setQuizLock]     = useState(null);
+  const [lockTick,     setLockTick]     = useState(0);
 
-  // ── Session-storage key scoped per user ───────────────────
+  // SessionStorage key scoped per user — persists rec across refresh (Bug #2 fix)
   const REC_KEY = `learn_rec_${userId}`;
 
   const loadRecommendation = useCallback(async (forceNew = false) => {
@@ -60,19 +62,17 @@ export default function Learn() {
     setError('');
     setUnitNotes([]);
 
-    // Bug fix #2: If a rec is already cached in sessionStorage and we're not
-    // forcing a new one (e.g. user clicked "Get Different Unit"), restore it
-    // instead of re-running MCTS so the unit doesn't change on refresh.
+    // Bug fix #2: restore cached rec on refresh instead of re-running MCTS
     if (!forceNew) {
       try {
         const cached = sessionStorage.getItem(REC_KEY);
         if (cached) {
-          const parsed = JSON.parse(cached);
-          setRec(parsed);
+          setRec(JSON.parse(cached));
+          setQuizLock(null);
           setPhase(PHASE.SHOW_UNIT);
           return;
         }
-      } catch { /* ignore parse errors */ }
+      } catch { /* ignore */ }
     }
 
     try {
@@ -84,6 +84,7 @@ export default function Learn() {
       }
       sessionStorage.setItem(REC_KEY, JSON.stringify(data));
       setRec(data);
+      setQuizLock(null);
       setPhase(PHASE.SHOW_UNIT);
     } catch (e) {
       if (e.status === 409 && e.detail?.code === 'REVIEWS_DUE') {
@@ -99,20 +100,38 @@ export default function Learn() {
   useEffect(() => {
     if (!userId) { navigate('/'); return; }
 
-    // Bug fix #3: If SkillTree passed a specific unit via router state, use it directly
-    // instead of running MCTS, so the correct unit is loaded.
+    // Bug fix #3: SkillTree passes a specific unit via router state — use it directly
     const forcedUnit = location.state?.forcedUnit;
     if (forcedUnit) {
-      // Clear router state so a subsequent refresh doesn't re-use it
-      window.history.replaceState({}, '');
+      window.history.replaceState({}, '');   // clear so refresh doesn't re-apply
       sessionStorage.setItem(REC_KEY, JSON.stringify(forcedUnit));
       setRec(forcedUnit);
+      setQuizLock(null);
       setPhase(PHASE.SHOW_UNIT);
       return;
     }
 
     loadRecommendation();
   }, [userId]); // eslint-disable-line
+
+  // Countdown ticker — re-renders every second while lock is active
+  useEffect(() => {
+    if (!quizLock?.locked_until) return;
+    const interval = setInterval(() => setLockTick(t => t + 1), 1000);
+    return () => clearInterval(interval);
+  }, [quizLock?.locked_until]);
+
+  function secondsRemaining() {
+    if (!quizLock?.locked_until) return 0;
+    return Math.max(0, Math.floor(quizLock.locked_until - Date.now() / 1000));
+  }
+
+  function formatCountdown(secs) {
+    const h = Math.floor(secs / 3600);
+    const m = Math.floor((secs % 3600) / 60);
+    const s = secs % 60;
+    return `${h}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+  }
 
   // ── Load notes then enter NOTES phase ─────────────────────
   async function handleViewNotes() {
@@ -149,8 +168,15 @@ export default function Learn() {
   async function handleStartQuiz() {
     setPhase(PHASE.LOADING_QS);
     setError('');
+    setQuizLock(null);
     try {
-      const data = await currApi.getQuestions(rec.unit_id);
+      const data = await currApi.getQuestions(rec.unit_id, userId);
+      // If quiz was taken in last 24hrs, backend returns lock info instead of questions
+      if (data.locked_until && data.seconds_remaining > 0) {
+        setQuizLock({ locked_until: data.locked_until, seconds_remaining: data.seconds_remaining });
+        setPhase(PHASE.SHOW_UNIT);
+        return;
+      }
       setQuestions(data.questions);
       setAnswers({});
       setCurrent(0);
@@ -193,9 +219,19 @@ export default function Learn() {
       setQuizResult(result);
       setPhase(PHASE.RESULT);
     } catch (e) {
-      if (e.status === 409) {
-        toast('Already submitted recently. Please wait 60 seconds.', 'warning');
-        setPhase(PHASE.QUIZ);
+      if (e.status === 423) {
+        const detail = e.detail || {};
+        setQuizLock({
+          locked_until:      detail.locked_until || (Date.now() / 1000 + 86400),
+          seconds_remaining: detail.seconds_remaining || 86400,
+        });
+        setPhase(PHASE.SHOW_UNIT);
+      } else if (e.status === 400) {
+        setError(
+          'Your mastery of prerequisite units is too low to submit this quiz. ' +
+          'Please go back and complete the earlier units first, or try the quiz again after reviewing the notes.'
+        );
+        setPhase(PHASE.SHOW_UNIT);
       } else {
         setError('Submission failed: ' + e.message);
         setPhase(PHASE.QUIZ);
@@ -205,10 +241,16 @@ export default function Learn() {
 
   async function handleAfterResult() {
     if (!quizResult?.bkt?.unit_passed) {
-      await handleStartQuiz();
+      // Failed — if quiz is now locked show the countdown, else allow retry
+      if (secondsRemaining() > 0) {
+        setPhase(PHASE.SHOW_UNIT);
+      } else {
+        await handleStartQuiz();
+      }
       return;
     }
-    // Unit is passed — clear cached rec so MCTS picks the next one fresh
+    // Passed — clear cache + lock, force fresh MCTS recommendation
+    setQuizLock(null);
     sessionStorage.removeItem(REC_KEY);
     try {
       const gate = await flashApi.checkGate(userId);
@@ -332,17 +374,28 @@ export default function Learn() {
           </Card>
         )}
 
-        <div className="unit-actions">
-          <Button size="lg" onClick={handleViewNotes} loading={notesLoading}>
-            📖 Read Notes
-          </Button>
-          <Button variant="secondary" size="lg" onClick={handleStartQuiz}>
-            ▶ Start Quiz
-          </Button>
-          <Button variant="ghost" onClick={() => loadRecommendation(true)}>
-            ↺ Get Different Unit
-          </Button>
-        </div>
+        {quizLock && secondsRemaining() > 0 ? (
+          <div className="quiz-lock-banner">
+            <div className="lock-icon">🔒</div>
+            <div className="lock-text">
+              <strong>Quiz locked — come back in</strong>
+              <div className="lock-countdown">{formatCountdown(secondsRemaining())}</div>
+              <span className="lock-sub">A fresh set of questions will be generated after the cooldown.</span>
+            </div>
+          </div>
+        ) : (
+          <div className="unit-actions">
+            <Button size="lg" onClick={handleViewNotes} loading={notesLoading}>
+              📖 Read Notes
+            </Button>
+            <Button variant="secondary" size="lg" onClick={handleStartQuiz}>
+              ▶ Start Quiz
+            </Button>
+            <Button variant="ghost" onClick={() => { sessionStorage.removeItem(REC_KEY); loadRecommendation(true); }}>
+              ↺ Get Different Unit
+            </Button>
+          </div>
+        )}
       </div>
     );
   }
@@ -548,6 +601,7 @@ export default function Learn() {
 
     return (
       <div className="page learn-page">
+        {error && <Alert type="error" onClose={() => setError('')}>{error}</Alert>}
         <div className="quiz-topbar">
           <div className="quiz-unit-name">{rec?.display_name}</div>
           <ProgressBar value={answeredCount} max={questions.length} color="var(--accent)" showPercent={false} />
