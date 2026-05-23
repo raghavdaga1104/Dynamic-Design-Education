@@ -30,12 +30,16 @@ Integration approach:
 
 ADDING NEW QUESTIONS
 ────────────────────
-  - Hand-crafted: add a dict to QUESTIONS below following the schema.
-  - Dataset-derived: add to _DATASET_QUESTIONS below. These are merged
-    into QUESTIONS at module load time.
+  - Hand-crafted: add a dict to _HANDCRAFTED_QUESTIONS following the schema.
+  - Dataset-derived: add to _DATASET_QUESTIONS below. Merged at module load.
+  - AI-generated: run generate_questions.py. Output goes to
+    python_source/data/questions.json and is loaded automatically at startup.
   - No changes to algorithm code are required.
 """
 
+import random
+import json
+from pathlib import Path
 from typing import List, Dict, Optional
 
 DIFFICULTY_TO_IRT = {"easy": 0.30, "medium": 0.60, "hard": 0.90}
@@ -1052,9 +1056,36 @@ _DATASET_QUESTIONS: List[Dict] = [
 #  De-duplicate by question_id (hand-crafted takes precedence).
 # ─────────────────────────────────────────────────────────────────
 
+# ── Load AI-generated questions from questions.json ──────────────────────────
+# Same pattern as notes.json: lives in python_source/data/, loaded at startup,
+# falls back to empty list if file doesn't exist yet.
+_QUESTIONS_JSON_PATH = Path(__file__).parent.parent / "data" / "questions.json"
+
+def _load_ai_questions() -> List[Dict]:
+    if not _QUESTIONS_JSON_PATH.exists():
+        return []
+    try:
+        with open(_QUESTIONS_JSON_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        questions = []
+        for unit in data.get("units", []):
+            unit_id = unit.get("unit_id", "")
+            for q in unit.get("questions", []):
+                q = dict(q)          # shallow copy so we don't mutate the parsed JSON
+                q["unit_id"] = unit_id
+                questions.append(q)
+        return questions
+    except Exception as e:
+        print(f"Warning: could not load questions.json — {e}")
+        return []
+
+_AI_QUESTIONS: List[Dict] = _load_ai_questions()
+
+
 def _merge_questions() -> List[Dict]:
+    # Handcrafted always wins on question_id collision
     by_id: Dict[str, Dict] = {q["question_id"]: q for q in _HANDCRAFTED_QUESTIONS}
-    for q in _DATASET_QUESTIONS:
+    for q in _DATASET_QUESTIONS + _AI_QUESTIONS:
         if q["question_id"] not in by_id:
             by_id[q["question_id"]] = q
     return list(by_id.values())
@@ -1074,7 +1105,9 @@ _QUESTION_MAP: Dict[str, Dict] = {q["question_id"]: q for q in QUESTIONS}
 # ─────────────────────────────────────────────────────────────────
 
 def get_questions_for_unit(unit_id: str) -> List[Dict]:
-    return [q for q in QUESTIONS if q["unit_id"] == unit_id]
+    questions = [q for q in QUESTIONS if q["unit_id"] == unit_id]
+    random.shuffle(questions)
+    return questions
 
 
 def get_question_by_id(question_id: str) -> Optional[Dict]:

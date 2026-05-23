@@ -7,9 +7,13 @@ prerequisite chains, skills, IRT parameters, and metadata.
 HOW TO ADD A NEW UNIT
 ─────────────────────
 1. Add a new entry to CURRICULUM_UNITS below.
-2. Add quiz questions for it in quiz_bank.py.
-3. Add micro-notes for it in the notes data file.
-4. No algorithm code changes are required — the graph loads automatically.
+2. Add handcrafted seed questions to quiz_bank.py (optional but recommended).
+   AI-generated questions are created on-demand by question_generator.py
+   the first time a student takes the quiz for this unit.
+3. Add the unit metadata to _UNIT_META in question_generator.py so the
+   AI prompt has the correct topics for generation.
+4. Add micro-notes for it in notes_data.py (_HANDWRITTEN_NOTES section).
+5. No algorithm code changes are required — the graph loads automatically.
 
 IRT PARAMETER GUIDE
 ───────────────────

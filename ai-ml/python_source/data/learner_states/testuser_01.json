@@ -1,27 +1,75 @@
 {
   "user_id": "testuser_01",
   "skill_mastery": {
-    "advanced oop": 0.1,
-    "python basics": 0.85,
-    "linked lists": 0.1,
-    "arrays": 0.1,
-    "recursion": 0.1,
-    "searching": 0.1,
-    "oop concepts": 0.1,
-    "python functions": 0.1,
-    "trees": 0.1,
-    "dynamic programming": 0.1,
     "hash tables": 0.1,
+    "python basics": 0.1832,
+    "oop concepts": 0.1,
+    "arrays": 0.1616,
     "stacks and queues": 0.1,
+    "searching": 0.1,
+    "recursion": 0.1,
+    "dynamic programming": 0.1,
+    "linked lists": 0.1,
+    "advanced oop": 0.1,
+    "python functions": 0.247,
     "graph algorithms": 0.1,
+    "trees": 0.1,
     "sorting": 0.1
   },
-  "completed_units": [],
-  "current_unit_id": "UNIT2_PythonFunctions",
+  "completed_units": [
+    "UNIT2_PythonFunctions"
+  ],
+  "current_unit_id": "UNIT1_PythonBasics",
   "streak_days": 0,
-  "flashcards": {},
-  "last_review_day": {},
-  "quiz_history": [],
+  "flashcards": {
+    "UNIT2_PythonFunctions": {
+      "unit_id": "UNIT2_PythonFunctions",
+      "ease_factor": 2.04,
+      "interval": 1,
+      "repetitions": 0
+    }
+  },
+  "last_review_day": {
+    "UNIT2_PythonFunctions": 23
+  },
+  "quiz_history": [
+    {
+      "unit_id": "UNIT2_PythonFunctions",
+      "was_correct": true,
+      "irt_mastery": 0.6822,
+      "timestamp": 1779348214.993
+    },
+    {
+      "unit_id": "UNIT5_Arrays",
+      "was_correct": false,
+      "irt_mastery": 0.4068,
+      "timestamp": 1779348804.847
+    },
+    {
+      "unit_id": "UNIT1_PythonBasics",
+      "was_correct": false,
+      "irt_mastery": 0.4827,
+      "timestamp": 1779349255.276
+    },
+    {
+      "unit_id": "UNIT1_PythonBasics",
+      "was_correct": false,
+      "irt_mastery": 0.6135,
+      "timestamp": 1779441349.818
+    },
+    {
+      "unit_id": "UNIT2_PythonFunctions",
+      "was_correct": false,
+      "irt_mastery": 0.3464,
+      "timestamp": 1779523088.931
+    },
+    {
+      "unit_id": "UNIT1_PythonBasics",
+      "was_correct": false,
+      "irt_mastery": 0.2665,
+      "timestamp": 1779523119.715
+    }
+  ],
   "diagnostic_result": {
     "topic": "python",
     "score_raw": 0,
@@ -34,7 +82,1389 @@
   },
   "current_day": 0,
   "_created_at": 1777493629.7949617,
-  "mistake_log": [],
-  "concept_index": {},
-  "consecutive_failures": {}
+  "mistake_log": [
+    {
+      "question_id": "Q_UNIT2_005",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "return",
+        "None"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_DS_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "recursion",
+        "factorial",
+        "code reading"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_DS_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "functions",
+        "polymorphism",
+        "string concat",
+        "code reading"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_DS_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "functions",
+        "return",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "scope"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_004",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "map",
+        "lambda"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "closures"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_DS_004",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "recursion",
+        "base case",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "lambda"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348214.993,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT5_005",
+      "unit_id": "UNIT5_Arrays",
+      "topic": "arrays",
+      "concept_tags": [
+        "sorting"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348804.847,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT5_002",
+      "unit_id": "UNIT5_Arrays",
+      "topic": "arrays",
+      "concept_tags": [
+        "indexing"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348804.847,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT5_004",
+      "unit_id": "UNIT5_Arrays",
+      "topic": "arrays",
+      "concept_tags": [
+        "list methods"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348804.847,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT5_003",
+      "unit_id": "UNIT5_Arrays",
+      "topic": "arrays",
+      "concept_tags": [
+        "slicing"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779348804.847,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT5_006",
+      "unit_id": "UNIT5_Arrays",
+      "topic": "arrays",
+      "concept_tags": [
+        "list methods"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348804.847,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT5_001",
+      "unit_id": "UNIT5_Arrays",
+      "topic": "arrays",
+      "concept_tags": [
+        "complexity"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779348804.847,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_DS_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables",
+        "type()",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_006",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "list comprehension"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_DS_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables",
+        "data types",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_007",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_008",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "swap"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "control flow"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779349255.276,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_DS_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables",
+        "data types",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779441349.818,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_008",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "swap"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779441349.818,
+      "attempt_num": 2,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779441349.818,
+      "attempt_num": 2,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779441349.818,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_006",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "list comprehension"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779441349.818,
+      "attempt_num": 2,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779441349.819,
+      "attempt_num": 2,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779441349.819,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_007",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779441349.819,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_DS_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables",
+        "type()",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779441349.819,
+      "attempt_num": 2,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "control flow"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779441349.819,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_E_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "return"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "closures"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_DS_004",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "recursion",
+        "base case",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "scope"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_DS_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "functions",
+        "polymorphism",
+        "string concat",
+        "code reading"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_M_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "builtin functions"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_E_004",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "arguments"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_E_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "scope"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_004",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "map",
+        "lambda"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_M_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "builtin functions"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_005",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "return",
+        "None"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_H_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "default arguments"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_M_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "functions"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "lambda"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_DS_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "recursion",
+        "factorial",
+        "code reading"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_E_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_6518_E_005",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT2_DS_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "topic": "python functions",
+      "concept_tags": [
+        "functions",
+        "return",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523088.931,
+      "attempt_num": 2,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_E_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.715,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_M_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "control flow"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.715,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_E_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.715,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_E_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.715,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_H_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "recursion"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523119.715,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_E_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_006",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "list comprehension"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_DS_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables",
+        "type()",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_008",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "swap"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "control flow"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_DS_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "variables",
+        "data types",
+        "code reading"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_H_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_M_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "list comprehensions"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_E_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_M_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "control flow"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_007",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.716,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_H_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "recursion"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_H_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "recursion"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_H_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1779523119.716,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1779523119.717,
+      "attempt_num": 3,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_2350_M_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "type conversion"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1779523119.717,
+      "attempt_num": 1,
+      "was_correct": false
+    }
+  ],
+  "concept_index": {
+    "return": {
+      "correct": 2,
+      "wrong": 3,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779523088.931,
+      "difficulty_wrong_counts": {
+        "easy": 3,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "None": {
+      "correct": 0,
+      "wrong": 2,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 2,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "recursion": {
+      "correct": 4,
+      "wrong": 3,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779523119.716,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 1,
+        "hard": 1
+      }
+    },
+    "factorial": {
+      "correct": 1,
+      "wrong": 1,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "code reading": {
+      "correct": 5,
+      "wrong": 9,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779441349.819,
+      "difficulty_wrong_counts": {
+        "easy": 7,
+        "medium": 2,
+        "hard": 0
+      }
+    },
+    "functions": {
+      "correct": 2,
+      "wrong": 3,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 2,
+        "hard": 0
+      }
+    },
+    "polymorphism": {
+      "correct": 1,
+      "wrong": 1,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "string concat": {
+      "correct": 1,
+      "wrong": 1,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "scope": {
+      "correct": 1,
+      "wrong": 2,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "map": {
+      "correct": 0,
+      "wrong": 2,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 2,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "lambda": {
+      "correct": 1,
+      "wrong": 3,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 3,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "closures": {
+      "correct": 0,
+      "wrong": 2,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 2,
+        "hard": 0
+      }
+    },
+    "base case": {
+      "correct": 1,
+      "wrong": 1,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": 1779348214.993,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "sorting": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1779348804.847,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "indexing": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1779348804.847,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "list methods": {
+      "correct": 0,
+      "wrong": 2,
+      "last_wrong_ts": 1779348804.847,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "slicing": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1779348804.847,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "complexity": {
+      "correct": 0,
+      "wrong": 6,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 5
+      }
+    },
+    "data types": {
+      "correct": 0,
+      "wrong": 10,
+      "last_wrong_ts": 1779523119.717,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 7,
+        "medium": 3,
+        "hard": 0
+      }
+    },
+    "variables": {
+      "correct": 1,
+      "wrong": 6,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779441349.819,
+      "difficulty_wrong_counts": {
+        "easy": 6,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "type()": {
+      "correct": 1,
+      "wrong": 2,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779441349.819,
+      "difficulty_wrong_counts": {
+        "easy": 2,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "list comprehension": {
+      "correct": 2,
+      "wrong": 1,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779441349.818,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "syntax": {
+      "correct": 2,
+      "wrong": 4,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779523088.931,
+      "difficulty_wrong_counts": {
+        "easy": 4,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "operators": {
+      "correct": 2,
+      "wrong": 3,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779441349.818,
+      "difficulty_wrong_counts": {
+        "easy": 2,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "swap": {
+      "correct": 1,
+      "wrong": 2,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779441349.818,
+      "difficulty_wrong_counts": {
+        "easy": 2,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "control flow": {
+      "correct": 1,
+      "wrong": 4,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": 1779349255.276,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 4,
+        "hard": 0
+      }
+    },
+    "builtin functions": {
+      "correct": 0,
+      "wrong": 2,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 2,
+        "hard": 0
+      }
+    },
+    "arguments": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "default arguments": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1779523088.931,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 1
+      }
+    },
+    "list comprehensions": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1779523119.716,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "type conversion": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1779523119.717,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    }
+  },
+  "consecutive_failures": {
+    "UNIT2_PythonFunctions": 1,
+    "UNIT5_Arrays": 1,
+    "UNIT1_PythonBasics": 3
+  }
 }

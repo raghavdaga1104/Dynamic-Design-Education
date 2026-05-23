@@ -647,7 +647,9 @@ def _build_all_notes() -> List[Dict]:
     # Index by id so we can de-duplicate
     by_id: Dict[str, Dict] = {n["id"]: n for n in dataset_notes}
 
-    # Hand-written notes: add if id not already present (dataset wins)
+    # Hand-written notes: add only if id not already present.
+    # This means handwritten notes fill gaps for topics the dataset doesn't cover,
+    # and dataset-derived notes always take precedence for the same id.
     for note in _HANDWRITTEN_NOTES:
         if note["id"] not in by_id:
             by_id[note["id"]] = note
@@ -656,3 +658,11 @@ def _build_all_notes() -> List[Dict]:
 
 
 ALL_NOTES: List[Dict] = _build_all_notes()
+
+# Log summary at import time so it's visible in server startup output
+import logging as _lg
+_lg.getLogger(__name__).info(
+    "notes_data: loaded %d notes (%d units)",
+    len(ALL_NOTES),
+    len({n['unit_id'] for n in ALL_NOTES}),
+)

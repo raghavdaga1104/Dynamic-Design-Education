@@ -575,7 +575,10 @@ class DiagnosticEngine:
         questions  = DIAGNOSTIC_QUESTIONS.get(topic_key)
 
         if not questions:
-            # Fallback: return python questions for unknown topics
+            import logging as _lg
+            _lg.getLogger(__name__).warning(
+                "DiagnosticEngine: unknown topic %r - falling back to 'python'", topic
+            )
             questions = DIAGNOSTIC_QUESTIONS["python"]
 
         # Return safe version — no correct answers exposed
@@ -615,7 +618,6 @@ class DiagnosticEngine:
         """
         topic_key  = topic.lower().strip()
         questions  = DIAGNOSTIC_QUESTIONS.get(topic_key, DIAGNOSTIC_QUESTIONS["python"])
-        q_map      = {q["question_id"]: q for q in questions}
 
         score_raw = 0
         breakdown = []
@@ -666,9 +668,8 @@ class DiagnosticEngine:
         Return beginner placement for users who chose to skip the diagnostic.
         Stored identically to a real result so the system treats it the same way.
         """
-        topic_key    = topic.lower().strip()
-        placement    = PLACEMENT_MAP.get(topic_key, PLACEMENT_MAP["python"])
-        starting_unit = placement["beginner"]
+        topic_key     = topic.lower().strip()
+        starting_unit = PLACEMENT_MAP.get(topic_key, PLACEMENT_MAP["python"])["beginner"]
 
         return {
             "topic":          topic,
@@ -678,10 +679,8 @@ class DiagnosticEngine:
             "tier":           "beginner",
             "starting_unit":  starting_unit,
             "skipped":        True,
-            "message":        (
-                f"You chose to start from the beginning. "
-                f"Your first unit is ready."
-            ),
+            "breakdown":      [],
+            "message":        "You chose to start from the beginning. Your first unit is ready.",
         }
 
     def get_available_topics(self) -> List[str]:

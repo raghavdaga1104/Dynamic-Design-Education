@@ -41,6 +41,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from python_source.content.curriculum    import build_knowledge_graph
 from python_source.content.quiz_bank     import get_questions_for_unit, get_question_by_id, enrich_with_irt
+from python_source.engines.question_generator import get_or_generate_questions, get_lock_status, clear_lock
 from python_source.core.mcts_algorithm   import MCTSAlgorithm
 from python_source.core.learner_session  import LearnerSession
 from python_source.core.analytics_logger import AnalyticsLogger
@@ -82,8 +83,8 @@ _EXECUTOR = ThreadPoolExecutor(max_workers=4, thread_name_prefix="dde_mcts")
 
 # Path to dataset
 # main.py is at:  ai-ml/main.py
-# dataset is at:  ai-ml/python_source/data/notes.json
-_DATASET_PATH = Path(__file__).parent / "python_source" / "data" / "notes.json"
+# dataset is at:  ai-ml/python_source/data/python_course_dataset.json
+_DATASET_PATH = Path(__file__).parent / "python_source" / "data" / "python_course_dataset.json"
 _NOTES_PATH   = Path(__file__).parent / "python_source" / "data" / "notes.json"
 
 # Maps curriculum unit_ids → notes.json unit_ids
@@ -103,6 +104,12 @@ _NOTES_UNIT_MAP = {
     "UNIT13_DynamicProgramming": "UNIT8_DynamicProgramming",
     "UNIT14_GraphAlgorithms":    "UNIT9_GraphAlgorithms",
 }
+
+# How many questions to serve per quiz attempt.
+# With the AI-generated bank each unit has ~34 questions — capping at 10 means
+# students get a fresh random 10 every attempt rather than the full pool.
+# Override in .env:  QUIZ_QUESTION_CAP=10
+QUIZ_QUESTION_CAP: int = int(os.environ.get("QUIZ_QUESTION_CAP", "10"))
 
 # ─────────────────────────────────────────────────────────────────
 #  REQUEST MODELS
@@ -263,8 +270,29 @@ def get_curriculum():
 
 
 @app.get("/curriculum/{unit_id}/questions")
-def get_unit_questions(unit_id: str):
-    questions = get_questions_for_unit(unit_id)
+def get_unit_questions(unit_id: str, user_id: str = ""):
+    if user_id:
+        result = get_or_generate_questions(user_id, unit_id)
+        # Lock active with no questions (submitted before AI fetch)
+        if result["seconds_remaining"] > 0 and not result["questions"]:
+            return {
+                "unit_id":           unit_id,
+                "questions":         [],
+                "count":             0,
+                "locked_until":      result["locked_until"],
+                "seconds_remaining": result["seconds_remaining"],
+                "source":            "locked",
+            }
+        return {
+            "unit_id":           unit_id,
+            "questions":         result["questions"],
+            "count":             len(result["questions"]),
+            "locked_until":      result["locked_until"],
+            "seconds_remaining": result["seconds_remaining"],
+            "source":            result["source"],
+        }
+    # Legacy / anonymous path
+    questions = get_questions_for_unit(unit_id)[:QUIZ_QUESTION_CAP]
     if not questions:
         raise HTTPException(404, f"No questions for unit {unit_id}.")
     safe = [
@@ -277,7 +305,8 @@ def get_unit_questions(unit_id: str):
         }
         for q in questions
     ]
-    return {"unit_id": unit_id, "questions": safe, "count": len(safe)}
+    return {"unit_id": unit_id, "questions": safe, "count": len(safe),
+            "locked_until": None, "seconds_remaining": 0, "source": "handcrafted"}
 
 
 @app.get("/debug/dataset")
@@ -539,10 +568,10 @@ def _enrich_notes(unit_id: str, notes: list) -> list:
 def get_unit_notes(unit_id: str):
     """
     Returns notes for a unit.
-    Primary source: notes.json (rich format with definitions, key_concepts, code_examples).
-    Fallback: python_course_dataset.json (legacy flat format).
+    Primary source  : notes.json (rich format — definitions, key_concepts, code_examples).
+    Fallback source : python_course_dataset.json (legacy flat format).
     """
-    # ── Primary: notes.json (rich format) ──────────────────────────────────
+    # ── Primary: notes.json ────────────────────────────────────────────────
     if _NOTES_PATH.exists():
         notes_unit_id = _NOTES_UNIT_MAP.get(unit_id)
         if notes_unit_id:
@@ -559,7 +588,7 @@ def get_unit_notes(unit_id: str):
                     "topics":  unit_entry["topics"],
                 }
 
-    # ── Fallback: python_course_dataset.json (legacy flat format) ──────────
+    # ── Fallback: python_course_dataset.json ───────────────────────────────
     if not _DATASET_PATH.exists():
         raise HTTPException(
             404,
@@ -570,7 +599,6 @@ def get_unit_notes(unit_id: str):
     with open(_DATASET_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    # Keep first occurrence of each unique topic (deduplicate)
     raw_notes = [n for n in data if n.get("unit") == unit_id]
     seen: set = set()
     unique_notes = []
@@ -766,6 +794,32 @@ def get_learner_state(user_id: str):
 def reset_learner(user_id: str):
     STATE_MANAGER.delete(user_id)
     return {"user_id": user_id, "status": "reset"}
+
+
+@app.delete("/learner/{user_id}/quiz-lock/{unit_id}")
+def clear_quiz_lock(user_id: str, unit_id: str):
+    """
+    Manually clear the 24hr quiz lock for a specific user + unit.
+    Useful during development and testing.
+    """
+    clear_lock(user_id, unit_id)
+    return {"user_id": user_id, "unit_id": unit_id, "status": "lock_cleared"}
+
+
+@app.delete("/learner/{user_id}/quiz-lock")
+def clear_all_quiz_locks(user_id: str):
+    """
+    Clear ALL quiz locks for a user across all units.
+    Useful during development and testing.
+    """
+    from python_source.engines.question_generator import _CACHE_DIR, _cache_path
+    import re
+    safe_uid = re.sub(r"[^\w\-]", "_", user_id)
+    cleared = []
+    for f in _CACHE_DIR.glob(f"{safe_uid}_*.json"):
+        f.unlink()
+        cleared.append(f.stem)
+    return {"user_id": user_id, "cleared": cleared, "count": len(cleared)}
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -1028,7 +1082,9 @@ def get_skill_tree(user_id: str, topic: Optional[str] = None):
         )
         if uid in completed:
             status = "completed"
-        elif prereqs_met:
+        elif prereqs_met or uid == current:
+            # If this is the current unit (assigned by MCTS before a server restart),
+            # always show it as unlocked even if mastery hasn't been reloaded yet.
             status = "unlocked"
         else:
             status = "locked"
@@ -1048,8 +1104,13 @@ def get_skill_tree(user_id: str, topic: Optional[str] = None):
             ),
         })
 
-    order = {"completed": 0, "unlocked": 1, "locked": 2}
-    nodes.sort(key=lambda n: (order[n["status"]], n["id"]))
+    # Sort by curriculum progression order, not alphabetically by ID.
+    # Within each status group units appear in the order they were defined
+    # in curriculum.py (UNIT1 first, UNIT14 last) so the tree reads naturally.
+    from python_source.content.curriculum import CURRICULUM_UNITS
+    curriculum_order = {u["unit_id"]: i for i, u in enumerate(CURRICULUM_UNITS)}
+    status_order = {"completed": 0, "unlocked": 1, "locked": 2}
+    nodes.sort(key=lambda n: (status_order[n["status"]], curriculum_order.get(n["id"], 99)))
 
     return {
         "user_id":      user_id,
@@ -1171,20 +1232,32 @@ def skip_diagnostic(req: DiagnosticSkipIn):
 def submit_quiz_irt(req: IRTQuizSubmitIn):
     session, logger = _load_session(req.user_id)
 
+    # Prereqs validated by MCTS at recommendation time.
+    # Warn only, do not block. Blocking here means students
+    # can start the quiz but cannot submit it.
     if not KG.are_prereqs_met(req.unit_id, session.get_mastery_state()):
-        raise HTTPException(400, f"Prerequisites not met for {req.unit_id}.")
+        import logging as _prereq_log
+        _prereq_log.getLogger(__name__).warning(
+            "submit-irt: prereqs not fully met for %s / %s, allowing anyway",
+            req.user_id, req.unit_id
+        )
 
-    import time as _time_mod
-    recent = [
-        h for h in session.quiz_history[-5:]
-        if h["unit_id"] == req.unit_id
-        and _time_mod.time() - h["timestamp"] < 60
-    ]
-    if recent:
+    # ── 24-hour quiz lock check ──────────────────────────────────────────────
+    # Blocks resubmission within 24 hours of the last attempt.
+    lock = get_lock_status(req.user_id, req.unit_id)
+    if lock["locked"]:
         raise HTTPException(
-            409,
-            f"Quiz for {req.unit_id} was already submitted in the last 60 seconds. "
-            "Duplicate submission ignored."
+            423,   # 423 Locked
+            {
+                "code":              "QUIZ_LOCKED",
+                "message":           (
+                    f"Quiz for {req.unit_id} is locked for "
+                    f"{lock['seconds_remaining'] // 3600}h "
+                    f"{(lock['seconds_remaining'] % 3600) // 60}m. Come back tomorrow!"
+                ),
+                "locked_until":      lock["locked_until"],
+                "seconds_remaining": lock["seconds_remaining"],
+            }
         )
 
     questions = enrich_with_irt(get_questions_for_unit(req.unit_id))
@@ -1217,6 +1290,13 @@ def submit_quiz_irt(req: IRTQuizSubmitIn):
         )
 
     STATE_MANAGER.save(session)
+
+    # ── Set the 24-hour lock immediately after scoring ────────────────────────
+    # Lock is set regardless of pass/fail — always enforced.
+    # If the unit was passed, clear_lock() will remove it when the next
+    # recommendation cycle starts (so MCTS can re-assign if needed).
+    from python_source.engines.question_generator import _save_cache as _set_lock
+    _set_lock(req.user_id, req.unit_id, [])   # empty questions list = lock only, no cache
 
     return {
         "user_id":  req.user_id,
