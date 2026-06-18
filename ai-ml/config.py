@@ -28,6 +28,9 @@ Environment variables (set in .env or shell):
 import os
 import logging
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
 # ─────────────────────────────────────────────────────────────────
 #  GROQ / LLM

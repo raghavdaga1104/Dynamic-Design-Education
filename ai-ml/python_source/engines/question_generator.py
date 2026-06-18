@@ -8,14 +8,14 @@ HOW IT WORKS
 When a student clicks "Take Quiz", the questions endpoint calls
 get_or_generate_questions(user_id, unit_id).
 
-1. CACHE HIT (quiz taken in last 24 hrs):
+1. CACHE HIT (quiz taken in last 6 hrs):
    - Returns cached questions immediately
    - Returns locked_until so the frontend can show the countdown
 
 2. CACHE MISS (first time or 24 hrs elapsed):
    - Calls Groq to generate a fresh set of questions for this unit
    - Saves them to  data/quiz_cache/{user_id}_{unit_id}.json
-   - Sets locked_until = now + 24 hours
+   - Sets locked_until = now + 6 hours
    - Registers the questions into quiz_bank's live QUESTIONS list
      so check_answer and submit-irt can look them up
 
@@ -56,7 +56,7 @@ _CACHE_DIR = Path(__file__).parent.parent / "data" / "quiz_cache"
 _CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── Lock duration ──────────────────────────────────────────────────────────────
-LOCK_SECONDS = 86400   # 24 hours
+LOCK_SECONDS = 21600   # 6 hours
 
 # ── Questions per difficulty per on-demand call ────────────────────────────────
 # 5 per tier = 15 total — fits comfortably in one Groq response
@@ -149,7 +149,7 @@ def _save_cache(user_id: str, unit_id: str, questions: List[Dict]) -> Dict:
 def get_lock_status(user_id: str, unit_id: str) -> Dict:
     """
     Returns the current lock status for a user+unit combination.
-    Used by the submit-irt endpoint to enforce the 24hr cooldown.
+    Used by the submit-irt endpoint to enforce the 6hr cooldown.
     """
     cache = _load_cache(user_id, unit_id)
     if not cache:
@@ -165,12 +165,24 @@ def get_lock_status(user_id: str, unit_id: str) -> Dict:
 
 def clear_lock(user_id: str, unit_id: str) -> None:
     """
-    Remove the lock for a user+unit (called after unit is passed, so the
-    next recommendation cycle can offer it again if needed).
+    Clear the lock for a user+unit after a failed attempt, so they can
+    retry immediately.  We KEEP the cached questions so the scorer uses
+    the same question set that was shown to the student.  Only the
+    locked_until timestamp is reset to None.
     """
     path = _cache_path(user_id, unit_id)
-    if path.exists():
-        path.unlink()
+    if not path.exists():
+        return
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            cache = json.load(f)
+        cache["locked_until"] = None   # unlock without deleting questions
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(cache, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        logger.warning("clear_lock: could not update cache for %s/%s: %s", user_id, unit_id, e)
+        # Last resort: delete so next fetch regenerates cleanly
+        path.unlink(missing_ok=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -451,8 +463,11 @@ def _fallback(unit_id: str) -> Dict:
     try:
         import random
         from python_source.content.quiz_bank import get_questions_for_unit
-        questions = get_questions_for_unit(unit_id)   # already shuffled
-        logger.info("Fallback to %d handcrafted questions for %s", len(questions), unit_id)
+        # FIX: Cap fallback questions to QUESTIONS_PER_DIFFICULTY * 3
+        # so the frontend and scorer always agree on the total count.
+        cap = QUESTIONS_PER_DIFFICULTY * 3  # e.g. 5*3 = 15
+        questions = get_questions_for_unit(unit_id)[:cap]   # already shuffled
+        logger.info("Fallback to %d handcrafted questions (capped) for %s", len(questions), unit_id)
     except Exception:
         questions = []
     return {

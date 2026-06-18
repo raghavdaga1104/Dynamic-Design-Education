@@ -50,6 +50,7 @@ from python_source.state.state_manager   import StateManager
 from python_source.engines.rag_engine    import RAGEngine, GROQ_MODEL
 from python_source.core.irt_scoring      import score_quiz as irt_score_quiz
 from python_source.engines.ats_engine    import ATSEngine
+from python_source.auth.auth_router       import router as auth_router
 
 # ─────────────────────────────────────────────────────────────────
 #  APP SETUP
@@ -67,6 +68,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(auth_router)
 
 # ─────────────────────────────────────────────────────────────────
 #  STARTUP
@@ -89,7 +92,7 @@ _NOTES_PATH   = Path(__file__).parent / "python_source" / "data" / "notes.json"
 
 # Maps curriculum unit_ids → notes.json unit_ids
 _NOTES_UNIT_MAP = {
-    "UNIT1_PythonBasics":        "UNIT1_from from python_source.content._source.content.Basics",
+    "UNIT1_PythonBasics":        "UNIT1_PythonBasics",
     "UNIT2_PythonFunctions":     "UNIT2_FunctionsScope",
     "UNIT3_OOP":                 "UNIT3_OOP",
     "UNIT4_OOPAdvanced":         "UNIT10_AdvancedOOP",
@@ -109,7 +112,7 @@ _NOTES_UNIT_MAP = {
 # With the AI-generated bank each unit has ~34 questions — capping at 10 means
 # students get a fresh random 10 every attempt rather than the full pool.
 # Override in .env:  QUIZ_QUESTION_CAP=10
-QUIZ_QUESTION_CAP: int = int(os.environ.get("QUIZ_QUESTION_CAP", "10"))
+QUIZ_QUESTION_CAP: int = int(os.environ.get("QUIZ_QUESTION_CAP", "15"))
 
 # ─────────────────────────────────────────────────────────────────
 #  REQUEST MODELS
@@ -1077,7 +1080,7 @@ def get_skill_tree(user_id: str, topic: Optional[str] = None):
         if topic and meta.get("domain", "").lower() != topic.lower():
             continue
         prereqs_met = all(
-            mastery.get(skill, 0.0) >= 0.70
+            mastery.get(skill, 0.0) >= 0.50
             for skill in meta["prereq_skills"]
         )
         if uid in completed:
@@ -1260,7 +1263,27 @@ def submit_quiz_irt(req: IRTQuizSubmitIn):
             }
         )
 
-    questions = enrich_with_irt(get_questions_for_unit(req.unit_id))
+    # FIX: Score only the questions actually served to this user.
+    # Previously used get_questions_for_unit() which returns ALL handcrafted
+    # questions (e.g. 24) regardless of how many the frontend showed (e.g. 15),
+    # causing the result screen to show "3/24" instead of "3/15".
+    _cache_result = get_or_generate_questions(req.user_id, req.unit_id)
+    _served_qs    = _cache_result.get("questions") or []
+    if _served_qs:
+        # Re-attach correct_idx from quiz_bank for handcrafted questions
+        _bank_map = {q["question_id"]: q for q in get_questions_for_unit(req.unit_id)}
+        _served_with_answers = []
+        for q in _served_qs:
+            bank_q = _bank_map.get(q["question_id"])
+            if bank_q:
+                _served_with_answers.append(bank_q)
+            else:
+                # AI-generated question — correct_idx already present in cache
+                _served_with_answers.append(q)
+        questions = enrich_with_irt(_served_with_answers)
+    else:
+        # Fallback: no cache, cap to QUIZ_QUESTION_CAP
+        questions = enrich_with_irt(get_questions_for_unit(req.unit_id)[:QUIZ_QUESTION_CAP])
     if not questions:
         raise HTTPException(404, f"No questions found for unit {req.unit_id}.")
 
@@ -1291,12 +1314,16 @@ def submit_quiz_irt(req: IRTQuizSubmitIn):
 
     STATE_MANAGER.save(session)
 
-    # ── Set the 24-hour lock immediately after scoring ────────────────────────
-    # Lock is set regardless of pass/fail — always enforced.
-    # If the unit was passed, clear_lock() will remove it when the next
-    # recommendation cycle starts (so MCTS can re-assign if needed).
-    from python_source.engines.question_generator import _save_cache as _set_lock
-    _set_lock(req.user_id, req.unit_id, [])   # empty questions list = lock only, no cache
+    # FIX: Only lock the quiz when the user PASSES.
+    # Previously the lock was set on every submit (pass or fail),
+    # which forced failed students to wait 6 hours before retrying.
+    # Now: pass → lock (prevents re-grinding a passed unit)
+    #      fail → clear questions cache so fresh questions are generated on retry
+    from python_source.engines.question_generator import _save_cache as _set_lock, clear_lock
+    if irt_result["passed"]:
+        _set_lock(req.user_id, req.unit_id, [])   # lock on pass only
+    else:
+        clear_lock(req.user_id, req.unit_id)       # allow immediate retry on fail
 
     return {
         "user_id":  req.user_id,

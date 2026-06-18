@@ -28,6 +28,13 @@ async function apiCall(method, endpoint, body = null) {
   return response.json();
 }
 
+// ── Auth ──────────────────────────────────────────────────────
+export const auth = {
+  login:  (email, password)  => apiCall('POST', '/auth/login',  { email, password }),
+  signup: (payload)          => apiCall('POST', '/auth/signup', payload),
+  logout: ()                 => apiCall('POST', '/auth/logout'),
+};
+
 // ── Health ────────────────────────────────────────────────────
 export const health = {
   check: () => apiCall('GET', '/health'),

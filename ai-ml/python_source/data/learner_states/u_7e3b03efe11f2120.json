@@ -1,0 +1,972 @@
+{
+  "user_id": "u_7e3b03efe11f2120",
+  "skill_mastery": {
+    "oop concepts": 0.5392,
+    "linked lists": 0.5351,
+    "arrays": 0.1,
+    "recursion": 0.1,
+    "python basics": 0.784,
+    "trees": 0.1,
+    "graph algorithms": 0.1,
+    "python functions": 0.1,
+    "stacks and queues": 0.1,
+    "hash tables": 0.1,
+    "dynamic programming": 0.1,
+    "searching": 0.1,
+    "sorting": 0.1,
+    "advanced oop": 0.1
+  },
+  "completed_units": [
+    "UNIT6_LinkedLists",
+    "UNIT3_OOP",
+    "UNIT1_PythonBasics"
+  ],
+  "current_unit_id": "UNIT2_PythonFunctions",
+  "streak_days": 1,
+  "flashcards": {
+    "UNIT3_OOP": {
+      "unit_id": "UNIT3_OOP",
+      "ease_factor": 2.5,
+      "interval": 1,
+      "repetitions": 0
+    },
+    "UNIT6_LinkedLists": {
+      "unit_id": "UNIT6_LinkedLists",
+      "ease_factor": 2.5,
+      "interval": 1,
+      "repetitions": 0
+    },
+    "UNIT1_PythonBasics": {
+      "unit_id": "UNIT1_PythonBasics",
+      "ease_factor": 2.5,
+      "interval": 1,
+      "repetitions": 0
+    }
+  },
+  "last_review_day": {
+    "UNIT3_OOP": 0,
+    "UNIT6_LinkedLists": 0,
+    "UNIT1_PythonBasics": 0
+  },
+  "quiz_history": [
+    {
+      "unit_id": "UNIT3_OOP",
+      "was_correct": true,
+      "irt_mastery": 0.7274,
+      "timestamp": 1781203596.932
+    },
+    {
+      "unit_id": "UNIT6_LinkedLists",
+      "was_correct": true,
+      "irt_mastery": 0.7216,
+      "timestamp": 1781204595.566
+    },
+    {
+      "unit_id": "UNIT1_PythonBasics",
+      "was_correct": true,
+      "irt_mastery": 0.7557,
+      "timestamp": 1781204940.3
+    }
+  ],
+  "diagnostic_result": {
+    "topic": "data structures",
+    "score_raw": 6,
+    "score_max": 20,
+    "score_percent": 30.0,
+    "tier": "beginner",
+    "starting_unit": "UNIT5_Arrays",
+    "breakdown": [
+      {
+        "question_id": "DQ_DS_001",
+        "difficulty": "easy",
+        "points": 1,
+        "chosen_idx": 1,
+        "correct_idx": 1,
+        "is_correct": true,
+        "earned": 1
+      },
+      {
+        "question_id": "DQ_DS_002",
+        "difficulty": "easy",
+        "points": 1,
+        "chosen_idx": 2,
+        "correct_idx": 2,
+        "is_correct": true,
+        "earned": 1
+      },
+      {
+        "question_id": "DQ_DS_003",
+        "difficulty": "easy",
+        "points": 1,
+        "chosen_idx": 2,
+        "correct_idx": 2,
+        "is_correct": true,
+        "earned": 1
+      },
+      {
+        "question_id": "DQ_DS_004",
+        "difficulty": "medium",
+        "points": 2,
+        "chosen_idx": 1,
+        "correct_idx": 2,
+        "is_correct": false,
+        "earned": 0
+      },
+      {
+        "question_id": "DQ_DS_005",
+        "difficulty": "medium",
+        "points": 2,
+        "chosen_idx": 0,
+        "correct_idx": 2,
+        "is_correct": false,
+        "earned": 0
+      },
+      {
+        "question_id": "DQ_DS_006",
+        "difficulty": "medium",
+        "points": 2,
+        "chosen_idx": 2,
+        "correct_idx": 3,
+        "is_correct": false,
+        "earned": 0
+      },
+      {
+        "question_id": "DQ_DS_007",
+        "difficulty": "medium",
+        "points": 2,
+        "chosen_idx": 1,
+        "correct_idx": 2,
+        "is_correct": false,
+        "earned": 0
+      },
+      {
+        "question_id": "DQ_DS_008",
+        "difficulty": "hard",
+        "points": 3,
+        "chosen_idx": 1,
+        "correct_idx": 1,
+        "is_correct": true,
+        "earned": 3
+      },
+      {
+        "question_id": "DQ_DS_009",
+        "difficulty": "hard",
+        "points": 3,
+        "chosen_idx": 1,
+        "correct_idx": 2,
+        "is_correct": false,
+        "earned": 0
+      },
+      {
+        "question_id": "DQ_DS_010",
+        "difficulty": "hard",
+        "points": 3,
+        "chosen_idx": 0,
+        "correct_idx": 1,
+        "is_correct": false,
+        "earned": 0
+      }
+    ],
+    "message": "Great start! You scored 30.0%. We'll begin from the fundamentals to build a solid foundation."
+  },
+  "current_day": 0,
+  "_created_at": 1781202746.8272994,
+  "mistake_log": [
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_001",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_002",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_003",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_004",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_005",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "syntax"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_001",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "inheritance"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_002",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781203596.932,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_003",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_004",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_005",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "mro",
+        "oop"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_001",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "mro",
+        "oop"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_002",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "super",
+        "mro",
+        "oop"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_003",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "mro",
+        "oop"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_004",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_005",
+      "unit_id": "UNIT3_OOP",
+      "topic": "oop concepts",
+      "concept_tags": [
+        "oop"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781203596.933,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_001",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "singly linked list"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204595.566,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_002",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "singly linked list",
+        "doubly linked list"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204595.566,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_003",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "time complexity"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204595.566,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_004",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "linked list"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_005",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "time complexity"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_001",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "doubly linked list"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_002",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "Floyd's algorithm"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_003",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "time complexity"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_004",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "circular linked list"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_001",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "Floyd's algorithm",
+        "cycle detection"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_002",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "singly linked list",
+        "insertion"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_003",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "time complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_004",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "space complexity",
+        "Floyd's algorithm"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_005",
+      "unit_id": "UNIT6_LinkedLists",
+      "topic": "linked lists",
+      "concept_tags": [
+        "doubly linked list",
+        "insertion"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204595.567,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_E_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "data types"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_E_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "import"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_E_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_E_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_E_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "easy",
+      "irt_b": 0.3,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_M_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "control flow"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_M_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "operators"
+      ],
+      "difficulty": "medium",
+      "irt_b": 0.6,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": false
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_H_001",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "binary search",
+        "time complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204940.3,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_H_002",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "space complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204940.301,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_H_003",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "dynamic programming",
+        "recurrence relation"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204940.301,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_H_004",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "merge sort",
+        "space complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204940.301,
+      "attempt_num": 1,
+      "was_correct": true
+    },
+    {
+      "question_id": "Q_UNIT1_GEN_9205_H_005",
+      "unit_id": "UNIT1_PythonBasics",
+      "topic": "python basics",
+      "concept_tags": [
+        "recurrence relation",
+        "time complexity"
+      ],
+      "difficulty": "hard",
+      "irt_b": 0.9,
+      "timestamp": 1781204940.301,
+      "attempt_num": 1,
+      "was_correct": true
+    }
+  ],
+  "concept_index": {
+    "oop": {
+      "correct": 7,
+      "wrong": 5,
+      "last_wrong_ts": 1781203596.933,
+      "last_correct_ts": 1781203596.933,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 2,
+        "hard": 2
+      }
+    },
+    "syntax": {
+      "correct": 2,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781203596.932,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "inheritance": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781203596.932,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "mro": {
+      "correct": 3,
+      "wrong": 1,
+      "last_wrong_ts": 1781203596.933,
+      "last_correct_ts": 1781203596.933,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 1
+      }
+    },
+    "super": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781203596.933,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "singly linked list": {
+      "correct": 2,
+      "wrong": 1,
+      "last_wrong_ts": 1781204595.567,
+      "last_correct_ts": 1781204595.566,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 1
+      }
+    },
+    "doubly linked list": {
+      "correct": 3,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204595.567,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "time complexity": {
+      "correct": 4,
+      "wrong": 2,
+      "last_wrong_ts": 1781204595.567,
+      "last_correct_ts": 1781204940.301,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 1
+      }
+    },
+    "linked list": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204595.567,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "Floyd's algorithm": {
+      "correct": 2,
+      "wrong": 1,
+      "last_wrong_ts": 1781204595.567,
+      "last_correct_ts": 1781204595.567,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "circular linked list": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1781204595.567,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "cycle detection": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204595.567,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "insertion": {
+      "correct": 1,
+      "wrong": 1,
+      "last_wrong_ts": 1781204595.567,
+      "last_correct_ts": 1781204595.567,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 1
+      }
+    },
+    "space complexity": {
+      "correct": 3,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.301,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "data types": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.3,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "import": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.3,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "operators": {
+      "correct": 2,
+      "wrong": 2,
+      "last_wrong_ts": 1781204940.3,
+      "last_correct_ts": 1781204940.3,
+      "difficulty_wrong_counts": {
+        "easy": 1,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "control flow": {
+      "correct": 0,
+      "wrong": 1,
+      "last_wrong_ts": 1781204940.3,
+      "last_correct_ts": null,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 1,
+        "hard": 0
+      }
+    },
+    "binary search": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.3,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "dynamic programming": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.301,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "recurrence relation": {
+      "correct": 2,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.301,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    },
+    "merge sort": {
+      "correct": 1,
+      "wrong": 0,
+      "last_wrong_ts": null,
+      "last_correct_ts": 1781204940.301,
+      "difficulty_wrong_counts": {
+        "easy": 0,
+        "medium": 0,
+        "hard": 0
+      }
+    }
+  },
+  "consecutive_failures": {
+    "UNIT3_OOP": 0,
+    "UNIT6_LinkedLists": 0,
+    "UNIT1_PythonBasics": 0
+  }
+}

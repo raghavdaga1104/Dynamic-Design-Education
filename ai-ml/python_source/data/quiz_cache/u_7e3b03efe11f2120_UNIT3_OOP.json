@@ -1,0 +1,283 @@
+{
+  "user_id": "u_7e3b03efe11f2120",
+  "unit_id": "UNIT3_OOP",
+  "generated_at": 1781203356.8236277,
+  "locked_until": 1781225196.943886,
+  "questions": [
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_001",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the purpose of the 'self' keyword in Python?",
+      "options": [
+        "To pass arguments to a function",
+        "To define a class attribute",
+        "To refer to the current object",
+        "To import a module"
+      ],
+      "correct_idx": 2,
+      "explanation": "The 'self' keyword is used to refer to the current instance of a class and is automatically passed as the first argument to methods within a class.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_002",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What does encapsulation in OOP mean?",
+      "options": [
+        "Hiding the implementation details of a class",
+        "Allowing multiple inheritance",
+        "Using getter and setter methods",
+        "Creating a new class from an existing one"
+      ],
+      "correct_idx": 0,
+      "explanation": "Encapsulation is the concept of hiding the internal details of an object from the outside world and only exposing necessary information through public methods.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_003",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the purpose of the 'class' keyword in Python?",
+      "options": [
+        "To define a function",
+        "To import a module",
+        "To create an instance of a class",
+        "To define a class"
+      ],
+      "correct_idx": 3,
+      "explanation": "The 'class' keyword is used to define a class, which is a blueprint for creating objects.",
+      "tags": [
+        "syntax"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_004",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What does inheritance mean in Python?",
+      "options": [
+        "Creating a new class from an existing one",
+        "Overloading methods with different parameters",
+        "Using the same method name for multiple operations",
+        "Implementing a base class with multiple inheritance"
+      ],
+      "correct_idx": 0,
+      "explanation": "Inheritance in Python means creating a new class from an existing one, inheriting its attributes and methods, and potentially adding new ones or overriding the ones from the base class.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_E_005",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What does the 'class' statement do in Python?",
+      "options": [
+        "It defines a function",
+        "It imports a module",
+        "It creates an instance of a class",
+        "It defines a class"
+      ],
+      "correct_idx": 3,
+      "explanation": "The 'class' statement in Python is used to define a class, which is a blueprint for creating objects.",
+      "tags": [
+        "syntax"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_001",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "Which of the following Python classes inherits from the Vehicle class?",
+      "options": [
+        "class Car(Vehicle):",
+        "class Vehicle(Car):",
+        "class Car:",
+        "class Car extends Vehicle:"
+      ],
+      "correct_idx": 0,
+      "explanation": "The '(' syntax is used to specify inheritance in Python, where the class on the right is the parent class.",
+      "tags": [
+        "inheritance"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_002",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is polymorphism in Python?",
+      "options": [
+        "Overloading methods with different parameters",
+        "Using the same method name for multiple operations",
+        "Implementing a base class with multiple inheritance",
+        "Using different data types for the same variable name"
+      ],
+      "correct_idx": 1,
+      "explanation": "Polymorphism is the ability of an object to take on multiple forms, depending on the context in which it is used, typically achieved by using the same method name for different operations.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_003",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is the difference between method overriding and method overloading in Python?",
+      "options": [
+        "Method overriding is when a subclass provides a different implementation of a method, while method overloading is when a method takes different parameters",
+        "Method overriding is when a method is called with different parameters, while method overloading is when a subclass provides a different implementation of a method",
+        "Method overriding is when a subclass provides a different implementation of a method, while method overloading is not supported in Python",
+        "Method overriding is not supported in Python, while method overloading is supported via default argument values"
+      ],
+      "correct_idx": 0,
+      "explanation": "Method overriding is when a subclass provides a different implementation of a method, while method overloading is not supported in Python.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_004",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is encapsulation in Python?",
+      "options": [
+        "Using private variables and methods",
+        "Hiding the implementation details of a class",
+        "Using getter and setter methods",
+        "Creating a new class from an existing one"
+      ],
+      "correct_idx": 2,
+      "explanation": "Encapsulation in Python is achieved by using private variables and methods, which are prefixed with a double underscore '_' to indicate that they should not be accessed directly from outside the class.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_M_005",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "How does Python handle method overriding in a multi-level inheritance scenario?",
+      "options": [
+        "It calls the method from the most specific class",
+        "It calls the method from the least specific class",
+        "It calls the method from the current class's parent",
+        "It fails and raises an error if multiple inheritance is involved"
+      ],
+      "correct_idx": 0,
+      "explanation": "Python handles method overriding in a multi-level inheritance scenario by using the method resolution order (MRO) to resolve the call, and it calls the method from the most specific class.",
+      "tags": [
+        "mro",
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_001",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the most specific method that will be called in the following code?\nclass A:\n    def method(self):\n        print('A')\nclass B(A):\n    def method(self):\n        print('B')\nb = B()\nb.method()",
+      "options": [
+        "method from class A",
+        "method from class B",
+        "method from class object",
+        "method from class A's parent"
+      ],
+      "correct_idx": 0,
+      "explanation": "Python's method resolution order (MRO) determines which method to call, and in this case, the most specific method is called, which is the 'method' from class B.",
+      "tags": [
+        "mro",
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_002",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "How does Python's super() function work in a multi-level inheritance scenario?",
+      "options": [
+        "It calls the method from the most specific class",
+        "It calls the method from the least specific class",
+        "It calls the method from the current class's parent",
+        "It fails and raises an error if multiple inheritance is involved"
+      ],
+      "correct_idx": 2,
+      "explanation": "Python's super() function works by calling the method from the current class's parent class, and when using multiple inheritance, it will call the method from the next class in the method resolution order (MRO).",
+      "tags": [
+        "super",
+        "mro",
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_003",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the order in which Python resolves method calls in a multi-level inheritance scenario?",
+      "options": [
+        "From most specific class to least specific class",
+        "From least specific class to most specific class",
+        "Using a priority queue to resolve the call",
+        "Failing and raising an error if multiple inheritance is involved"
+      ],
+      "correct_idx": 0,
+      "explanation": "Python's method resolution order (MRO) determines the order in which method calls are resolved, and in a multi-level inheritance scenario, it uses C3 linearization to resolve the call, which is roughly from most specific class to least specific class.",
+      "tags": [
+        "mro",
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_004",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "Why is encapsulation important in object-oriented programming?",
+      "options": [
+        "It improves code readability and maintainability",
+        "It reduces the likelihood of bugs and errors",
+        "It allows for multiple inheritance and polymorphism",
+        "It is not important in Python as it does not support encapsulation"
+      ],
+      "correct_idx": 1,
+      "explanation": "Encapsulation is important in object-oriented programming as it improves code readability and maintainability by hiding the internal details of an object from the outside world and only exposing necessary information through public methods.",
+      "tags": [
+        "oop"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT3_GEN_8475_H_005",
+      "unit_id": "UNIT3_OOP",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the difference between dynamic method binding and static method dispatch in Python?",
+      "options": [
+        "Dynamic method binding is when a method is called before it is defined, while static method dispatch is when a method is called after it is defined",
+        "Dynamic method binding is when a method is called after it is defined, while static method dispatch is when a method is called before it is defined",
+        "Dynamic method binding is used for method overriding, while static method dispatch is used for method overloading",
+        "Dynamic method binding is used for method overloading, while static method dispatch is used for method overriding"
+      ],
+      "correct_idx": 1,
+      "explanation": "Dynamic method binding in Python is used for method overriding, where the method to be called is determined at runtime based on the type of the object, while static method dispatch is used for method overloading, where the method to be called is determined at compile time based on the method signature.",
+      "tags": [
+        "oop"
+      ]
+    }
+  ]
+}

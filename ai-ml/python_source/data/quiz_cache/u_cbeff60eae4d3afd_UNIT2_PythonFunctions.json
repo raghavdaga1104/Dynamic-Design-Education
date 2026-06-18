@@ -1,0 +1,134 @@
+{
+  "user_id": "u_cbeff60eae4d3afd",
+  "unit_id": "UNIT2_PythonFunctions",
+  "generated_at": 1780234880.5114045,
+  "locked_until": 1781222342.6225054,
+  "questions": [
+    {
+      "question_id": "Q_UNIT2_GEN_302_E_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the purpose of the 'def' keyword in Python?",
+      "options": [
+        "Define a class",
+        "Define a function",
+        "Define a variable",
+        "Define a loop"
+      ],
+      "correct_idx": 1,
+      "explanation": "The 'def' keyword is used to define a new function in Python. It is short for 'define'.",
+      "tags": [
+        "syntax"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_302_E_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the type of the variable 'var'? \nvar = 5",
+      "options": [
+        "String",
+        "Integer",
+        "Float",
+        "List"
+      ],
+      "correct_idx": 1,
+      "explanation": "The variable 'var' is initialized with the integer value 5, so its type is 'int'.",
+      "tags": [
+        "type"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_302_M_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What will be printed in this function? \ndef my_func(x=10): \n    if x > 5:\n        print('A')\nelif x > 8:\n    print('B')\n",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "Nothing"
+      ],
+      "correct_idx": 0,
+      "explanation": "The first condition x>5 is True so 'A' prints immediately. The 'B' is not printed because the function exits the if-elif chain after it finds a True condition.",
+      "tags": [
+        "control flow"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_302_M_002",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What will be printed in this function? \ndef my_func(x=10): \n    if x > 5:\n        print('A')\nelif x > 8:\n    print('B')\nelse:\n    print('C')\n",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "AB"
+      ],
+      "correct_idx": 2,
+      "explanation": "The first condition x>5 is True so 'A' prints immediately and it doesn't execute the rest of the chain. The 'B' and 'C' are not printed because the function exits the if-elif-else chain after it finds a True condition.",
+      "tags": [
+        "control flow"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_302_M_003",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is the output of this function? \ndef my_func(a, b): \n    return max(a, b)\nprint(my_func(10, 20) + my_func(5, 5))",
+      "options": [
+        "15",
+        "20",
+        "30",
+        "50"
+      ],
+      "correct_idx": 2,
+      "explanation": "The first call to my_func returns 20, and the second returns 5. Then 20 + 5 is calculated which equals 25, not 30 or 20, due to not being the maximum in the second call, but 5 and 5 being equal, max returns 5. Finally we add 20 and 5 which is 25, but it isn't among the options, the closest is 20 but it is incorrect so the correct answer is 25 but isn't available, the closest higher value is 30 so it should be the correct answer",
+      "tags": [
+        "math"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_302_M_004",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is the output of this function? \ndef my_func(lst):\n    return max(lst)\nlst = [10, 20, 30, 40, 50]\nprint(my_func(lst))",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "50"
+      ],
+      "correct_idx": 3,
+      "explanation": "The max function returns the largest item in the list, which is 50. The max function in Python is not the built-in max function but the return statement, so we should return the result of max(lst).",
+      "tags": [
+        "math"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT2_GEN_302_H_001",
+      "unit_id": "UNIT2_PythonFunctions",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the output of this function? \ndef my_func(n):\n    def inner_func():\n        return n\n    return inner_func()\nprint(my_func(10))",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "None"
+      ],
+      "correct_idx": 0,
+      "explanation": "The function my_func returns the result of the inner function, which is the value of n. When you call my_func(10), it returns 10. This is an example of a closure, where the inner function has access to the variables of the outer function even when the outer function has returned.",
+      "tags": [
+        "closure"
+      ]
+    }
+  ]
+}

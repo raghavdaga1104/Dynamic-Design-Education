@@ -104,7 +104,7 @@ class MCTSAlgorithm:
     W_GOAL               = 0.35           # FIX: reduced from 0.5 → weights now sum to 1.0
     W_WEAKNESS           = 0.15           # weight for weak-concept units
     P_REDUNDANCY         = -0.1           # penalty for revisiting mastered skills
-    MASTERY_THRESHOLD    = 0.7            # prereq gate (unit unlocks above this)
+    MASTERY_THRESHOLD    = 0.5            # prereq gate (unit unlocks above this)
     REDUNDANCY_THRESHOLD = 0.80           # skill considered mastered (for pruning)
     ROLLOUT_DEPTH        = 6              # max simulation steps
     # FIX: W_GAIN + W_GOAL + W_WEAKNESS = 0.50 + 0.35 + 0.15 = 1.00

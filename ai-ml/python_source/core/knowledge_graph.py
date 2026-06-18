@@ -74,7 +74,7 @@ class KnowledgeGraph:
     def get_available_units(
         self,
         skill_mastery: Dict[str, float],
-        mastery_threshold: float = 0.7,
+        mastery_threshold: float = 0.5,
     ) -> List[str]:
         """
         Return units whose prerequisite skills are all sufficiently mastered.
@@ -96,7 +96,7 @@ class KnowledgeGraph:
         self,
         unit_id: str,
         skill_mastery: Dict[str, float],
-        mastery_threshold: float = 0.7,
+        mastery_threshold: float = 0.5,
     ) -> bool:
         """Check whether a specific unit's prerequisites are satisfied."""
         meta = self.units.get(unit_id)

@@ -30,7 +30,7 @@ irt_discrimination  (a parameter):
 
 PREREQUISITE LOGIC
 ──────────────────
-A unit is unlocked when ALL of its prereq_skills have mastery >= 0.70.
+A unit is unlocked when ALL of its prereq_skills have mastery >= 0.50.
 Design prereq chains so the curriculum flows naturally:
   Python Basics → OOP → Data Structures → Algorithms
 """
@@ -105,7 +105,7 @@ CURRICULUM_UNITS = [
         "domain":             "data structures",
         "skills_taught":      ["linked lists"],
         "prereq_skills":      ["python basics", "oop concepts"],
-        "irt_difficulty":     0.70,
+        "irt_difficulty":     0.50,
         "irt_discrimination": 1.00,
         "description":        "Singly and doubly linked lists, traversal, insertion, and deletion.",
     },
@@ -147,7 +147,7 @@ CURRICULUM_UNITS = [
         "domain":             "algorithms",
         "skills_taught":      ["sorting"],
         "prereq_skills":      ["arrays"],
-        "irt_difficulty":     0.70,
+        "irt_difficulty":     0.50,
         "irt_discrimination": 1.00,
         "description":        "Bubble, selection, insertion, merge, and quicksort with complexity analysis.",
     },

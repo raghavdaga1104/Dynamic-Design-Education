@@ -45,7 +45,7 @@ From there, every session is personalised:
 
 ## Curriculum
 
-14 units across 4 domains with prerequisite chains enforced by a knowledge graph. A unit unlocks only when all prerequisite skills have mastery ≥ 0.70.
+14 units across 4 domains with prerequisite chains enforced by a knowledge graph. A unit unlocks only when all prerequisite skills have mastery ≥ 0.50.
 
 | Domain | Units |
 |---|---|

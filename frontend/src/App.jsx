@@ -1,7 +1,7 @@
 // src/App.jsx
 // ─────────────────────────────────────────────────────────────
 // Route definitions. Guards redirect unauthenticated users
-// back to onboarding. Layout wraps all authenticated pages.
+// back to login. Layout wraps all authenticated pages.
 // ─────────────────────────────────────────────────────────────
 
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
@@ -11,6 +11,8 @@ import { ToastContainer } from './components/ui';
 
 // Pages
 import Onboarding  from './pages/Onboarding';
+import Login       from './pages/Login';
+import Signup      from './pages/Signup';
 import Diagnostic  from './pages/Diagnostic';
 import Dashboard   from './pages/Dashboard';
 import Learn       from './pages/Learn';
@@ -23,7 +25,7 @@ import ATS         from './pages/ATS';
 function RequireAuth({ children }) {
   const { userId } = useApp();
   const location = useLocation();
-  if (!userId) return <Navigate to="/" state={{ from: location }} replace />;
+  if (!userId) return <Navigate to="/login" state={{ from: location }} replace />;
   return children;
 }
 
@@ -41,8 +43,13 @@ export default function App() {
     <>
       <ToastContainer />
       <Routes>
+        {/* Root → Login */}
+        <Route path="/"           element={<Navigate to="/login" replace />} />
+
         {/* Public */}
-        <Route path="/"           element={<Onboarding />} />
+        <Route path="/login"      element={<Login />} />
+        <Route path="/signup"     element={<Signup />} />
+        <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/diagnostic" element={<RequireAuth><Diagnostic /></RequireAuth>} />
 
         {/* Authenticated + Layout */}
@@ -54,7 +61,7 @@ export default function App() {
         <Route path="/ats"        element={<AuthenticatedPage><ATS /></AuthenticatedPage>} />
 
         {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>
   );

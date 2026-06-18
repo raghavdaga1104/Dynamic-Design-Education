@@ -1,0 +1,265 @@
+{
+  "user_id": "u_7e3b03efe11f2120",
+  "unit_id": "UNIT6_LinkedLists",
+  "generated_at": 1781204419.727489,
+  "locked_until": 1781226195.5874655,
+  "questions": [
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_001",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the purpose of the 'next' attribute in a singly linked list node?",
+      "options": [
+        "to store the node's value",
+        "to store the node's next node reference",
+        "to store the node's previous node reference",
+        "to store the node's data type"
+      ],
+      "correct_idx": 1,
+      "explanation": "The 'next' attribute in a singly linked list node is used to store the reference to the next node in the list, which allows for traversal from one node to the next.",
+      "tags": [
+        "singly linked list"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_002",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the difference between a singly linked list and a doubly linked list?",
+      "options": [
+        "a doubly linked list has a head node, a singly linked list does not",
+        "a doubly linked list has a tail node, a singly linked list does not",
+        "a doubly linked list has a reference to the previous node, a singly linked list does not",
+        "a doubly linked list has a reference to the next node, a singly linked list does not"
+      ],
+      "correct_idx": 2,
+      "explanation": "A doubly linked list has a reference to both the next and previous nodes, whereas a singly linked list only has a reference to the next node.",
+      "tags": [
+        "singly linked list",
+        "doubly linked list"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_003",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the time complexity of traversing a singly linked list from head to tail?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n^2)"
+      ],
+      "correct_idx": 2,
+      "explanation": "The time complexity of traversing a singly linked list from head to tail is O(n), where n is the number of nodes in the list, because we have to visit each node once.",
+      "tags": [
+        "time complexity"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_004",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the purpose of the 'head' attribute in a linked list?",
+      "options": [
+        "to store the node's value",
+        "to store the node's next node reference",
+        "to store the node's previous node reference",
+        "to store the first node in the list"
+      ],
+      "correct_idx": 3,
+      "explanation": "The 'head' attribute in a linked list is used to store a reference to the first node in the list, which allows for easy traversal from the beginning of the list.",
+      "tags": [
+        "linked list"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_E_005",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "easy",
+      "text": "What is the time complexity of inserting a new node at the beginning of a singly linked list?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n^2)"
+      ],
+      "correct_idx": 0,
+      "explanation": "The time complexity of inserting a new node at the beginning of a singly linked list is O(1), because we only need to update the reference to the head node, regardless of the size of the list.",
+      "tags": [
+        "time complexity"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_001",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is the correct way to insert a new node into a doubly linked list at a specific position?",
+      "options": [
+        "create a new node and update the references of the previous and next nodes",
+        "create a new node and only update the reference of the previous node",
+        "create a new node and only update the reference of the next node",
+        "update the value of the existing node at the position"
+      ],
+      "correct_idx": 0,
+      "explanation": "To insert a new node into a doubly linked list at a specific position, we need to create a new node and update the references of the previous and next nodes to point to the new node and the node after the position respectively.",
+      "tags": [
+        "doubly linked list"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_002",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "How does Floyd's cycle detection algorithm work?",
+      "options": [
+        "it traverses the list forward and backward simultaneously",
+        "it uses a hash table to store node references",
+        "it uses a recursive function to detect cycles",
+        "it uses a loop to traverse the list and detect cycles"
+      ],
+      "correct_idx": 0,
+      "explanation": "Floyd's cycle detection algorithm works by having two pointers traverse the list at different speeds, one moving twice as fast as the other. If there is a cycle, the faster pointer will eventually catch up to the slower pointer.",
+      "tags": [
+        "Floyd's algorithm"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_003",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is the time complexity of deleting a node from a doubly linked list?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n^2)"
+      ],
+      "correct_idx": 2,
+      "explanation": "The time complexity of deleting a node from a doubly linked list is O(n), because we need to find the node to be deleted first, which requires traversing the list from the beginning.",
+      "tags": [
+        "time complexity"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_M_004",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "medium",
+      "text": "What is the difference between a circular linked list and a doubly linked list?",
+      "options": [
+        "a circular linked list has a reference to the first node, a doubly linked list does not",
+        "a circular linked list has a reference to the last node, a doubly linked list does not",
+        "a circular linked list has a reference to the next node, a doubly linked list has a reference to the previous node",
+        "a circular linked list has a reference to both the next and previous nodes, a doubly linked list does not"
+      ],
+      "correct_idx": 3,
+      "explanation": "A circular linked list has a reference to both the next and previous nodes, similar to a doubly linked list, but it also has a reference to the first node, which allows for easy traversal from the beginning of the list.",
+      "tags": [
+        "circular linked list"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_001",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the time complexity of detecting a cycle in a linked list using Floyd's algorithm?",
+      "options": [
+        "O(1)",
+        "O(n)",
+        "O(n^2)",
+        "O(n*m) where n is the number of nodes and m is the maximum length of the cycle"
+      ],
+      "correct_idx": 1,
+      "explanation": "The time complexity of detecting a cycle in a linked list using Floyd's algorithm is O(n), because we need to traverse the list at most once to detect the cycle. The maximum length of the cycle, m, does not affect the time complexity.",
+      "tags": [
+        "Floyd's algorithm",
+        "cycle detection"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_002",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the difference between inserting a new node at the beginning and inserting a new node at the end of a singly linked list?",
+      "options": [
+        "inserting at the beginning is faster than inserting at the end",
+        "inserting at the end is faster than inserting at the beginning",
+        "inserting at the beginning requires more memory than inserting at the end",
+        "inserting at the beginning requires less memory than inserting at the end"
+      ],
+      "correct_idx": 1,
+      "explanation": "Inserting a new node at the beginning of a singly linked list is faster than inserting at the end because we only need to update the reference to the head node, whereas inserting at the end requires traversing the list from the beginning to find the last node.",
+      "tags": [
+        "singly linked list",
+        "insertion"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_003",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the time complexity of deleting the last node from a doubly linked list?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n^2)"
+      ],
+      "correct_idx": 2,
+      "explanation": "The time complexity of deleting the last node from a doubly linked list is O(n), because we need to find the last node first, which requires traversing the list from the beginning.",
+      "tags": [
+        "time complexity"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_004",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "What is the space complexity of Floyd's cycle detection algorithm?",
+      "options": [
+        "O(1)",
+        "O(n)",
+        "O(n^2)",
+        "O(n*m) where n is the number of nodes and m is the maximum length of the cycle"
+      ],
+      "correct_idx": 0,
+      "explanation": "The space complexity of Floyd's cycle detection algorithm is O(1), because we only need a constant amount of space to store the two pointers, regardless of the size of the list.",
+      "tags": [
+        "space complexity",
+        "Floyd's algorithm"
+      ]
+    },
+    {
+      "question_id": "Q_UNIT6_GEN_9205_H_005",
+      "unit_id": "UNIT6_LinkedLists",
+      "source": "ai_generated",
+      "difficulty": "hard",
+      "text": "How does the time complexity of inserting a new node into a doubly linked list at a specific position compare to inserting at the beginning or end of the list?",
+      "options": [
+        "inserting at the middle position is faster than inserting at the beginning or end",
+        "inserting at the beginning or end is faster than inserting at the middle position",
+        "inserting at the middle position is slower than inserting at the beginning or end",
+        "inserting at the beginning or end is slower than inserting at the middle position"
+      ],
+      "correct_idx": 1,
+      "explanation": "Inserting a new node at the beginning or end of a doubly linked list is faster than inserting at a middle position because we can simply update the reference to the head or tail node, whereas inserting at a middle position requires updating the references of multiple nodes.",
+      "tags": [
+        "doubly linked list",
+        "insertion"
+      ]
+    }
+  ]
+}

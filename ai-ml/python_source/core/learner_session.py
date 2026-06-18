@@ -36,7 +36,7 @@ from python_source.core.analytics_logger import AnalyticsLogger
 
 logger = logging.getLogger(__name__)
 
-PASS_THRESHOLD  = 0.70
+PASS_THRESHOLD  = 0.50
 STUCK_THRESHOLD = 3
 IRT_BLEND_ALPHA = 0.7   # weight given to IRT mastery estimate on quiz pass
 
@@ -552,7 +552,7 @@ class LearnerSession:
                 "mastery_level":   mastery_to_level(current_mastery),
                 "teaching_unit":   teaching_unit,
                 "display_name":    self.kg.get_display_name(teaching_unit) if teaching_unit else skill,
-                "needs_review":    current_mastery < 0.70,
+                "needs_review":    current_mastery < 0.50,
                 "message": (
                     f"Your mastery of '{skill}' is {current_mastery:.0%}. "
                     f"Review '{self.kg.get_display_name(teaching_unit)}' before retrying."
