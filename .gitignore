@@ -15,8 +15,14 @@ frontend/node_modules/
 
 # Data / DB
 ai-ml/python_source/data/chroma_db/
+ai-ml/python_source/data/learner_states/
+ai-ml/python_source/data/quiz_cache/
+ai-ml/python_source/data/users.json
+*.db
 
 # OS / misc
 .DS_Store
 Thumbs.db
 
+# Logs
+*.log
