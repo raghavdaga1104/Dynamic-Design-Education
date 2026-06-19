@@ -195,7 +195,7 @@ class LearnerSession:
 
             if irt_passed:
                 p_after = IRT_BLEND_ALPHA * irt_mastery + (1 - IRT_BLEND_ALPHA) * p_before
-                p_after = float(min(1.0, max(0.0, p_after)))
+                p_after = float(min(1.0, max(PASS_THRESHOLD, p_after)))
                 update_method = "irt_blend"
             else:
                 params  = self._bkt_params(skill)
