@@ -36,6 +36,8 @@ from typing import Optional, Dict, List
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from database import engine
+from models import Base
 
 sys.path.insert(0, str(Path(__file__).parent))
 
@@ -56,6 +58,7 @@ from python_source.auth.auth_router       import router as auth_router
 # ─────────────────────────────────────────────────────────────────
 #  APP SETUP
 # ─────────────────────────────────────────────────────────────────
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="DDE AI/ML Service",
