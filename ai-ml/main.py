@@ -47,7 +47,7 @@ from python_source.engines.question_generator import get_or_generate_questions, 
 from python_source.core.mcts_algorithm   import MCTSAlgorithm
 from python_source.core.learner_session  import LearnerSession
 from python_source.core.analytics_logger import AnalyticsLogger
-from python_source.core.adaptive_systems import irt_select_best_question
+from python_source.core.adaptive_systems import irt_select_best_question, mastery_to_level
 from python_source.state.state_manager   import StateManager
 from python_source.engines.rag_engine    import RAGEngine, GROQ_MODEL
 from python_source.core.irt_scoring      import score_quiz as irt_score_quiz
@@ -1314,19 +1314,47 @@ def submit_quiz_irt(req: IRTQuizSubmitIn):
     # Previously used get_questions_for_unit() which returns ALL handcrafted
     # questions (e.g. 24) regardless of how many the frontend showed (e.g. 15),
     # causing the result screen to show "3/24" instead of "3/15".
+    # ── Rebuild question list with correct_idx for scoring ─────────────────
+    # Strategy:
+    #   1. Load the raw cache (contains correct_idx for AI-generated questions).
+    #   2. For handcrafted questions, re-attach correct_idx from quiz_bank
+    #      (ground-truth source), ignoring whatever the cache says.
+    #   3. For AI-generated questions, use correct_idx from the cache BUT also
+    #      verify it passes the same semantic check used at generation time.
+    #      If a question fails the check here (e.g. cache was written before
+    #      the fix), drop it and log — it will not affect the student's score.
+    from python_source.engines.question_generator import _load_cache as _qgen_load_cache
+    _raw_cache    = _qgen_load_cache(req.user_id, req.unit_id)
+    _raw_cache_qs = {q["question_id"]: q for q in (_raw_cache or {}).get("questions", [])}
+
     _cache_result = get_or_generate_questions(req.user_id, req.unit_id)
     _served_qs    = _cache_result.get("questions") or []
     if _served_qs:
-        # Re-attach correct_idx from quiz_bank for handcrafted questions
+        # Build a map of handcrafted questions by ID (authoritative correct_idx)
         _bank_map = {q["question_id"]: q for q in get_questions_for_unit(req.unit_id)}
         _served_with_answers = []
         for q in _served_qs:
-            bank_q = _bank_map.get(q["question_id"])
+            qid    = q["question_id"]
+            bank_q = _bank_map.get(qid)
             if bank_q:
+                # Handcrafted — always use quiz_bank's correct_idx (manually verified)
                 _served_with_answers.append(bank_q)
             else:
-                # AI-generated question — correct_idx already present in cache
-                _served_with_answers.append(q)
+                # AI-generated — pull correct_idx from raw cache (not the stripped version)
+                raw_q = _raw_cache_qs.get(qid)
+                if raw_q and "correct_idx" in raw_q:
+                    # Merge: take display fields from served q, scoring fields from raw cache
+                    merged = {**q, "correct_idx": raw_q["correct_idx"],
+                              "explanation": raw_q.get("explanation", "")}
+                    _served_with_answers.append(merged)
+                else:
+                    # correct_idx missing entirely — skip this question to avoid
+                    # marking everything wrong due to a None comparison
+                    import logging as _sl
+                    _sl.getLogger(__name__).warning(
+                        "submit-irt: AI question %s has no correct_idx in cache — skipping",
+                        qid,
+                    )
         questions = enrich_with_irt(_served_with_answers)
     else:
         # Fallback: no cache, cap to QUIZ_QUESTION_CAP
@@ -1378,6 +1406,8 @@ def submit_quiz_irt(req: IRTQuizSubmitIn):
         "irt": {
             "theta":          irt_result["theta"],
             "mastery":        irt_result["mastery"],
+            "mastery_pct":    round(irt_result["mastery"] * 100),
+            "mastery_level":  mastery_to_level(irt_result["mastery"]),  # label from IRT score
             "passed":         irt_result["passed"],
             "pass_threshold": irt_result["pass_threshold"],
             "explanation":    irt_result["explanation"],

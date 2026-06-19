@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 
 PASS_THRESHOLD  = 0.50
 STUCK_THRESHOLD = 3
-IRT_BLEND_ALPHA = 0.7   # weight given to IRT mastery estimate on quiz pass
+IRT_BLEND_ALPHA = 0.8   # weight given to IRT mastery estimate on quiz pass (raised from 0.7)
 
 
 class LearnerSession:
@@ -214,7 +214,10 @@ class LearnerSession:
                 "skill":         skill,
                 "p_L_before":    round(p_before, 3),
                 "p_L_after":     round(p_after,  3),
-                "mastery_level": mastery_to_level(p_after),
+                "mastery_level":     mastery_to_level(p_after),
+                "irt_mastery_level": mastery_to_level(irt_mastery),  # label based on IRT score
+                "irt_mastery_pct":   round(irt_mastery * 100),       # IRT % for display
+                "bkt_mastery_pct":   round(p_after * 100),           # BKT blend % for skill tree
                 "update_method": update_method,
             })
 

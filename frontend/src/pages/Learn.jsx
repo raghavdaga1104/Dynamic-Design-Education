@@ -699,6 +699,17 @@ export default function Learn() {
         <div className={`result-card ${passed ? 'result-pass' : 'result-fail'}`}>
           <div className="result-emoji">{passed ? '🎉' : '📖'}</div>
           <h2 className="result-heading">{passed ? 'Unit Passed!' : 'Not Quite Yet'}</h2>
+          {quizResult.irt?.mastery_level && (
+            <div className="result-mastery-badge">
+              <Badge color={
+                quizResult.irt.mastery_level === 'Mastered'   ? '#10b981' :
+                quizResult.irt.mastery_level === 'Proficient' ? '#6366f1' :
+                quizResult.irt.mastery_level === 'Developing' ? '#f59e0b' : '#94a3b8'
+              }>
+                {quizResult.irt.mastery_level.toUpperCase()}
+              </Badge>
+            </div>
+          )}
           <p className="result-explanation">{quizResult.irt?.explanation}</p>
 
           <div className="result-stats">
@@ -711,7 +722,7 @@ export default function Learn() {
               <div className="stat-lbl">Score</div>
             </div>
             <div className="stat-box">
-              <div className="stat-num">{(quizResult.irt?.mastery * 100)?.toFixed(0)}%</div>
+              <div className="stat-num">{quizResult.irt?.mastery_pct ?? (quizResult.irt?.mastery * 100)?.toFixed(0)}%</div>
               <div className="stat-lbl">Mastery (IRT)</div>
             </div>
             {passed && (
@@ -729,9 +740,15 @@ export default function Learn() {
                   <span className="su-skill">{su.skill}</span>
                   <span className="su-before">{(su.p_L_before * 100).toFixed(0)}%</span>
                   <span className="su-arrow">→</span>
-                  <span className="su-after">{(su.p_L_after * 100).toFixed(0)}%</span>
-                  <Badge color={su.mastery_level === 'Mastered' ? '#10b981' : '#6366f1'}>
-                    {su.mastery_level}
+                  <span className="su-after" title="BKT blended mastery">
+                    {su.bkt_mastery_pct ?? (su.p_L_after * 100).toFixed(0)}%
+                  </span>
+                  <Badge color={
+                    (su.irt_mastery_level || su.mastery_level) === 'Mastered'  ? '#10b981' :
+                    (su.irt_mastery_level || su.mastery_level) === 'Proficient' ? '#6366f1' :
+                    (su.irt_mastery_level || su.mastery_level) === 'Developing' ? '#f59e0b' : '#94a3b8'
+                  }>
+                    {su.irt_mastery_level || su.mastery_level}
                   </Badge>
                 </div>
               ))}

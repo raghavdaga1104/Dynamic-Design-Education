@@ -304,7 +304,9 @@
 .result-pass { border-color: rgba(52,211,153,0.3) !important; }
 .result-fail { border-color: rgba(248,113,113,0.2) !important; }
 .result-emoji { font-size: 3rem; margin-bottom: var(--s3); }
-.result-heading { font-size: 1.75rem; font-weight: 900; margin-bottom: var(--s3); }
+.result-heading { font-size: 1.75rem; font-weight: 900; margin-bottom: var(--s2); }
+.result-mastery-badge { display: flex; justify-content: center; margin-bottom: var(--s3); }
+.result-mastery-badge .badge { font-size: 0.85rem; letter-spacing: 0.08em; padding: 0.3rem 0.9rem; }
 .result-explanation { color: var(--text-2); margin-bottom: var(--s5); font-size: 0.9rem; line-height: 1.6; }
 
 .skill-updates {

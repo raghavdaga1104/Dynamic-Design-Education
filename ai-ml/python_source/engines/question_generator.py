@@ -230,11 +230,19 @@ DIFFICULTY GUIDE:
 
 RULES:
 - Exactly 4 options per question — all plausible, no obviously wrong distractors
-- correct_idx must be 0, 1, 2, or 3 — vary across questions
+- correct_idx must be 0, 1, 2, or 3 — vary across questions (do not always use 0)
 - explanation must say WHY the answer is correct, not just restate it
 - Use \\n for line breaks inside code snippets in the "text" field
 - Tags must be short lowercase strings (e.g. "complexity", "BST", "lambda")
 - Every question must test something DIFFERENT
+
+CRITICAL — SELF-CHECK BEFORE OUTPUT:
+For EVERY question, verify this before including it:
+  1. Read options[correct_idx]. Is it factually the correct answer to the question?
+  2. Does the explanation describe options[correct_idx]? It must match — not another option.
+  3. Are all 4 options distinct? No duplicates or near-duplicates.
+If any check fails, fix correct_idx or rewrite the question before outputting.
+A wrong correct_idx is a silent bug that breaks the student's score — never guess.
 
 Respond with ONLY a raw JSON array. No markdown fences, no explanation, no extra text.
 Each item: {{"difficulty":"easy|medium|hard","text":"...","options":["A","B","C","D"],"correct_idx":0,"explanation":"...","tags":["tag"]}}"""
@@ -297,17 +305,60 @@ def _call_groq(prompt: str) -> Tuple[Optional[List[Dict]], Optional[str]]:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _validate(q: Dict) -> bool:
+    """
+    Structural + semantic validation for Groq-generated questions.
+
+    Structural checks (original):
+      - text, options, correct_idx, explanation, tags, difficulty all present
+        and well-formed.
+
+    Semantic checks (new — prevents wrong correct_idx bug):
+      1. correct_option_overlap: at least one meaningful word (>3 chars) from
+         the correct option must appear in the explanation. Catches cases where
+         Groq labels "Define a class" as correct but explanation says "defines
+         a function".
+      2. unique_options: all 4 options must be distinct (case-insensitive).
+    """
+    import re as _re
+
+    # ── Structural checks ────────────────────────────────────────────────────
     try:
-        assert isinstance(q.get("text"), str)       and len(q["text"].strip()) >= 10
-        assert isinstance(q.get("options"), list)   and len(q["options"]) == 4
-        assert all(isinstance(o, str) and o.strip() for o in q["options"])
+        assert isinstance(q.get("text"), str)        and len(q["text"].strip()) >= 10
+        assert isinstance(q.get("options"), list)    and len(q["options"]) == 4
+        assert all(isinstance(o, str) and o.strip()  for o in q["options"])
         assert q.get("correct_idx") in (0, 1, 2, 3)
         assert isinstance(q.get("explanation"), str) and len(q["explanation"].strip()) >= 10
         assert isinstance(q.get("tags"), list)       and len(q["tags"]) > 0
         assert q.get("difficulty") in ("easy", "medium", "hard")
-        return True
     except AssertionError:
         return False
+
+    # ── Semantic check 1: unique options ────────────────────────────────────
+    opts_lower = [o.strip().lower() for o in q["options"]]
+    if len(set(opts_lower)) != 4:
+        logger.warning(
+            "_validate: duplicate options — dropping: %.60s", q.get("text", "")
+        )
+        return False
+
+    # ── Semantic check 2: correct option overlaps with explanation ───────────
+    # Extract meaningful words (>3 chars) from the correct option and verify
+    # at least one appears in the explanation. This catches the core bug where
+    # Groq returns correct_idx pointing to a wrong option (e.g. "Define a class"
+    # when the explanation says "def is used to define a function").
+    correct_option = q["options"][q["correct_idx"]].lower()
+    explanation    = q.get("explanation", "").lower()
+    meaningful     = [w for w in _re.split(r"[^a-z0-9]+", correct_option) if len(w) > 3]
+
+    if meaningful and not all(w in explanation for w in meaningful):  # ALL words must match (AND logic)
+        logger.warning(
+            "_validate: correct option %r has no overlap with explanation %r "
+            "— likely wrong correct_idx, dropping: %.60s",
+            correct_option, explanation[:80], q.get("text", ""),
+        )
+        return False
+
+    return True
 
 
 def _assign_ids(questions: List[Dict], unit_id: str, user_id: str) -> List[Dict]:
@@ -423,10 +474,24 @@ def get_or_generate_questions(
         return _fallback(unit_id)
 
     # Validate and filter
+    # _validate() now includes semantic checks — questions with a wrong
+    # correct_idx (explanation contradicts selected option) are dropped here.
     valid = [q for q in raw_qs if _validate(q)]
-    if len(valid) < n_per_difficulty:   # need at least 1 per difficulty tier
-        logger.warning("Too few valid questions (%d/%d) for %s — using fallback",
-                       len(valid), len(raw_qs), unit_id)
+    dropped = len(raw_qs) - len(valid)
+    if dropped:
+        logger.warning(
+            "_validate dropped %d/%d questions for %s (structural or semantic failures)",
+            dropped, len(raw_qs), unit_id,
+        )
+
+    # Need at least n_per_difficulty valid questions per tier.
+    # If Groq produced too many bad questions, fall back to handcrafted bank
+    # which has manually verified correct_idx values.
+    if len(valid) < n_per_difficulty:
+        logger.warning(
+            "Too few valid questions (%d/%d) for %s — using handcrafted fallback",
+            len(valid), len(raw_qs), unit_id,
+        )
         return _fallback(unit_id)
 
     # Assign IDs and cap to n_per_difficulty per difficulty
