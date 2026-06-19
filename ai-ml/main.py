@@ -33,7 +33,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Optional, Dict, List
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -50,6 +50,7 @@ from python_source.state.state_manager   import StateManager
 from python_source.engines.rag_engine    import RAGEngine, GROQ_MODEL
 from python_source.core.irt_scoring      import score_quiz as irt_score_quiz
 from python_source.engines.ats_engine    import ATSEngine
+from python_source.engines.resume_parser import extract_resume_text, ResumeParseError
 from python_source.auth.auth_router       import router as auth_router
 
 # ─────────────────────────────────────────────────────────────────
@@ -148,6 +149,10 @@ class ATSIn(BaseModel):
     user_id:         str
     resume_text:     str
     job_description: str
+    # include_semantic_matches kept for backwards compatibility but is now always True —
+    # semantic matching runs inside analyze() itself (SBERT is fast/free, LLM advisory
+    # implied-keyword check runs only when Groq is available).
+    include_semantic_matches: bool = True
 
 class ATSImproveIn(BaseModel):
     user_id:         str
@@ -996,12 +1001,21 @@ async def ask_chatbot(req: ChatIn):
 def analyze_resume(req: ATSIn):
     if not req.resume_text.strip() or not req.job_description.strip():
         raise HTTPException(400, "Both resume_text and job_description required.")
+
     result = ATS.analyze(req.resume_text, req.job_description)
-    # Add keyword_density and recommendations aliases that ATSPage reads
-    matched = len(result.get("matched_keywords", []))
-    missing = len(result.get("missing_keywords", []))
-    result["keyword_density"]  = round(matched / max(matched + missing, 1), 3)
+
+    # keyword_density and recommendations aliases for ATSPage
+    matched_count = len(result.get("matched_keywords", []))
+    missing_count = len(result.get("missing_keywords", []))
+    implied_count = len(result.get("implied_keywords", []))
+    result["keyword_density"]  = round(matched_count / max(matched_count + missing_count + implied_count, 1), 3)
     result["recommendations"]  = result.get("suggestions", [])
+
+    # semantic_matches is already included by analyze() — no extra call needed.
+    # implied_keywords shows keywords the resume already covers under different
+    # wording (shown as amber chips in the UI, separate from green matched and
+    # red missing).
+
     return {"user_id": req.user_id, **result}
 
 
@@ -1024,6 +1038,8 @@ def improve_resume(req: ATSImproveIn):
         "score_ats":               scoring.get("score_ats", 0),
         "matched_keywords":        scoring.get("matched_keywords", []),
         "missing_keywords":        scoring.get("missing_keywords", []),
+        "implied_keywords":        scoring.get("implied_keywords", []),    # NEW
+        "semantic_matches":        scoring.get("semantic_matches", []),    # NEW
         "feedback":                scoring.get("feedback", ""),
         "bullet_rewrites":         improve.get("bullet_rewrites", []),
         "keyword_suggestions":     improve.get("keyword_suggestions", []),
@@ -1055,6 +1071,34 @@ def rewrite_bullets_only(req: ATSImproveIn):
         "bullet_rewrites":         rewrites.get("bullet_rewrites", []),
         "improved_summary":        rewrites.get("improved_summary", {}),
         "anti_hallucination_note": rewrites.get("anti_hallucination_note", ""),
+    }
+
+
+MAX_RESUME_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
+
+
+@app.post("/ats/upload-resume")
+async def upload_resume_file(file: UploadFile = File(...)):
+    filename = file.filename or ""
+    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+    if ext not in ("pdf", "docx"):
+        raise HTTPException(400, "Please upload a PDF or DOCX file.")
+
+    contents = await file.read()
+    if not contents:
+        raise HTTPException(400, "Uploaded file is empty.")
+    if len(contents) > MAX_RESUME_FILE_SIZE:
+        raise HTTPException(400, "File is too large (max 5MB).")
+
+    try:
+        text = extract_resume_text(contents, ext)
+    except ResumeParseError as exc:
+        raise HTTPException(400, str(exc))
+
+    return {
+        "resume_text": text,
+        "filename":    filename,
+        "char_count":  len(text),
     }
 
 

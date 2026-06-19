@@ -1,7 +1,19 @@
 // pages/ATS.jsx
 // ─────────────────────────────────────────────────────────────
-// Resume ATS analyzer. User pastes resume + job description.
+// Resume ATS analyzer. User drag-and-drops a resume + pastes a job description.
 // Backend scores and returns matched/missing keywords, tips.
+//
+// Dropzone styling is inline (dzStyles below) so it matches the app's dark
+// theme out of the box — no separate CSS file needed.
+//
+// ADD TO services/api.js, inside the `ats` export:
+//   uploadResume: async (file) => {
+//     const formData = new FormData();
+//     formData.append('file', file);
+//     const res = await fetch(`${BASE_URL}/ats/upload-resume`, { method: 'POST', body: formData });
+//     if (!res.ok) throw new Error((await res.json()).detail || 'Upload failed');
+//     return res.json();
+//   },
 // ─────────────────────────────────────────────────────────────
 
 import { useState } from 'react';
@@ -21,9 +33,101 @@ export default function ATS() {
   const [loadingImprove, setLoadingImprove] = useState(false);
   const [error, setError]           = useState('');
 
+  const [uploadedFileName, setUploadedFileName] = useState('');
+  const [parsingFile, setParsingFile]           = useState(false);
+  const [isDragging, setIsDragging]             = useState(false);
+
+  async function handleResumeFile(file) {
+    if (!file) return;
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (!['pdf', 'docx'].includes(ext)) {
+      setError('Please upload a PDF or DOCX file.');
+      return;
+    }
+    setParsingFile(true);
+    setError('');
+    try {
+      const data = await atsApi.uploadResume(file);
+      setResumeText(data.resume_text);
+      setUploadedFileName(file.name);
+    } catch (e) {
+      setError('Could not read that file: ' + e.message);
+    } finally {
+      setParsingFile(false);
+    }
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    handleResumeFile(file);
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave() {
+    setIsDragging(false);
+  }
+
+  function handleFileInputChange(e) {
+    handleResumeFile(e.target.files?.[0]);
+  }
+
+  const dzStyles = {
+    box: {
+      border: `2px dashed ${isDragging ? '#818cf8' : '#2e3548'}`,
+      borderRadius: 12,
+      padding: '32px 24px',
+      textAlign: 'center',
+      background: isDragging ? 'rgba(99,102,241,0.08)' : '#11151f',
+      transition: 'all .15s ease',
+    },
+    button: {
+      background: '#6366f1',
+      color: '#fff',
+      border: 'none',
+      padding: '13px 30px',
+      borderRadius: 8,
+      fontSize: 15,
+      fontWeight: 700,
+      cursor: 'pointer',
+      boxShadow: '0 4px 12px rgba(99,102,241,0.3)',
+    },
+    hint: {
+      color: '#7c8398',
+      fontSize: 14,
+      margin: '14px 0 0',
+    },
+    filenameRow: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 14,
+    },
+    filename: {
+      fontSize: 14,
+      margin: 0,
+      fontWeight: 500,
+      color: '#e2e4ed',
+    },
+    remove: {
+      fontSize: 12,
+      color: '#f87171',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      textDecoration: 'underline',
+      padding: 0,
+    },
+  };
+
   async function handleAnalyze() {
     if (!resumeText.trim() || !jobDesc.trim()) {
-      setError('Please paste both your resume and the job description.');
+      setError('Please upload your resume and paste the job description.');
       return;
     }
     setLoading(true);
@@ -71,13 +175,46 @@ export default function ATS() {
       <div className="ats-input-grid">
         <div className="ats-input-col">
           <label className="form-label">Your Resume</label>
-          <textarea
-            className="textarea"
-            placeholder="Paste your resume text here…"
-            value={resumeText}
-            onChange={e => setResumeText(e.target.value)}
-            rows={12}
-          />
+
+          <div
+            style={dzStyles.box}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+          >
+            <input
+              id="ats-file-input"
+              type="file"
+              accept=".pdf,.docx"
+              style={{ display: 'none' }}
+              onChange={handleFileInputChange}
+            />
+            {parsingFile ? (
+              <Spinner message="Reading your resume…" />
+            ) : uploadedFileName ? (
+              <div style={dzStyles.filenameRow}>
+                <p style={dzStyles.filename}>📄 {uploadedFileName}</p>
+                <button
+                  type="button"
+                  style={dzStyles.remove}
+                  onClick={() => { setUploadedFileName(''); setResumeText(''); }}
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  style={dzStyles.button}
+                  onClick={() => document.getElementById('ats-file-input').click()}
+                >
+                  Select Resume File
+                </button>
+                <p style={dzStyles.hint}>or drop a PDF / WORD document here</p>
+              </>
+            )}
+          </div>
         </div>
         <div className="ats-input-col">
           <label className="form-label">Job Description</label>
@@ -161,7 +298,7 @@ export default function ATS() {
 
           {/* Improve section */}
           <Card className="ats-improve-card">
-            <div className="card-title">AI-Powered Improvement (slow — uses LLM)</div>
+            <div className="card-title">AI-Powered Summary Improvement (slow — uses LLM)</div>
             <div className="improve-row">
               <input
                 className="input"
@@ -170,29 +307,55 @@ export default function ATS() {
                 onChange={e => setTargetRole(e.target.value)}
               />
               <Button onClick={handleImprove} loading={loadingImprove} variant="secondary">
-                Get Bullet Rewrites
+                Improve Summary
               </Button>
             </div>
-            {loadingImprove && <Spinner message="AI is rewriting your bullets… (10–60s)" />}
+            {loadingImprove && <Spinner message="AI is improving your summary… (10–30s)" />}
           </Card>
 
           {/* Improved output */}
           {improved && (
             <Card>
               <div className="card-title">Improved Version</div>
-              {improved.bullet_rewrites?.map((br, i) => (
-                <div key={i} className="bullet-rewrite">
-                  <div className="bullet-before">
-                    <span className="bullet-label">Before</span>
-                    <p>{br.original}</p>
+
+              {/* Improved Summary */}
+              {improved.improved_summary?.improved_summary && (
+                <div style={{ marginBottom: 24 }}>
+                  <div className="bullet-label" style={{ marginBottom: 8, fontSize: 13, color: '#7c8398', textTransform: 'uppercase', letterSpacing: 1 }}>
+                    Improved Professional Summary
                   </div>
-                  <div className="bullet-arrow">→</div>
-                  <div className="bullet-after">
-                    <span className="bullet-label">After</span>
-                    <p>{br.rewritten}</p>
-                  </div>
+                  <p style={{ color: '#e2e4ed', lineHeight: 1.7, margin: 0 }}>
+                    {improved.improved_summary.improved_summary}
+                  </p>
+                  {improved.improved_summary.changes_made && (
+                    <p style={{ color: '#7c8398', fontSize: 13, marginTop: 10, fontStyle: 'italic' }}>
+                      ✎ {improved.improved_summary.changes_made}
+                    </p>
+                  )}
                 </div>
-              ))}
+              )}
+
+              {/* Keyword suggestions if any */}
+              {improved.keyword_suggestions?.filter(s => s.can_add).length > 0 && (
+                <div>
+                  <div className="bullet-label" style={{ marginBottom: 8, fontSize: 13, color: '#7c8398', textTransform: 'uppercase', letterSpacing: 1 }}>
+                    Keyword Addition Suggestions
+                  </div>
+                  {improved.keyword_suggestions.filter(s => s.can_add).map((s, i) => (
+                    <div key={i} style={{ marginBottom: 10, padding: '10px 14px', background: '#1a1f2e', borderRadius: 8, borderLeft: '3px solid #6366f1' }}>
+                      <span style={{ color: '#818cf8', fontWeight: 600, fontSize: 13 }}>{s.keyword}</span>
+                      <span style={{ color: '#7c8398', fontSize: 13 }}> → {s.section}</span>
+                      <p style={{ color: '#e2e4ed', fontSize: 14, margin: '6px 0 0' }}>{s.suggestion}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {improved.anti_hallucination_note && (
+                <p style={{ color: '#4b5563', fontSize: 12, marginTop: 16, fontStyle: 'italic' }}>
+                  ℹ {improved.anti_hallucination_note}
+                </p>
+              )}
             </Card>
           )}
         </div>

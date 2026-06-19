@@ -31,10 +31,13 @@ numpy>=1.26.0
 pandas>=2.2.0
 
 # ── File Handling ─────────────────────────────
+# Powers POST /ats/upload-resume (PDF/DOCX text extraction)
 PyPDF2==3.0.1
 python-docx==1.1.2
 
-# ── Optional: API / Forms ─────────────────────
+# ── API / Forms ────────────────────────────────
+# Required (not optional) — FastAPI needs this to accept
+# multipart file uploads (UploadFile / File()) on /ats/upload-resume
 python-multipart==0.0.12
 
 # ── Optional: Production Deployment ───────────

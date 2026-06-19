@@ -118,6 +118,28 @@ export const mistakes = {
 
 // ── ATS ──────────────────────────────────────────────────────
 export const ats = {
+  // Uses raw fetch (not apiCall) — file uploads need FormData, and
+  // apiCall always forces Content-Type: application/json + JSON.stringify,
+  // which would break the multipart upload.
+  uploadResume: async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE}/ats/upload-resume`, {
+      method: 'POST',
+      body: formData, // no Content-Type header — browser sets the multipart boundary itself
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
+      const err = new Error(error.detail?.message || error.detail || 'Upload failed');
+      err.status = response.status;
+      err.detail = error.detail;
+      throw err;
+    }
+
+    return response.json();
+  },
   analyze: (userId, resumeText, jobDescription) =>
     apiCall('POST', '/ats/analyze', {
       user_id: userId,
