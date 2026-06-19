@@ -26,8 +26,6 @@ Security
 import hashlib
 import logging
 import secrets
-from datetime import datetime, timezone
-from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -35,12 +33,9 @@ from pydantic import BaseModel, EmailStr, field_validator
 from sqlalchemy.orm import Session
 
 from database import SessionLocal
-from models import User
+from models import User, LearnerState
 
 logger = logging.getLogger(__name__)
-
-# Learner state dir — used to detect returning users
-_LEARNER_STATE_DIR = Path(__file__).parent.parent / "data" / "learner_states"
 
 PBKDF2_ITERS = 260_000
 PBKDF2_HASH  = "sha256"
@@ -119,7 +114,6 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
     """Register a new user. Returns user_id and profile on success."""
     email_lower = req.email.lower()
 
-    # Duplicate email check
     existing = db.query(User).filter(User.email == email_lower).first()
     if existing:
         raise HTTPException(
@@ -149,9 +143,9 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
     logger.info("New user registered: %s (%s)", user_id, email_lower)
 
     return AuthResponse(
-        user_id  = user_id,
-        name     = req.name,
-        profile  = {"degree": req.degree, "year": req.year, "interest": req.interest},
+        user_id     = user_id,
+        name        = req.name,
+        profile     = {"degree": req.degree, "year": req.year, "interest": req.interest},
         is_new_user = True,
     )
 
@@ -170,9 +164,10 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
 
     logger.info("User logged in: %s", user.user_id)
 
-    # If no learner state file exists yet, treat as new user → send to diagnostic
-    safe_id  = "".join(c for c in user.user_id if c.isalnum() or c in "-_")
-    has_state = (_LEARNER_STATE_DIR / f"{safe_id}.json").exists()
+    # Check PostgreSQL for existing learner state — not the file system
+    has_state = db.query(LearnerState).filter(
+        LearnerState.user_id == user.user_id
+    ).first() is not None
 
     return AuthResponse(
         user_id     = user.user_id,
