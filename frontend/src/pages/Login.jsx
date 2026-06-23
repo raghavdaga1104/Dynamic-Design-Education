@@ -117,7 +117,12 @@ export default function Login() {
       const data = await auth.login(email.trim(), password);
       setUserId(data.user_id);
       setUserName(data.name || data.user_id);
-      if (data.profile) setProfile(data.profile);
+      if (data.profile) {
+        setProfile(prev => ({
+        ...prev,
+        ...data.profile
+      }));
+}
       navigate(data.is_new_user ? '/diagnostic' : '/dashboard');
     } catch (err) {
       setError(err.message || 'Invalid email or password.');
