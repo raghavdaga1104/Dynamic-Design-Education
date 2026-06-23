@@ -1,7 +1,8 @@
 // pages/Diagnostic.jsx
 // ─────────────────────────────────────────────────────────────
-// Placement test: user picks a topic → answers 10 questions →
-// backend returns tier + starting_unit → redirect to dashboard.
+// Placement test: auto-selects topic based on chosen subject →
+// answers 10 questions → backend returns tier + starting_unit
+// → redirect to dashboard.
 // ─────────────────────────────────────────────────────────────
 
 import { useState, useEffect } from 'react';
@@ -11,44 +12,47 @@ import { diagnostic as diagApi } from '../services/api';
 import { Button, Spinner, Alert, Badge, ProgressBar } from '../components/ui';
 import { domainIcon, domainColor } from '../utils/helpers';
 
-const STEP = { PICK_TOPIC: 'pick_topic', QUIZ: 'quiz', RESULT: 'result' };
+const STEP = { LOADING: 'loading', QUIZ: 'quiz', RESULT: 'result' };
+
+// Map subject id → topic string expected by the backend
+const SUBJECT_TOPIC_MAP = {
+  'dsa-python': 'Data Structures',
+};
 
 export default function DiagnosticPage() {
-  const { userId, markDiagnosticDone } = useApp();
+  const { userId, profile, markDiagnosticDone } = useApp();
   const navigate = useNavigate();
 
-  const [step, setStep]       = useState(STEP.PICK_TOPIC);
-  const [topics, setTopics]   = useState([]);
-  const [topic, setTopic]     = useState('');
+  const [step, setStep]           = useState(STEP.LOADING);
   const [questions, setQuestions] = useState([]);
-  const [answers, setAnswers] = useState({}); // { qId: idx }
-  const [current, setCurrent] = useState(0);
-  const [result, setResult]   = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState('');
+  const [answers, setAnswers]     = useState({});
+  const [current, setCurrent]     = useState(0);
+  const [result, setResult]       = useState(null);
+  const [loading, setLoading]     = useState(false);
+  const [error, setError]         = useState('');
 
-  // Fetch available topics on mount
+  // Derive topic from selected subject
+  const topic = SUBJECT_TOPIC_MAP[profile?.subject] || 'Data Structures';
+
+  // Auto-start diagnostic on mount
   useEffect(() => {
-    diagApi.getTopics()
-      .then(r => setTopics(r.topics))
-      .catch(() => setError('Could not load topics. Is the backend running?'));
-  }, []);
-
-  async function handleStartDiagnostic() {
-    setLoading(true);
-    setError('');
-    try {
-      const data = await diagApi.start(userId, topic);
-      setQuestions(data.questions);
-      setAnswers({});
-      setCurrent(0);
-      setStep(STEP.QUIZ);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
+    async function startDiagnostic() {
+      setLoading(true);
+      setError('');
+      try {
+        const data = await diagApi.start(userId, topic);
+        setQuestions(data.questions);
+        setAnswers({});
+        setCurrent(0);
+        setStep(STEP.QUIZ);
+      } catch (e) {
+        setError(e.message || 'Could not load questions. Is the backend running?');
+      } finally {
+        setLoading(false);
+      }
     }
-  }
+    startDiagnostic();
+  }, []);
 
   async function handleSkip() {
     setLoading(true);
@@ -95,57 +99,17 @@ export default function DiagnosticPage() {
   const q = questions[current];
   const answeredCount = Object.keys(answers).length;
 
-  // ── Topic Picker ─────────────────────────────────────────
-  if (step === STEP.PICK_TOPIC) {
+  // ── Loading ───────────────────────────────────────────────
+  if (step === STEP.LOADING) {
     return (
       <div className="page-centered diag-page">
-        <div className="diag-header">
-          <h1 className="page-title">Placement Test</h1>
-          <p className="page-subtitle">
-            Answer 10 questions so the AI can place you at the right starting point.
-            Takes about 3–5 minutes.
-          </p>
-        </div>
-
-        {error && <Alert type="error">{error}</Alert>}
-
-        {topics.length === 0 && !error ? (
-          <Spinner message="Loading topics…" />
-        ) : (
-          <div className="topic-grid">
-            {topics.map(t => (
-              <button
-                key={t}
-                className={`topic-card ${topic === t ? 'topic-selected' : ''}`}
-                onClick={() => setTopic(t)}
-                style={{ '--domain-color': domainColor(t) }}
-              >
-                <span className="topic-icon">{domainIcon(t)}</span>
-                <span className="topic-name">{t}</span>
-                {topic === t && <span className="topic-check">✓</span>}
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="diag-actions">
-          <Button
-            onClick={handleStartDiagnostic}
-            disabled={!topic}
-            loading={loading}
-            size="lg"
-          >
-            Start Diagnostic →
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={handleSkip}
-            disabled={!topic}
-            loading={loading}
-          >
-            Skip — Start from Beginning
-          </Button>
-        </div>
+        {error
+          ? <>
+              <Alert type="error">{error}</Alert>
+              <Button variant="ghost" onClick={() => navigate('/select-subject')}>← Back to subjects</Button>
+            </>
+          : <Spinner message="Preparing your placement test…" />
+        }
       </div>
     );
   }
@@ -154,6 +118,18 @@ export default function DiagnosticPage() {
   if (step === STEP.QUIZ) {
     return (
       <div className="page-centered diag-page">
+        <div className="diag-header">
+          <div className="diag-subject-badge">
+            <span className="diag-subject-icon">🧩</span>
+            Subject: Data Structures &amp; Algorithms (DSA) with Python
+          </div>
+          <h1 className="page-title">Placement Test</h1>
+          <p className="page-subtitle">
+            Answer 10 questions so the AI can place you at the right starting point.
+            Takes about 3–5 minutes.
+          </p>
+        </div>
+
         <div className="quiz-header">
           <div className="quiz-meta">
             <Badge color={domainColor(topic)}>{domainIcon(topic)} {topic}</Badge>
@@ -199,18 +175,11 @@ export default function DiagnosticPage() {
           <Button variant="ghost" onClick={handlePrev} disabled={current === 0}>← Prev</Button>
 
           {current < questions.length - 1 ? (
-            <Button
-              onClick={handleNext}
-              disabled={answers[q?.question_id] == null}
-            >
+            <Button onClick={handleNext} disabled={answers[q?.question_id] == null}>
               Next →
             </Button>
           ) : (
-            <Button
-              onClick={handleSubmit}
-              loading={loading}
-              disabled={answeredCount < questions.length}
-            >
+            <Button onClick={handleSubmit} loading={loading} disabled={answeredCount < questions.length}>
               Submit Quiz ✓
             </Button>
           )}
@@ -225,6 +194,12 @@ export default function DiagnosticPage() {
               onClick={() => setCurrent(i)}
             />
           ))}
+        </div>
+
+        <div className="diag-skip-wrap">
+          <Button variant="ghost" onClick={handleSkip} loading={loading}>
+            Skip — Start from Beginning
+          </Button>
         </div>
       </div>
     );

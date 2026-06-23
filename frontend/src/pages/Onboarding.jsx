@@ -38,7 +38,7 @@ export default function Onboarding() {
 
   function handleProfileSubmit() {
     setProfile(form);
-    navigate(diagnosticDone ? '/dashboard' : '/diagnostic');
+    navigate(diagnosticDone ? '/dashboard' : '/select-subject');
   }
 
   return (
@@ -153,7 +153,7 @@ export default function Onboarding() {
               </div>
 
               <Button onClick={handleProfileSubmit} className="btn-full" size="lg">
-                {diagnosticDone ? 'Go to Dashboard →' : 'Start Diagnostic →'}
+                {diagnosticDone ? 'Go to Dashboard →' : 'Choose Subject →'}
               </Button>
 
               <button className="back-link" onClick={() => setStep(1)}>← Change ID</button>

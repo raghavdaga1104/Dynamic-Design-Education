@@ -6,7 +6,6 @@ import { auth } from '../services/api';
 
 const DEGREES   = ['BTech', 'BSc', 'BCA', 'MCA', 'MTech', 'MSc', 'Other'];
 const YEARS     = ['1st', '2nd', '3rd', '4th', 'Postgrad'];
-const INTERESTS = ['python', 'data structures', 'oop', 'algorithms'];
 
 function NeuralCanvas() {
   const canvasRef = useRef(null);
@@ -58,7 +57,7 @@ export default function Signup() {
 
   const [step, setStep]         = useState(1);
   const [account, setAccount]   = useState({ name: '', email: '', password: '', confirm: '' });
-  const [profile, setProfileSt] = useState({ degree: 'BTech', year: '2nd', interest: 'python' });
+  const [profile, setProfileSt] = useState({ degree: 'BTech', year: '2nd' });
   const [error, setError]       = useState('');
   const [loading, setLoading]   = useState(false);
   const [mounted, setMounted]   = useState(false);
@@ -84,7 +83,7 @@ export default function Signup() {
       setUserId(data.user_id);
       setUserName(data.name || data.user_id);
       setProfile(profile);
-      navigate('/diagnostic');
+      navigate('/select-subject');
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
     } finally { setLoading(false); }
@@ -208,15 +207,6 @@ export default function Signup() {
                     {YEARS.map(y => (
                       <button key={y} className={`auth-chip ${profile.year === y ? 'active' : ''}`}
                         onClick={() => setProfileSt(p => ({ ...p, year: y }))}>{y}</button>
-                    ))}
-                  </div>
-                </div>
-                <div className="auth-field">
-                  <label className="auth-label">Primary Interest</label>
-                  <div className="auth-chip-group">
-                    {INTERESTS.map(i => (
-                      <button key={i} className={`auth-chip ${profile.interest === i ? 'active' : ''}`}
-                        onClick={() => setProfileSt(p => ({ ...p, interest: i }))}>{i}</button>
                     ))}
                   </div>
                 </div>

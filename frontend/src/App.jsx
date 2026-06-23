@@ -19,7 +19,8 @@ import Learn       from './pages/Learn';
 import SkillTree   from './pages/SkillTree';
 import Flashcards  from './pages/Flashcards';
 import Mistakes    from './pages/Mistakes';
-import ATS         from './pages/ATS';
+import ATS           from './pages/ATS';
+import SelectSubject from './pages/SelectSubject';
 
 // ── Auth Guard ───────────────────────────────────────────────
 function RequireAuth({ children }) {
@@ -50,7 +51,8 @@ export default function App() {
         <Route path="/login"      element={<Login />} />
         <Route path="/signup"     element={<Signup />} />
         <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/diagnostic" element={<RequireAuth><Diagnostic /></RequireAuth>} />
+        <Route path="/diagnostic"      element={<RequireAuth><Diagnostic /></RequireAuth>} />
+        <Route path="/select-subject" element={<RequireAuth><SelectSubject /></RequireAuth>} />
 
         {/* Authenticated + Layout */}
         <Route path="/dashboard"  element={<AuthenticatedPage><Dashboard /></AuthenticatedPage>} />

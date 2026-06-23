@@ -13,6 +13,10 @@ const NAV_ITEMS = [
   { path: '/ats',        icon: '⬙', label: 'ATS Resume'  },
 ];
 
+const SUBJECT_LABELS = {
+  'dsa-python': 'DSA with Python',
+};
+
 export default function Layout({ children }) {
   const { userId, userName, profile, resetAllLocalState } = useApp();
   const navigate  = useNavigate();
@@ -26,10 +30,11 @@ export default function Layout({ children }) {
     navigate('/login');
   }
 
-  // Initials from name
   const initials = userName
     ? userName.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
     : userId.slice(0, 2).toUpperCase();
+
+  const subjectLabel = SUBJECT_LABELS[profile?.subject] || profile?.subject || '—';
 
   return (
     <div className={`layout ${collapsed ? 'layout-collapsed' : ''}`}>
@@ -105,8 +110,8 @@ export default function Layout({ children }) {
                 <span className="profile-menu-val">{profile?.year}</span>
               </div>
               <div className="profile-menu-row">
-                <span className="profile-menu-label">Interest</span>
-                <span className="profile-menu-val">{profile?.interest}</span>
+                <span className="profile-menu-label">Subject</span>
+                <span className="profile-menu-val">{subjectLabel}</span>
               </div>
               <div className="profile-menu-divider" />
               <button className="profile-menu-logout" onClick={handleLogout}>

@@ -4,12 +4,22 @@ import { health as healthApi } from '../services/api';
 
 const AppContext = createContext(null);
 
+const DEFAULT_PROFILE = { degree: 'BTech', year: '2nd', subject: 'dsa-python' };
+
 export function AppProvider({ children }) {
-  const [userId, setUserId]   = useState(() => localStorage.getItem('dde_user_id') || '');
+  const [userId, setUserId]     = useState(() => localStorage.getItem('dde_user_id') || '');
   const [userName, setUserName] = useState(() => localStorage.getItem('dde_user_name') || '');
-  const [profile, setProfile] = useState(() => {
-    const saved = localStorage.getItem('dde_profile');
-    return saved ? JSON.parse(saved) : { degree: 'BTech', year: '2nd', interest: 'python' };
+  const [profile, setProfile]   = useState(() => {
+    try {
+      const saved = localStorage.getItem('dde_profile');
+      if (!saved) return DEFAULT_PROFILE;
+      const parsed = JSON.parse(saved);
+      // Migrate old profiles: drop interest, ensure subject exists
+      const { interest, ...rest } = parsed;
+      return { ...DEFAULT_PROFILE, ...rest };
+    } catch {
+      return DEFAULT_PROFILE;
+    }
   });
   const [serverStatus, setServerStatus] = useState('checking');
   const [diagnosticDone, setDiagnosticDone] = useState(
@@ -47,7 +57,7 @@ export function AppProvider({ children }) {
     setUserId('');
     setUserName('');
     setDiagnosticDone(false);
-    setProfile({ degree: 'BTech', year: '2nd', interest: 'python' });
+    setProfile(DEFAULT_PROFILE);
   }
 
   return (
