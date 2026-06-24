@@ -26,11 +26,8 @@ export default function ATS() {
 
   const [resumeText, setResumeText] = useState('');
   const [jobDesc, setJobDesc]       = useState('');
-  const [targetRole, setTargetRole] = useState('');
   const [result, setResult]         = useState(null);
-  const [improved, setImproved]     = useState(null);
   const [loading, setLoading]       = useState(false);
-  const [loadingImprove, setLoadingImprove] = useState(false);
   const [error, setError]           = useState('');
 
   const [uploadedFileName, setUploadedFileName] = useState('');
@@ -133,7 +130,7 @@ export default function ATS() {
     setLoading(true);
     setError('');
     setResult(null);
-    setImproved(null);
+
     try {
       const data = await atsApi.analyze(userId, resumeText, jobDesc);
       setResult(data);
@@ -141,19 +138,6 @@ export default function ATS() {
       setError('Analysis failed: ' + e.message);
     } finally {
       setLoading(false);
-    }
-  }
-
-  async function handleImprove() {
-    setLoadingImprove(true);
-    setError('');
-    try {
-      const data = await atsApi.improve(userId, resumeText, jobDesc, targetRole);
-      setImproved(data);
-    } catch (e) {
-      setError('Improvement failed: ' + e.message);
-    } finally {
-      setLoadingImprove(false);
     }
   }
 
@@ -293,69 +277,6 @@ export default function ATS() {
                   </li>
                 ))}
               </ul>
-            </Card>
-          )}
-
-          {/* Improve section */}
-          <Card className="ats-improve-card">
-            <div className="card-title">AI-Powered Summary Improvement (slow — uses LLM)</div>
-            <div className="improve-row">
-              <input
-                className="input"
-                placeholder="Target role (e.g. Backend Engineer)"
-                value={targetRole}
-                onChange={e => setTargetRole(e.target.value)}
-              />
-              <Button onClick={handleImprove} loading={loadingImprove} variant="secondary">
-                Improve Summary
-              </Button>
-            </div>
-            {loadingImprove && <Spinner message="AI is improving your summary… (10–30s)" />}
-          </Card>
-
-          {/* Improved output */}
-          {improved && (
-            <Card>
-              <div className="card-title">Improved Version</div>
-
-              {/* Improved Summary */}
-              {improved.improved_summary?.improved_summary && (
-                <div style={{ marginBottom: 24 }}>
-                  <div className="bullet-label" style={{ marginBottom: 8, fontSize: 13, color: '#7c8398', textTransform: 'uppercase', letterSpacing: 1 }}>
-                    Improved Professional Summary
-                  </div>
-                  <p style={{ color: '#e2e4ed', lineHeight: 1.7, margin: 0 }}>
-                    {improved.improved_summary.improved_summary}
-                  </p>
-                  {improved.improved_summary.changes_made && (
-                    <p style={{ color: '#7c8398', fontSize: 13, marginTop: 10, fontStyle: 'italic' }}>
-                      ✎ {improved.improved_summary.changes_made}
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {/* Keyword suggestions if any */}
-              {improved.keyword_suggestions?.filter(s => s.can_add).length > 0 && (
-                <div>
-                  <div className="bullet-label" style={{ marginBottom: 8, fontSize: 13, color: '#7c8398', textTransform: 'uppercase', letterSpacing: 1 }}>
-                    Keyword Addition Suggestions
-                  </div>
-                  {improved.keyword_suggestions.filter(s => s.can_add).map((s, i) => (
-                    <div key={i} style={{ marginBottom: 10, padding: '10px 14px', background: '#1a1f2e', borderRadius: 8, borderLeft: '3px solid #6366f1' }}>
-                      <span style={{ color: '#818cf8', fontWeight: 600, fontSize: 13 }}>{s.keyword}</span>
-                      <span style={{ color: '#7c8398', fontSize: 13 }}> → {s.section}</span>
-                      <p style={{ color: '#e2e4ed', fontSize: 14, margin: '6px 0 0' }}>{s.suggestion}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {improved.anti_hallucination_note && (
-                <p style={{ color: '#4b5563', fontSize: 12, marginTop: 16, fontStyle: 'italic' }}>
-                  ℹ {improved.anti_hallucination_note}
-                </p>
-              )}
             </Card>
           )}
         </div>
