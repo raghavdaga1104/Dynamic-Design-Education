@@ -1,16 +1,16 @@
 {
-  "course": "from from python_source.content._source.content. Programming and Data Structures",
+  "course": "Python Programming and Data Structures",
   "total_units": 14,
   "units": [
     {
-      "unit_id": "UNIT1_from from python_source.content._source.content.Basics",
-      "unit_title": "from from python_source.content._source.content. Basics",
+      "unit_id": "UNIT1_python_basics",
+      "unit_title": "Python Basics",
       "topics": [
         {
           "topic": "Variables",
-          "definition": "A variable is a named label bound to a memory location that stores a data value. In from from python_source.content._source.content. the interpreter infers the type automatically — no explicit declaration is required. from from python_source.content._source.content. follows a reference model: a variable stores a reference (pointer) to an object in memory, not the object itself.",
+          "definition": "A variable is a named label bound to a memory location that stores a data value. In Python the interpreter infers the type automatically — no explicit declaration is required. Python follows a reference model: a variable stores a reference (pointer) to an object in memory, not the object itself.",
           "key_concepts": [
-            "from from python_source.content._source.content. is dynamically typed — type is inferred, not declared",
+            "Python is dynamically typed — type is inferred, not declared",
             "Variables store references to objects, not the objects themselves",
             "Case-sensitive: age and Age are different variables",
             "type() returns the type of any object",
@@ -24,7 +24,7 @@
             "Cannot begin with a digit",
             "Only letters, digits, and underscores are allowed",
             "Case-sensitive: age and Age are different variables",
-            "Cannot use from from python_source.content._source.content. reserved keywords (if, for, while, class …)",
+            "Cannot use Python reserved keywords (if, for, while, class …)",
             "Use snake_case for variables: total_marks, not totalMarks",
             "Constants in UPPER_CASE: MAX_SIZE = 100"
           ],
@@ -35,22 +35,22 @@
             }
           ],
           "important_points": [
-            "from from python_source.content._source.content. variables are dynamically typed — the type can change on reassignment",
+            "Python variables are dynamically typed — the type can change on reassignment",
             "Always use type() to inspect the type at runtime",
             "bool is a subclass of int: True=1, False=0",
             "id() gives the memory address — use to understand reference model"
           ],
           "exam_questions": [
-            "What are the rules for naming variables in from from python_source.content._source.content.?",
-            "What is the difference between = and == in from from python_source.content._source.content.?",
+            "What are the rules for naming variables in Python ?",
+            "What is the difference between = and == in Python ?",
             "Explain dynamic typing with an example.",
             "What is the output of: a, b = 5, 10; a, b = b, a; print(a, b)?"
           ],
-          "explanation": "Variables in from from python_source.content._source.content. are dynamically typed, meaning you do not need to declare a type. The interpreter infers the type from the assigned value. Variables hold references to objects in memory, not the actual values."
+          "explanation": "Variables in Python are dynamically typed, meaning you do not need to declare a type. The interpreter infers the type from the assigned value. Variables hold references to objects in memory, not the actual values."
         },
         {
           "topic": "Data Types",
-          "definition": "A data type defines the kind of value a variable can hold and the operations that can be performed on it. from from python_source.content._source.content. has several built-in data types grouped into categories: Numeric, Text, Boolean, Sequence, Mapping, Set, and None.",
+          "definition": "A data type defines the kind of value a variable can hold and the operations that can be performed on it. Python has several built-in data types grouped into categories: Numeric, Text, Boolean, Sequence, Mapping, Set, and None.",
           "key_concepts": [
             "int — whole numbers, unlimited precision: 42, -7, 0",
             "float — 64-bit IEEE 754 decimal numbers: 3.14, -0.5",
@@ -69,7 +69,7 @@
             "Tuples are hashable and can be used as dict keys; lists cannot",
             "Sets do not allow duplicate values",
             "bool is a subclass of int: True==1 and False==0",
-            "dict preserves insertion order from from from python_source.content._source.content. 3.7+"
+            "dict preserves insertion order from Python 3.7+"
           ],
           "comparison_table": {
             "headers": [
@@ -128,17 +128,17 @@
             }
           ],
           "exam_questions": [
-            "List all built-in data types in from from python_source.content._source.content. with examples.",
+            "List all built-in data types in Python with examples.",
             "What is the difference between a list and a tuple?",
             "Why can tuples be used as dictionary keys but lists cannot?",
             "What is the output of: print(True + 5, False + 0)?",
             "Explain the difference between mutable and immutable types."
           ],
-          "explanation": "from from python_source.content._source.content.'s built-in types cover all common programming needs. The key distinction is mutability — lists, dicts, and sets are mutable (can be changed in place), while int, float, str, tuple, bool, and frozenset are immutable."
+          "explanation": "Python's built-in types cover all common programming needs. The key distinction is mutability — lists, dicts, and sets are mutable (can be changed in place), while int, float, str, tuple, bool, and frozenset are immutable."
         },
         {
           "topic": "Operators",
-          "definition": "Operators are special symbols that perform operations on one or more operands. from from python_source.content._source.content. supports arithmetic, comparison, logical, assignment, bitwise, membership, and identity operators.",
+          "definition": "Operators are special symbols that perform operations on one or more operands. Python supports arithmetic, comparison, logical, assignment, bitwise, membership, and identity operators.",
           "key_concepts": [
             "Arithmetic: +, -, *, /, //, %, ** ",
             "Comparison: ==, !=, <, >, <=, >= — return bool",
@@ -146,7 +146,7 @@
             "Assignment: =, +=, -=, *=, /=, //=, **=, %=",
             "Identity: is, is not — compare object identity (memory address)",
             "Membership: in, not in — check presence in sequence",
-            "/ always returns float in from from python_source.content._source.content. 3",
+            "/ always returns float in Python 3",
             "// returns integer (floor division)",
             "** is right-associative: 2**3**2 = 2**9 = 512"
           ],
@@ -178,7 +178,7 @@
             "/ always returns float: 10/2 = 5.0, not 5",
             "// returns floor: -7//2 = -4 (rounds toward negative infinity)",
             "== checks value equality; is checks object identity",
-            "Cfrom from python_source.content._source.content. caches integers -5 to 256 — do not rely on is for larger integers",
+            "CPython caches integers -5 to 256 — do not rely on is for larger integers",
             "and / or return one of the operands, not necessarily True/False",
             "** is right-associative: 2**3**2 evaluates as 2**(3**2) = 512"
           ],
@@ -186,20 +186,20 @@
             "What is the difference between == and is? Give an example.",
             "What is the output of: print(10 // 3, 10 % 3, 2 ** 10)?",
             "Explain short-circuit evaluation with an example.",
-            "What is the operator precedence in from from python_source.content._source.content.? List from highest to lowest.",
+            "What is the operator precedence in Python ? List from highest to lowest.",
             "What is the output of: print(2 ** 3 ** 2)?"
           ],
-          "explanation": "from from python_source.content._source.content. operators follow a strict precedence order. The most important rules are: ** is highest among arithmetic operators and is right-associative; / always returns float; == tests value while is tests identity."
+          "explanation": "Python operators follow a strict precedence order. The most important rules are: ** is highest among arithmetic operators and is right-associative; / always returns float; == tests value while is tests identity."
         },
         {
           "topic": "Control Flow",
-          "definition": "Control flow statements determine the order in which instructions are executed. from from python_source.content._source.content. uses if/elif/else for conditional execution. Indentation (4 spaces) defines code blocks — there are no braces.",
+          "definition": "Control flow statements determine the order in which instructions are executed. Python uses if/elif/else for conditional execution. Indentation (4 spaces) defines code blocks — there are no braces.",
           "key_concepts": [
             "if block executes when condition is True",
             "elif checks additional conditions in sequence",
             "else runs when all preceding conditions are False",
             "Ternary expression: value_if_true if condition else value_if_false",
-            "Conditions can be chained: 0 < x < 10 is valid from from python_source.content._source.content.",
+            "Conditions can be chained: 0 < x < 10 is valid Python",
             "Any non-zero / non-empty value is truthy",
             "Falsy values: 0, 0.0, '', [], {}, (), None, False"
           ],
@@ -214,23 +214,23 @@
             }
           ],
           "important_points": [
-            "from from python_source.content._source.content. uses indentation — inconsistent indentation causes IndentationError",
-            "elif is short for 'else if' — from from python_source.content._source.content. has no switch statement (match added in 3.10)",
+            "Python uses indentation — inconsistent indentation causes IndentationError",
+            "elif is short for 'else if' — Python has no switch statement (match added in 3.10)",
             "Conditions are evaluated top to bottom — first True block executes",
             "Ternary: x if condition else y — useful for simple one-line conditions",
-            "Chained comparisons: 0 < x < 10 works and is from from python_source.content._source.content.ic"
+            "Chained comparisons: 0 < x < 10 works and is Pythonic"
           ],
           "exam_questions": [
-            "Write a from from python_source.content._source.content. program to find the largest of three numbers.",
+            "Write a Python program to find the largest of three numbers.",
             "What is a ternary operator? Write an example.",
             "Explain the if-elif-else ladder with a grade calculator example.",
-            "What are falsy values in from from python_source.content._source.content.? List all of them."
+            "What are falsy values in Python ? List all of them."
           ],
-          "explanation": "from from python_source.content._source.content.'s control flow uses indentation instead of braces. The if-elif-else ladder evaluates conditions top to bottom and executes the first matching block. The ternary expression provides a concise one-line alternative for simple conditions."
+          "explanation": "Python's control flow uses indentation instead of braces. The if-elif-else ladder evaluates conditions top to bottom and executes the first matching block. The ternary expression provides a concise one-line alternative for simple conditions."
         },
         {
           "topic": "Loops",
-          "definition": "Loops allow repeated execution of a block of code. from from python_source.content._source.content. provides two loop types: for (iterates over a sequence) and while (repeats while a condition is True). Both support break, continue, pass, and an else clause.",
+          "definition": "Loops allow repeated execution of a block of code. Python provides two loop types: for (iterates over a sequence) and while (repeats while a condition is True). Both support break, continue, pass, and an else clause.",
           "key_concepts": [
             "for loop iterates over any iterable: list, string, range, dict, tuple, set",
             "range(start, stop, step) — stop is exclusive",
@@ -262,11 +262,11 @@
           "exam_questions": [
             "What is the difference between break and continue?",
             "Explain the for-else construct with an example.",
-            "Write a from from python_source.content._source.content. program to print all prime numbers between 1 and 50.",
+            "Write a Python program to print all prime numbers between 1 and 50.",
             "What is the output of: for i in range(2, 10, 3): print(i)?",
             "Write a program using a while loop to compute factorial of n."
           ],
-          "explanation": "from from python_source.content._source.content.'s for loop is used to iterate over sequences. The while loop is used when the number of iterations is not known in advance. The else clause on a loop is a unique from from python_source.content._source.content. feature that executes when the loop completes without a break."
+          "explanation": "Python's for loop is used to iterate over sequences. The while loop is used when the number of iterations is not known in advance. The else clause on a loop is a unique Python feature that executes when the loop completes without a break."
         },
         {
           "topic": "Input Output",
@@ -276,7 +276,7 @@
             "int(input()) for integer input; float(input()) for decimal",
             "map(int, input().split()) — read multiple integers on one line",
             "print() parameters: sep (separator), end (line ending)",
-            "f-strings are the recommended formatting method (from from python_source.content._source.content. 3.6+)",
+            "f-strings are the recommended formatting method (Python 3.6+)",
             "Format specifiers: :.2f (2 decimal places), :d (integer), :<10 (left-align)"
           ],
           "code_examples": [
@@ -302,13 +302,13 @@
             "Explain f-string formatting with three examples.",
             "What is the output of: print('A','B','C', sep='--', end='!')?"
           ],
-          "explanation": "input() is the standard way to receive user input in from from python_source.content._source.content.. It always returns a string, so explicit casting with int() or float() is required for numeric operations. f-strings are the modern, preferred formatting method."
+          "explanation": "input() is the standard way to receive user input in Python. It always returns a string, so explicit casting with int() or float() is required for numeric operations. f-strings are the modern, preferred formatting method."
         },
         {
           "topic": "Type Casting",
-          "definition": "Type casting (type conversion) is the process of converting a value from one data type to another. from from python_source.content._source.content. supports implicit conversion (automatic, done by interpreter) and explicit conversion (manual, using built-in functions).",
+          "definition": "Type casting (type conversion) is the process of converting a value from one data type to another. Python supports implicit conversion (automatic, done by interpreter) and explicit conversion (manual, using built-in functions).",
           "key_concepts": [
-            "Implicit: from from python_source.content._source.content. auto-promotes type to prevent data loss (int + float → float)",
+            "Implicit: Python auto-promotes type to prevent data loss (int + float → float)",
             "Explicit: programmer uses int(), float(), str(), bool(), list(), tuple(), set()",
             "int() truncates float — does NOT round: int(3.9) = 3",
             "int('3.14') raises ValueError — must use int(float('3.14'))",
@@ -319,7 +319,7 @@
           "types": [
             {
               "name": "Implicit Conversion",
-              "description": "from from python_source.content._source.content. automatically promotes types to avoid data loss in mixed expressions.",
+              "description": "Python automatically promotes types to avoid data loss in mixed expressions.",
               "example": "result = 10 + 3.5  # int + float → float = 13.5"
             },
             {
@@ -338,16 +338,16 @@
             "int(3.9) = 3 — truncation, not rounding; use round(3.9) = 4 for rounding",
             "bool(0) = False; bool([]) = False; bool([0]) = True (non-empty list)",
             "str(None) = 'None' (string); not the same as None",
-            "Implicit conversion only widens type — from from python_source.content._source.content. never silently loses precision"
+            "Implicit conversion only widens type — Python never silently loses precision"
           ],
           "exam_questions": [
             "What is the difference between implicit and explicit type conversion?",
             "What is the output of: print(int('3.14'))?  Why?",
-            "List all falsy values in from from python_source.content._source.content..",
+            "List all falsy values in Python.",
             "What is the output of: print(bool([]), bool([0]), bool(''))?",
             "How do you convert a binary string '1010' to an integer?"
           ],
-          "explanation": "from from python_source.content._source.content. performs implicit conversion to prevent precision loss in mixed-type arithmetic. Explicit casting must be done manually using built-in functions. The most common mistake is trying to convert a float string directly to int."
+          "explanation": "Python performs implicit conversion to prevent precision loss in mixed-type arithmetic. Explicit casting must be done manually using built-in functions. The most common mistake is trying to convert a float string directly to int."
         },
         {
           "topic": "Strings",
@@ -377,7 +377,7 @@
           "code_examples": [
             {
               "description": "Indexing, slicing, and string methods",
-              "code": "s = 'from from python_source.content._source.content.'\n#    P  y  t  h  o  n\n#    0  1  2  3  4  5   (positive)\n#   -6 -5 -4 -3 -2 -1   (negative)\n\nprint(s[0])       # P\nprint(s[-1])      # n\nprint(s[2:5])     # tho\nprint(s[:3])      # Pyt\nprint(s[3:])      # hon\nprint(s[::2])     # Pto\nprint(s[::-1])    # nohtyP\n\n# Methods\nprint('hello'.upper())         # HELLO\nprint('  hi  '.strip())        # hi\nprint('a,b,c'.split(','))      # ['a','b','c']\nprint('-'.join(['x','y','z'])) # x-y-z\nprint('hello'.replace('l','r'))# herro\nprint('hello'.find('l'))       # 2\nprint('hello'.count('l'))      # 2\nprint('123'.isdigit())         # True"
+              "code": "s = 'Python '\n#    P  y  t  h  o  n\n#    0  1  2  3  4  5   (positive)\n#   -6 -5 -4 -3 -2 -1   (negative)\n\nprint(s[0])       # P\nprint(s[-1])      # n\nprint(s[2:5])     # tho\nprint(s[:3])      # Pyt\nprint(s[3:])      # hon\nprint(s[::2])     # Pto\nprint(s[::-1])    # nohtyP\n\n# Methods\nprint('hello'.upper())         # HELLO\nprint('  hi  '.strip())        # hi\nprint('a,b,c'.split(','))      # ['a','b','c']\nprint('-'.join(['x','y','z'])) # x-y-z\nprint('hello'.replace('l','r'))# herro\nprint('hello'.find('l'))       # 2\nprint('hello'.count('l'))      # 2\nprint('123'.isdigit())         # True"
             }
           ],
           "important_points": [
@@ -385,16 +385,16 @@
             "String methods return NEW strings — the original is unchanged",
             "Slicing never raises IndexError — out-of-range indices are clipped",
             "find() returns -1 if not found; index() raises ValueError",
-            "Use f-strings for formatting (from from python_source.content._source.content. 3.6+): f'Hello {name}'"
+            "Use f-strings for formatting (Python 3.6+): f'Hello {name}'"
           ],
           "exam_questions": [
-            "What is the output of: s='from from python_source.content._source.content.'; print(s[1:4], s[::-1])?",
+            "What is the output of: s='Python '; print(s[1:4], s[::-1])?",
             "Explain string immutability with an example.",
             "What is the difference between find() and index()?",
             "Write a program to count vowels in a given string.",
             "What is the output of: print('ab' * 3, len('hello'))?"
           ],
-          "explanation": "Strings are one of the most frequently used data types in from from python_source.content._source.content.. Their immutability means every modification creates a new string object. The slicing syntax s[start:stop:step] is extremely powerful and must be mastered for exams."
+          "explanation": "Strings are one of the most frequently used data types in Python. Their immutability means every modification creates a new string object. The slicing syntax s[start:stop:step] is extremely powerful and must be mastered for exams."
         }
       ]
     },
@@ -437,14 +437,14 @@
             "What is the difference between a parameter and an argument?",
             "What does a function return if there is no return statement?",
             "Write a function to check if a number is prime.",
-            "Explain with an example that functions are first-class objects in from from python_source.content._source.content..",
+            "Explain with an example that functions are first-class objects in Python.",
             "What is a docstring? How do you access it?"
           ],
-          "explanation": "Functions are the fundamental building block of modular from from python_source.content._source.content. code. They are defined with def, optionally documented with docstrings, and can return any value including tuples for multiple return values. Since functions are first-class objects, they can be passed and stored like any other value."
+          "explanation": "Functions are the fundamental building block of modular Python code. They are defined with def, optionally documented with docstrings, and can return any value including tuples for multiple return values. Since functions are first-class objects, they can be passed and stored like any other value."
         },
         {
           "topic": "Function Arguments",
-          "definition": "from from python_source.content._source.content. supports five types of function arguments: positional, keyword, default, *args (variable positional), and **kwargs (variable keyword). This flexibility allows functions to handle a wide range of calling conventions.",
+          "definition": "Python supports five types of function arguments: positional, keyword, default, *args (variable positional), and **kwargs (variable keyword). This flexibility allows functions to handle a wide range of calling conventions.",
           "key_concepts": [
             "Positional arguments: matched by position, order matters",
             "Keyword arguments: matched by name, order does not matter",
@@ -480,16 +480,16 @@
             "Write a function using **kwargs to print a person's profile.",
             "Explain keyword-only arguments with an example."
           ],
-          "explanation": "from from python_source.content._source.content.'s flexible argument system covers positional, keyword, default, *args, and **kwargs. The most common exam traps are the mutable default argument pitfall and the required order of argument types in a function signature."
+          "explanation": "Python's flexible argument system covers positional, keyword, default, *args, and **kwargs. The most common exam traps are the mutable default argument pitfall and the required order of argument types in a function signature."
         },
         {
           "topic": "Scope Rules",
-          "definition": "Scope defines the region of a program where a variable is accessible. from from python_source.content._source.content. resolves variable names using the LEGB rule: Local → Enclosing → Global → Built-in. The scope is determined at definition time, not call time.",
+          "definition": "Scope defines the region of a program where a variable is accessible. Python resolves variable names using the LEGB rule: Local → Enclosing → Global → Built-in. The scope is determined at definition time, not call time.",
           "key_concepts": [
             "Local scope: variables defined inside a function",
             "Enclosing scope: variables in the enclosing (outer) function for nested functions",
             "Global scope: variables defined at module level",
-            "Built-in scope: from from python_source.content._source.content.'s built-in names (print, len, range, etc.)",
+            "Built-in scope: Python's built-in names (print, len, range, etc.)",
             "global keyword: declare that a variable refers to the global scope inside a function",
             "nonlocal keyword: declare that a variable refers to the enclosing function's scope",
             "A local variable shadows a global variable of the same name",
@@ -514,13 +514,13 @@
             "UnboundLocalError: assigning to x inside a function before referencing the global x"
           ],
           "exam_questions": [
-            "Explain the LEGB rule in from from python_source.content._source.content. with an example.",
+            "Explain the LEGB rule in Python with an example.",
             "What is the difference between global and nonlocal?",
             "What is the output of: x=10; def f(): x=20; f(); print(x)?",
             "What error occurs if you read a variable before assigning it locally?",
             "Write a counter function using nonlocal."
           ],
-          "explanation": "from from python_source.content._source.content. uses lexical (static) scoping with the LEGB rule. Variables are first looked up locally, then in enclosing functions, then globally, then in built-ins. The global and nonlocal keywords allow functions to modify variables in outer scopes."
+          "explanation": "Python uses lexical (static) scoping with the LEGB rule. Variables are first looked up locally, then in enclosing functions, then globally, then in built-ins. The global and nonlocal keywords allow functions to modify variables in outer scopes."
         },
         {
           "topic": "Lambda Expressions",
@@ -588,7 +588,7 @@
             "lambda can only contain a single expression — no loops, no assignments",
             "Use def for anything complex — lambda is for short one-liners",
             "map() and filter() return iterators — wrap in list() to see values",
-            "sorted() with key= is more from from python_source.content._source.content.ic than cmp= (removed in from from python_source.content._source.content. 3)",
+            "sorted() with key= is more Pythonic than cmp= (removed in Python 3)",
             "Lambda functions have access to enclosing scope (closure)"
           ],
           "exam_questions": [
@@ -607,9 +607,9 @@
             "Base case: the condition under which the function stops calling itself",
             "Recursive case: the function calls itself with a simpler/smaller input",
             "Call stack: each recursive call adds a stack frame",
-            "Stack overflow: too many recursive calls exceed from from python_source.content._source.content.'s recursion limit (default 1000)",
+            "Stack overflow: too many recursive calls exceed Python's recursion limit (default 1000)",
             "sys.setrecursionlimit(n) can increase the limit",
-            "Tail recursion: recursive call is the last operation (from from python_source.content._source.content. does NOT optimize this)",
+            "Tail recursion: recursive call is the last operation (Python does NOT optimize this)",
             "Every recursive solution can be rewritten iteratively",
             "Time/Space complexity depends on the depth of recursion"
           ],
@@ -660,10 +660,10 @@
           },
           "important_points": [
             "Every recursive function MUST have a base case or it causes infinite recursion",
-            "from from python_source.content._source.content.'s default recursion limit is 1000 — use sys.setrecursionlimit() to change",
+            "Python's default recursion limit is 1000 — use sys.setrecursionlimit() to change",
             "Naive Fibonacci is O(2^n) — use memoization or iteration for efficiency",
             "Recursion uses O(depth) stack space — can cause MemoryError on deep calls",
-            "from from python_source.content._source.content. does NOT perform tail-call optimization"
+            "Python does NOT perform tail-call optimization"
           ],
           "exam_questions": [
             "What are the two essential components of a recursive function?",
@@ -673,11 +673,11 @@
             "Compare recursion and iteration — advantages and disadvantages.",
             "What is the output of: def f(n): return 1 if n<=1 else n+f(n-1); print(f(5))?"
           ],
-          "explanation": "Recursion solves problems by breaking them into smaller subproblems of the same type. A base case prevents infinite recursion. from from python_source.content._source.content.'s call stack has a limit of ~1000 frames, so deep recursion requires either iteration or memoization. Recursive solutions are elegant for tree and divide-and-conquer problems."
+          "explanation": "Recursion solves problems by breaking them into smaller subproblems of the same type. A base case prevents infinite recursion. Python's call stack has a limit of ~1000 frames, so deep recursion requires either iteration or memoization. Recursive solutions are elegant for tree and divide-and-conquer problems."
         },
         {
           "topic": "Higher Order Functions",
-          "definition": "A higher-order function is a function that takes one or more functions as arguments, or returns a function as its result, or both. from from python_source.content._source.content.'s built-in higher-order functions include map(), filter(), sorted(), and functools.reduce().",
+          "definition": "A higher-order function is a function that takes one or more functions as arguments, or returns a function as its result, or both. Python's built-in higher-order functions include map(), filter(), sorted(), and functools.reduce().",
           "key_concepts": [
             "map(func, iterable) — applies func to every element, returns iterator",
             "filter(func, iterable) — keeps elements where func returns True, returns iterator",
@@ -764,7 +764,7 @@
         },
         {
           "topic": "Inheritance",
-          "definition": "Inheritance is an OOP mechanism where a child (derived) class acquires the attributes and methods of a parent (base) class. It promotes code reuse and establishes an IS-A relationship. from from python_source.content._source.content. supports single, multiple, multilevel, and hierarchical inheritance.",
+          "definition": "Inheritance is an OOP mechanism where a child (derived) class acquires the attributes and methods of a parent (base) class. It promotes code reuse and establishes an IS-A relationship. Python supports single, multiple, multilevel, and hierarchical inheritance.",
           "key_concepts": [
             "Syntax: class Child(Parent):",
             "Child class inherits all public and protected attributes/methods of the parent",
@@ -772,7 +772,7 @@
             "Method overriding: child redefines a method inherited from the parent",
             "isinstance(obj, Parent) returns True for child instances",
             "issubclass(Child, Parent) checks class hierarchy",
-            "MRO (Method Resolution Order): order from from python_source.content._source.content. searches for methods in multiple inheritance",
+            "MRO (Method Resolution Order): order Python searches for methods in multiple inheritance",
             "C3 linearisation algorithm determines MRO — accessible via ClassName.__mro__",
             "Types: Single, Multiple, Multilevel, Hierarchical, Hybrid"
           ],
@@ -793,20 +793,20 @@
               "code": "class A:\n    def hello(self):\n        return \"Hello from A\"\n\nclass B(A):\n    def hello(self):\n        return \"Hello from B\"\n\nclass C(A):\n    def hello(self):\n        return \"Hello from C\"\n\nclass D(B, C):                # Multiple inheritance\n    pass\n\nd = D()\nprint(d.hello())              # Hello from B  (MRO: D→B→C→A)\nprint(D.__mro__)              # (<class 'D'>,<class 'B'>,<class 'C'>,<class 'A'>,...)\nprint(issubclass(D, A))      # True"
             }
           ],
-          "method_resolution_order": "MRO for class D(B, C) where B(A) and C(A):\nD → B → C → A → object\nfrom from python_source.content._source.content. uses C3 linearisation to determine this order.\nAlways check ClassName.__mro__ or ClassName.mro() to verify.",
+          "method_resolution_order": "MRO for class D(B, C) where B(A) and C(A):\nD → B → C → A → object\nPython uses C3 linearisation to determine this order.\nAlways check ClassName.__mro__ or ClassName.mro() to verify.",
           "important_points": [
-            "super() without arguments works in from from python_source.content._source.content. 3 — no need to pass class and self",
+            "super() without arguments works in Python 3 — no need to pass class and self",
             "Method overriding replaces the parent's method in the child class",
             "Use super().method() to call the parent's original method from a child",
             "MRO determines which method is called in multiple inheritance",
-            "All from from python_source.content._source.content. classes implicitly inherit from object",
+            "All Python classes implicitly inherit from object",
             "issubclass(Child, Parent) checks class relationship without creating an object"
           ],
           "exam_questions": [
             "What is inheritance? What are its types?",
             "What is method overriding? How is it different from method overloading?",
             "Explain super() with an example.",
-            "What is MRO? How does from from python_source.content._source.content. resolve method calls in multiple inheritance?",
+            "What is MRO? How does Python resolve method calls in multiple inheritance?",
             "Write a class hierarchy: Shape → Rectangle → Square with area() methods."
           ],
           "explanation": "Inheritance lets child classes reuse and extend parent class functionality. super() provides clean access to the parent class. Method overriding lets the child customize inherited behaviour. MRO (C3 linearisation) determines which method gets called in complex inheritance hierarchies."
@@ -835,33 +835,33 @@
               "code": "class BankAccount:\n    def __init__(self, owner, balance):\n        self.owner    = owner        # public\n        self._branch  = \"Main\"       # protected (convention)\n        self.__balance = balance      # private (name mangled)\n\n    def deposit(self, amount):\n        if amount > 0:\n            self.__balance += amount\n\n    def withdraw(self, amount):\n        if 0 < amount <= self.__balance:\n            self.__balance -= amount\n        else:\n            print(\"Insufficient funds\")\n\n    def get_balance(self):           # getter\n        return self.__balance\n\nacc = BankAccount(\"Alice\", 1000)\nacc.deposit(500)\nprint(acc.get_balance())      # 1500\nprint(acc.owner)              # Alice  (public)\nprint(acc._branch)            # Main   (protected — accessible but discouraged)\n# print(acc.__balance)        # AttributeError!\nprint(acc._BankAccount__balance)  # 1500  (name mangling)"
             },
             {
-              "description": "@property decorator — from from python_source.content._source.content.ic getters and setters",
+              "description": "@property decorator — Pythonic getters and setters",
               "code": "class Temperature:\n    def __init__(self, celsius):\n        self._celsius = celsius\n\n    @property\n    def celsius(self):              # getter\n        return self._celsius\n\n    @celsius.setter\n    def celsius(self, value):       # setter with validation\n        if value < -273.15:\n            raise ValueError(\"Temperature below absolute zero!\")\n        self._celsius = value\n\n    @property\n    def fahrenheit(self):           # computed property\n        return self._celsius * 9/5 + 32\n\nt = Temperature(25)\nprint(t.celsius)        # 25      (calls getter)\nprint(t.fahrenheit)     # 77.0   (computed)\nt.celsius = 100         # calls setter\nprint(t.fahrenheit)     # 212.0\n# t.celsius = -300      # ValueError!"
             }
           ],
           "important_points": [
-            "from from python_source.content._source.content. does not enforce access control — it relies on naming conventions",
+            "Python does not enforce access control — it relies on naming conventions",
             "Single underscore _name is a hint: 'for internal use only'",
             "Double underscore __name triggers name mangling: _ClassName__name",
             "@property makes attribute access look like a simple variable read",
-            "Use @property instead of explicit get_x()/set_x() methods for from from python_source.content._source.content.ic code",
+            "Use @property instead of explicit get_x()/set_x() methods for Pythonic code",
             "Encapsulation prevents accidental modification of internal state"
           ],
           "exam_questions": [
             "What is encapsulation? Why is it important?",
-            "What is the difference between public, protected, and private attributes in from from python_source.content._source.content.?",
+            "What is the difference between public, protected, and private attributes in Python ?",
             "What is name mangling? Give an example.",
             "Explain the @property decorator with a getter and setter example.",
             "Write a class Person with a private __age attribute and validation in the setter."
           ],
-          "explanation": "Encapsulation bundles data and methods together while restricting direct access to internals. from from python_source.content._source.content. uses naming conventions (_protected, __private) rather than strict enforcement. The @property decorator provides a clean from from python_source.content._source.content.ic way to add validation and computed attributes."
+          "explanation": "Encapsulation bundles data and methods together while restricting direct access to internals. Python uses naming conventions (_protected, __private) rather than strict enforcement. The @property decorator provides a clean Pythonic way to add validation and computed attributes."
         },
         {
           "topic": "Polymorphism",
-          "definition": "Polymorphism means 'many forms'. In OOP, it is the ability of different objects to respond to the same method call in their own way. from from python_source.content._source.content. supports polymorphism through method overriding, duck typing, and operator overloading.",
+          "definition": "Polymorphism means 'many forms'. In OOP, it is the ability of different objects to respond to the same method call in their own way. Python supports polymorphism through method overriding, duck typing, and operator overloading.",
           "key_concepts": [
             "Method overriding: child class redefines a parent method",
-            "Duck typing: 'If it walks like a duck and quacks like a duck, it is a duck' — from from python_source.content._source.content. checks behaviour, not type",
+            "Duck typing: 'If it walks like a duck and quacks like a duck, it is a duck' — Python checks behaviour, not type",
             "Operator overloading: redefining built-in operators for custom classes using dunder methods",
             "Dunder (magic) methods: __add__, __sub__, __mul__, __len__, __eq__, __lt__, __str__, __repr__",
             "isinstance() checks type but duck typing avoids the need for explicit type checks",
@@ -883,7 +883,7 @@
             }
           ],
           "important_points": [
-            "from from python_source.content._source.content. polymorphism is achieved mainly through duck typing — no interfaces needed",
+            "Python polymorphism is achieved mainly through duck typing — no interfaces needed",
             "Dunder methods allow operator overloading for custom classes",
             "Abstract classes (ABC) cannot be instantiated — they only serve as interfaces",
             "@abstractmethod forces subclasses to implement the method or raise TypeError",
@@ -892,16 +892,16 @@
           ],
           "exam_questions": [
             "What is polymorphism? Explain with an example.",
-            "What is duck typing? How does it relate to polymorphism in from from python_source.content._source.content.?",
+            "What is duck typing? How does it relate to polymorphism in Python ?",
             "What is operator overloading? Overload + for a Fraction class.",
             "What is an abstract class? How is it different from a regular class?",
             "Explain method overriding with a Shape hierarchy example."
           ],
-          "explanation": "Polymorphism allows different objects to be used interchangeably through a common interface. from from python_source.content._source.content. achieves this primarily via duck typing — checking behaviour rather than type. Operator overloading uses dunder methods to give natural syntax to custom objects. Abstract base classes enforce a common interface across subclasses."
+          "explanation": "Polymorphism allows different objects to be used interchangeably through a common interface. Python achieves this primarily via duck typing — checking behaviour rather than type. Operator overloading uses dunder methods to give natural syntax to custom objects. Abstract base classes enforce a common interface across subclasses."
         },
         {
           "topic": "Dunder Methods",
-          "definition": "Dunder (double underscore) methods, also called magic methods or special methods, are predefined methods in from from python_source.content._source.content. that start and end with double underscores. They allow custom classes to integrate with from from python_source.content._source.content.'s built-in syntax and functions.",
+          "definition": "Dunder (double underscore) methods, also called magic methods or special methods, are predefined methods in Python that start and end with double underscores. They allow custom classes to integrate with Python's built-in syntax and functions.",
           "key_concepts": [
             "__init__(self, ...): initialiser — called when object is created",
             "__str__(self): string for end users — called by print() and str()",
@@ -926,7 +926,7 @@
           ],
           "important_points": [
             "__str__ is for end users; __repr__ is for developers/debugging",
-            "If __str__ is not defined, from from python_source.content._source.content. falls back to __repr__",
+            "If __str__ is not defined, Python falls back to __repr__",
             "Define both __eq__ and __hash__ together — if __eq__ is defined, __hash__ is set to None",
             "__lt__, __le__, __gt__, __ge__ can all be derived from __lt__ and __eq__ using @functools.total_ordering",
             "Dunder methods should never be called directly — use the operator or built-in instead"
@@ -938,11 +938,11 @@
             "What dunder method is called by the len() function?",
             "What happens if you define __eq__ but not __hash__?"
           ],
-          "explanation": "Dunder methods are from from python_source.content._source.content.'s mechanism for operator overloading and integration with built-in functions. They make custom classes feel like native from from python_source.content._source.content. types. __str__ and __repr__ control string representation; __add__, __eq__ etc. overload operators; __len__, __getitem__, __iter__ make classes behave like containers."
+          "explanation": "Dunder methods are Python's mechanism for operator overloading and integration with built-in functions. They make custom classes feel like native Python types. __str__ and __repr__ control string representation; __add__, __eq__ etc. overload operators; __len__, __getitem__, __iter__ make classes behave like containers."
         },
         {
           "topic": "Class Methods and Static Methods",
-          "definition": "from from python_source.content._source.content. provides three types of methods in a class: instance methods (operate on self), class methods (operate on the class itself via cls), and static methods (neither self nor cls — behave like plain functions inside a class namespace).",
+          "definition": "Python provides three types of methods in a class: instance methods (operate on self), class methods (operate on the class itself via cls), and static methods (neither self nor cls — behave like plain functions inside a class namespace).",
           "key_concepts": [
             "Instance method: first parameter is self — has access to instance and class",
             "@classmethod: first parameter is cls — has access to class but not instance",
@@ -1022,7 +1022,7 @@
       "topics": [
         {
           "topic": "Lists",
-          "definition": "A list is a built-in from from python_source.content._source.content. data structure that stores an ordered, mutable collection of items. Items can be of any data type and can be mixed. Lists are the most commonly used sequence type in from from python_source.content._source.content. and serve as from from python_source.content._source.content.'s dynamic array.",
+          "definition": "A list is a built-in Python data structure that stores an ordered, mutable collection of items. Items can be of any data type and can be mixed. Lists are the most commonly used sequence type in Python and serve as Python's dynamic array.",
           "key_concepts": [
             "Ordered — elements maintain insertion order",
             "Mutable — elements can be added, removed, or changed after creation",
@@ -1058,11 +1058,11 @@
             "How do you create a list of 10 zeros?",
             "What is the time complexity of the in operator on a list?"
           ],
-          "explanation": "Lists are from from python_source.content._source.content.'s most versatile built-in sequence. They are dynamic arrays under the hood — mutable, ordered, and allowing duplicates. Understanding reference semantics (a = b does not copy) is critical for avoiding bugs."
+          "explanation": "Lists are Python's most versatile built-in sequence. They are dynamic arrays under the hood — mutable, ordered, and allowing duplicates. Understanding reference semantics (a = b does not copy) is critical for avoiding bugs."
         },
         {
           "topic": "List Methods",
-          "definition": "from from python_source.content._source.content. lists come with a rich set of built-in methods for adding, removing, searching, sorting, and transforming elements. All mutating methods modify the list in place and return None.",
+          "definition": "Python lists come with a rich set of built-in methods for adding, removing, searching, sorting, and transforming elements. All mutating methods modify the list in place and return None.",
           "key_concepts": [
             "append(x) — add x to the end: O(1) amortized",
             "insert(i, x) — insert x at index i: O(n)",
@@ -1166,7 +1166,7 @@
             ]
           },
           "important_points": [
-            "append() is O(1) amortized — from from python_source.content._source.content. over-allocates memory for efficiency",
+            "append() is O(1) amortized — Python over-allocates memory for efficiency",
             "insert(0, x) is O(n) — all elements must shift right",
             "sort() modifies in place and returns None — do NOT write lst = lst.sort()",
             "sorted() is safe for immutables — it returns a new list",
@@ -1184,7 +1184,7 @@
         },
         {
           "topic": "Slicing",
-          "definition": "Slicing is a powerful from from python_source.content._source.content. feature that extracts a sub-sequence from a list, string, or tuple using the syntax sequence[start:stop:step]. The start is inclusive, stop is exclusive, and step determines the direction and stride.",
+          "definition": "Slicing is a powerful Python feature that extracts a sub-sequence from a list, string, or tuple using the syntax sequence[start:stop:step]. The start is inclusive, stop is exclusive, and step determines the direction and stride.",
           "key_concepts": [
             "Syntax: lst[start:stop:step]",
             "start: index to begin (inclusive) — default 0",
@@ -1216,7 +1216,7 @@
             "What is the output of: lst=list(range(10)); print(lst[::3])?",
             "Write a slice to extract every second element starting from index 1."
           ],
-          "explanation": "Slicing is one of from from python_source.content._source.content.'s most powerful sequence operations. The start:stop:step syntax provides flexible extraction with no risk of IndexError. Negative step reverses direction. Slice assignment allows in-place replacement of sub-sequences."
+          "explanation": "Slicing is one of Python's most powerful sequence operations. The start:stop:step syntax provides flexible extraction with no risk of IndexError. Negative step reverses direction. Slice assignment allows in-place replacement of sub-sequences."
         },
         {
           "topic": "List Comprehensions",
@@ -1236,7 +1236,7 @@
           "code_examples": [
             {
               "description": "List comprehensions — basic, filtered, nested",
-              "code": "# Basic — square each number\nsquares = [x**2 for x in range(1, 6)]\nprint(squares)          # [1, 4, 9, 16, 25]\n\n# With filter — even numbers only\nevens = [x for x in range(20) if x % 2 == 0]\nprint(evens)            # [0,2,4,6,8,10,12,14,16,18]\n\n# Transform and filter\nresult = [x**2 for x in range(10) if x % 3 == 0]\nprint(result)           # [0, 9, 36, 81]\n\n# String operations\nwords = ['hello', 'world', 'from from python_source.content._source.content.']\nupper = [w.upper() for w in words]\nprint(upper)            # ['HELLO','WORLD','from from python_source.content._source.content.']\n\nlengths = [len(w) for w in words]\nprint(lengths)          # [5, 5, 6]\n\n# Nested comprehension — 3x3 matrix\nmatrix = [[i*3+j for j in range(1,4)] for i in range(3)]\nprint(matrix)           # [[1,2,3],[4,5,6],[7,8,9]]\n\n# Flatten a 2D list\nflat = [x for row in matrix for x in row]\nprint(flat)             # [1,2,3,4,5,6,7,8,9]"
+              "code": "# Basic — square each number\nsquares = [x**2 for x in range(1, 6)]\nprint(squares)          # [1, 4, 9, 16, 25]\n\n# With filter — even numbers only\nevens = [x for x in range(20) if x % 2 == 0]\nprint(evens)            # [0,2,4,6,8,10,12,14,16,18]\n\n# Transform and filter\nresult = [x**2 for x in range(10) if x % 3 == 0]\nprint(result)           # [0, 9, 36, 81]\n\n# String operations\nwords = ['hello', 'world', 'Python ']\nupper = [w.upper() for w in words]\nprint(upper)            # ['HELLO','WORLD','Python ']\n\nlengths = [len(w) for w in words]\nprint(lengths)          # [5, 5, 6]\n\n# Nested comprehension — 3x3 matrix\nmatrix = [[i*3+j for j in range(1,4)] for i in range(3)]\nprint(matrix)           # [[1,2,3],[4,5,6],[7,8,9]]\n\n# Flatten a 2D list\nflat = [x for row in matrix for x in row]\nprint(flat)             # [1,2,3,4,5,6,7,8,9]"
             },
             {
               "description": "Dict, set comprehensions and generator expressions",
@@ -1288,7 +1288,7 @@
             "Keep comprehensions simple — complex logic belongs in a regular loop",
             "Generator expressions are memory-efficient — they compute lazily",
             "Nested comprehensions: outer loop comes first, inner loop second",
-            "Walrus operator (:=) can be used inside comprehensions (from from python_source.content._source.content. 3.8+)"
+            "Walrus operator (:=) can be used inside comprehensions (Python 3.8+)"
           ],
           "exam_questions": [
             "What is a list comprehension? Write the syntax.",
@@ -1297,7 +1297,7 @@
             "What is the difference between a list comprehension and a generator expression?",
             "Write a dict comprehension to map numbers 1–5 to their cubes."
           ],
-          "explanation": "List comprehensions are a from from python_source.content._source.content.ic way to build lists from iterables. They are more readable and faster than equivalent for loops. Dict and set comprehensions follow the same pattern. Generator expressions are the memory-efficient alternative when you don't need the full list at once."
+          "explanation": "List comprehensions are a Pythonic way to build lists from iterables. They are more readable and faster than equivalent for loops. Dict and set comprehensions follow the same pattern. Generator expressions are the memory-efficient alternative when you don't need the full list at once."
         },
         {
           "topic": "Array Operations",
@@ -1352,10 +1352,10 @@
         },
         {
           "topic": "List Complexity",
-          "definition": "Understanding the time and space complexity of list operations is essential for writing efficient from from python_source.content._source.content. programs. from from python_source.content._source.content. lists are implemented as dynamic arrays — they over-allocate memory to keep amortized O(1) append performance.",
+          "definition": "Understanding the time and space complexity of list operations is essential for writing efficient Python programs. Python lists are implemented as dynamic arrays — they over-allocate memory to keep amortized O(1) append performance.",
           "key_concepts": [
-            "Dynamic array: from from python_source.content._source.content. lists resize automatically when capacity is exceeded",
-            "Over-allocation: from from python_source.content._source.content. allocates more space than needed to avoid frequent resizing",
+            "Dynamic array: Python lists resize automatically when capacity is exceeded",
+            "Over-allocation: Python allocates more space than needed to avoid frequent resizing",
             "Amortized O(1) append: occasional O(n) resize is spread over many operations",
             "Space complexity: O(n) for a list of n elements",
             "Sorting: O(n log n) using Timsort (hybrid merge + insertion sort)",
@@ -1385,20 +1385,20 @@
             }
           ],
           "important_points": [
-            "len() is O(1) — from from python_source.content._source.content. caches the length as a separate attribute",
+            "len() is O(1) — Python caches the length as a separate attribute",
             "Slicing lst[i:j] is O(k) where k = j - i, not O(n)",
-            "Timsort is from from python_source.content._source.content.'s built-in sort — stable, O(n log n) worst case",
+            "Timsort is Python's built-in sort — stable, O(n log n) worst case",
             "For membership testing with O(1) lookups, use a set or dict instead of a list",
             "Avoid repeated insert(0, x) — each is O(n); use collections.deque for O(1) front insert"
           ],
           "exam_questions": [
             "What is amortized O(1) complexity? Explain for list append.",
             "Why is in operator O(n) for lists but O(1) for sets?",
-            "What sorting algorithm does from from python_source.content._source.content. use internally? What are its properties?",
-            "What is the space complexity of a from from python_source.content._source.content. list?",
+            "What sorting algorithm does Python use internally? What are its properties?",
+            "What is the space complexity of a Python list?",
             "When should you use a deque instead of a list?"
           ],
-          "explanation": "from from python_source.content._source.content. lists are dynamic arrays with amortized O(1) append due to over-allocation. The key insight is that O(1) index access makes lists ideal for random access, but O(n) insertion/deletion and O(n) membership testing can be bottlenecks. Use sets for fast lookup and deque for fast front insertion."
+          "explanation": "Python lists are dynamic arrays with amortized O(1) append due to over-allocation. The key insight is that O(1) index access makes lists ideal for random access, but O(n) insertion/deletion and O(n) membership testing can be bottlenecks. Use sets for fast lookup and deque for fast front insertion."
         }
       ]
     },
@@ -1523,7 +1523,7 @@
             "Efficient for small arrays and nearly-sorted arrays",
             "Best case O(n) when array is already sorted",
             "Adaptive — performs fewer operations on partially sorted input",
-            "Used as the base case in hybrid sorts like Timsort (from from python_source.content._source.content.'s built-in)"
+            "Used as the base case in hybrid sorts like Timsort (Python's built-in)"
           ],
           "code_examples": [
             {
@@ -1553,7 +1553,7 @@
           "important_points": [
             "Key insight: left portion is always sorted; we insert current element into it",
             "Shifting is not swapping — elements move right one by one without a temp variable",
-            "Timsort (from from python_source.content._source.content.'s sort) uses insertion sort for runs of size < 64",
+            "Timsort (Python's sort) uses insertion sort for runs of size < 64",
             "Best choice for small arrays or nearly-sorted arrays",
             "Stable and adaptive — two properties bubble and selection sort lack together"
           ],
@@ -1610,7 +1610,7 @@
             "Stable: left[i] <= right[j] ensures left element is chosen on tie",
             "Depth of recursion tree is log₂(n)",
             "Each level of the tree does O(n) total work → O(n log n) overall",
-            "from from python_source.content._source.content.'s Timsort uses merge sort for large runs"
+            "Python's Timsort uses merge sort for large runs"
           ],
           "exam_questions": [
             "Trace merge sort on [5, 2, 4, 6, 1, 3].",
@@ -1666,7 +1666,7 @@
             "Not stable — elements equal to pivot may be reordered",
             "Quick sort is faster than merge sort in practice due to cache efficiency",
             "3-way partition handles duplicate elements efficiently",
-            "from from python_source.content._source.content.'s built-in sort (Timsort) is NOT quicksort — it is merge+insertion"
+            "Python's built-in sort (Timsort) is NOT quicksort — it is merge+insertion"
           ],
           "exam_questions": [
             "Trace quick sort on [3, 6, 8, 10, 1, 2, 1] with last element as pivot.",
@@ -1686,7 +1686,7 @@
             "Adaptive: sort that performs better on partially sorted input",
             "Comparison-based sorts cannot do better than O(n log n) in the worst case",
             "Non-comparison sorts (counting, radix, bucket) can achieve O(n)",
-            "Timsort: from from python_source.content._source.content.'s built-in — hybrid of merge sort and insertion sort",
+            "Timsort: Python's built-in — hybrid of merge sort and insertion sort",
             "For small arrays: insertion sort wins",
             "For large random arrays: quick sort wins in practice",
             "For guaranteed performance and stability: merge sort"
@@ -1760,8 +1760,8 @@
           },
           "code_examples": [
             {
-              "description": "from from python_source.content._source.content. built-in sort and sorted() — Timsort under the hood",
-              "code": "# from from python_source.content._source.content.'s built-in sort uses Timsort\ndata = [5, 2, 8, 1, 9, 3]\n\n# sorted() — returns new list\nnew_list = sorted(data)\nprint(new_list)   # [1, 2, 3, 5, 8, 9]\nprint(data)       # [5, 2, 8, 1, 9, 3]  unchanged\n\n# list.sort() — in-place\ndata.sort()\nprint(data)       # [1, 2, 3, 5, 8, 9]\n\n# Sort with key function\nwords = ['banana', 'apple', 'cherry', 'date']\nwords.sort(key=len)           # sort by length\nprint(words)  # ['date', 'apple', 'banana', 'cherry']\n\n# Sort descending\nnums = [3, 1, 4, 1, 5, 9]\nnums.sort(reverse=True)\nprint(nums)   # [9, 5, 4, 3, 1, 1]\n\n# Sort list of tuples by second element\nstudents = [('Bob',85), ('Alice',92), ('Carol',78)]\nstudents.sort(key=lambda s: s[1], reverse=True)\nprint(students)  # [('Alice',92),('Bob',85),('Carol',78)]"
+              "description": "Python built-in sort and sorted() — Timsort under the hood",
+              "code": "# Python's built-in sort uses Timsort\ndata = [5, 2, 8, 1, 9, 3]\n\n# sorted() — returns new list\nnew_list = sorted(data)\nprint(new_list)   # [1, 2, 3, 5, 8, 9]\nprint(data)       # [5, 2, 8, 1, 9, 3]  unchanged\n\n# list.sort() — in-place\ndata.sort()\nprint(data)       # [1, 2, 3, 5, 8, 9]\n\n# Sort with key function\nwords = ['banana', 'apple', 'cherry', 'date']\nwords.sort(key=len)           # sort by length\nprint(words)  # ['date', 'apple', 'banana', 'cherry']\n\n# Sort descending\nnums = [3, 1, 4, 1, 5, 9]\nnums.sort(reverse=True)\nprint(nums)   # [9, 5, 4, 3, 1, 1]\n\n# Sort list of tuples by second element\nstudents = [('Bob',85), ('Alice',92), ('Carol',78)]\nstudents.sort(key=lambda s: s[1], reverse=True)\nprint(students)  # [('Alice',92),('Bob',85),('Carol',78)]"
             }
           ],
           "when_to_use": [
@@ -1770,23 +1770,23 @@
             "Insertion Sort: small arrays (n<20) or nearly sorted data",
             "Merge Sort: need guaranteed O(n log n) and stability; linked lists; external sort",
             "Quick Sort: large random arrays where average performance matters",
-            "Timsort (from from python_source.content._source.content. built-in): almost always — best general-purpose choice"
+            "Timsort (Python built-in): almost always — best general-purpose choice"
           ],
           "important_points": [
-            "from from python_source.content._source.content.'s sort() and sorted() use Timsort — O(n log n) worst, O(n) best, stable",
+            "Python's sort() and sorted() use Timsort — O(n log n) worst, O(n) best, stable",
             "No comparison-based sort can beat O(n log n) worst case — proven lower bound",
             "Stability matters when sorting by multiple keys or preserving original order",
             "Quick sort beats merge sort in practice despite same O(n log n) average",
-            "Always prefer from from python_source.content._source.content.'s built-in sort unless implementing for learning purposes"
+            "Always prefer Python's built-in sort unless implementing for learning purposes"
           ],
           "exam_questions": [
             "Fill in the comparison table for all sorting algorithms.",
             "Which sorting algorithm is stable and has O(n log n) guaranteed? Why?",
             "When would you choose insertion sort over merge sort?",
-            "What sorting algorithm does from from python_source.content._source.content. use internally? What are its properties?",
+            "What sorting algorithm does Python use internally? What are its properties?",
             "What is the theoretical lower bound for comparison-based sorting? Prove it."
           ],
-          "explanation": "Each sorting algorithm has different trade-offs. For exams, the key table to memorise is: Bubble/Selection/Insertion are O(n²); Merge/Quick/Timsort are O(n log n). Stability: Bubble, Insertion, Merge, Timsort are stable; Selection and Quick are not. In-place: all except Merge sort. Always use from from python_source.content._source.content.'s built-in sort in practice."
+          "explanation": "Each sorting algorithm has different trade-offs. For exams, the key table to memorise is: Bubble/Selection/Insertion are O(n²); Merge/Quick/Timsort are O(n log n). Stability: Bubble, Insertion, Merge, Timsort are stable; Selection and Quick are not. In-place: all except Merge sort. Always use Python's built-in sort in practice."
         }
       ]
     },
@@ -1814,7 +1814,7 @@
             },
             {
               "description": "Linear search on 2D list and string",
-              "code": "# Search in 2D list — return (row, col)\ndef search_2d(matrix, target):\n    for i, row in enumerate(matrix):\n        for j, val in enumerate(row):\n            if val == target:\n                return (i, j)\n    return None\n\nmatrix = [[1,2,3],[4,5,6],[7,8,9]]\nprint(search_2d(matrix, 5))   # (1, 1)\nprint(search_2d(matrix, 10))  # None\n\n# Search in string\ndef find_char(s, char):\n    for i, c in enumerate(s):\n        if c == char:\n            return i\n    return -1\n\nprint(find_char('from from python_source.content._source.content.', 't'))   # 2"
+              "code": "# Search in 2D list — return (row, col)\ndef search_2d(matrix, target):\n    for i, row in enumerate(matrix):\n        for j, val in enumerate(row):\n            if val == target:\n                return (i, j)\n    return None\n\nmatrix = [[1,2,3],[4,5,6],[7,8,9]]\nprint(search_2d(matrix, 5))   # (1, 1)\nprint(search_2d(matrix, 10))  # None\n\n# Search in string\ndef find_char(s, char):\n    for i, c in enumerate(s):\n        if c == char:\n            return i\n    return -1\n\nprint(find_char('Python ', 't'))   # 2"
             }
           ],
           "complexity": {
@@ -1837,8 +1837,8 @@
           ],
           "important_points": [
             "Linear search is the only option for unsorted data",
-            "from from python_source.content._source.content.'s in operator uses linear search for lists: O(n)",
-            "from from python_source.content._source.content.'s in operator uses hashing for sets/dicts: O(1)",
+            "Python's in operator uses linear search for lists: O(n)",
+            "Python's in operator uses hashing for sets/dicts: O(1)",
             "For a single search on unsorted data, linear search is optimal",
             "Use binary search when data is sorted and multiple searches are needed"
           ],
@@ -1847,7 +1847,7 @@
             "What is the time complexity of linear search in best, average, and worst cases?",
             "When would you prefer linear search over binary search?",
             "Write a linear search function that returns all indices where target is found.",
-            "What is the time complexity of from from python_source.content._source.content.'s in operator on a list vs a set?"
+            "What is the time complexity of Python's in operator on a list vs a set?"
           ],
           "explanation": "Linear search is the simplest and most universal search algorithm. It requires no preprocessing and works on any iterable. Its O(n) complexity makes it impractical for large sorted datasets where binary search is far superior, but it remains the only option for unsorted or non-random-access data."
         },
@@ -1871,7 +1871,7 @@
             },
             {
               "description": "Binary search variants — first/last occurrence, search insert position",
-              "code": "# Find FIRST occurrence of target\ndef first_occurrence(arr, target):\n    lo, hi, result = 0, len(arr)-1, -1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            result = mid\n            hi = mid - 1    # keep searching LEFT for first\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return result\n\n# Find LAST occurrence of target\ndef last_occurrence(arr, target):\n    lo, hi, result = 0, len(arr)-1, -1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            result = mid\n            lo = mid + 1    # keep searching RIGHT for last\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return result\n\narr = [1, 2, 2, 2, 3, 4, 5]\nprint(first_occurrence(arr, 2))  # 1\nprint(last_occurrence(arr, 2))   # 3\n\n# bisect module — from from python_source.content._source.content. built-in binary search\nimport bisect\narr = [1, 3, 5, 7, 9]\nprint(bisect.bisect_left(arr, 5))   # 2 — index to insert left\nprint(bisect.bisect_right(arr, 5))  # 3 — index to insert right\nbisect.insort(arr, 6)               # insert 6 maintaining order\nprint(arr)  # [1, 3, 5, 6, 7, 9]"
+              "code": "# Find FIRST occurrence of target\ndef first_occurrence(arr, target):\n    lo, hi, result = 0, len(arr)-1, -1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            result = mid\n            hi = mid - 1    # keep searching LEFT for first\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return result\n\n# Find LAST occurrence of target\ndef last_occurrence(arr, target):\n    lo, hi, result = 0, len(arr)-1, -1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if arr[mid] == target:\n            result = mid\n            lo = mid + 1    # keep searching RIGHT for last\n        elif arr[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return result\n\narr = [1, 2, 2, 2, 3, 4, 5]\nprint(first_occurrence(arr, 2))  # 1\nprint(last_occurrence(arr, 2))   # 3\n\n# bisect module — Python built-in binary search\nimport bisect\narr = [1, 3, 5, 7, 9]\nprint(bisect.bisect_left(arr, 5))   # 2 — index to insert left\nprint(bisect.bisect_right(arr, 5))  # 3 — index to insert right\nbisect.insort(arr, 6)               # insert 6 maintaining order\nprint(arr)  # [1, 3, 5, 6, 7, 9]"
             }
           ],
           "trace_example": "Array: [1, 3, 5, 7, 9, 11, 13], target=7\nStep 1: lo=0, hi=6, mid=3, arr[3]=7 == 7 → FOUND at index 3\n\nArray: [1, 3, 5, 7, 9, 11, 13], target=6\nStep 1: lo=0, hi=6, mid=3, arr[3]=7 > 6 → hi=2\nStep 2: lo=0, hi=2, mid=1, arr[1]=3 < 6 → lo=2\nStep 3: lo=2, hi=2, mid=2, arr[2]=5 < 6 → lo=3\nStep 4: lo=3 > hi=2 → return -1 (NOT FOUND)",
@@ -1886,7 +1886,7 @@
             "O(log n) — extremely fast for large sorted arrays",
             "Simple and elegant implementation",
             "Works for any sorted comparable data",
-            "Bisect module provides ready-to-use implementation in from from python_source.content._source.content.",
+            "Bisect module provides ready-to-use implementation in Python",
             "Can be adapted for many variants: first/last occurrence, floor/ceil"
           ],
           "disadvantages": [
@@ -1899,7 +1899,7 @@
             "mid = (lo + hi) // 2 — use this to avoid integer overflow (vs (lo+hi)/2)",
             "lo <= hi is the correct loop condition — not lo < hi",
             "After the loop, lo is the insertion point for the target",
-            "from from python_source.content._source.content.'s bisect module provides binary search: bisect_left, bisect_right, insort",
+            "Python's bisect module provides binary search: bisect_left, bisect_right, insort",
             "Binary search on answer: a powerful technique for optimisation problems"
           ],
           "exam_questions": [
@@ -1909,7 +1909,7 @@
             "Write binary search to find the first occurrence of a value in a sorted array.",
             "How many comparisons does binary search need for an array of 1024 elements?"
           ],
-          "explanation": "Binary search is one of the most important algorithms in computer science. By halving the search space at each step, it achieves O(log n) — for 1 million elements, it takes at most 20 comparisons. The key precondition is a sorted array. from from python_source.content._source.content.'s bisect module provides a production-ready implementation."
+          "explanation": "Binary search is one of the most important algorithms in computer science. By halving the search space at each step, it achieves O(log n) — for 1 million elements, it takes at most 20 comparisons. The key precondition is a sorted array. Python's bisect module provides a production-ready implementation."
         },
         {
           "topic": "Search on Data Structures",
@@ -1927,7 +1927,7 @@
           "code_examples": [
             {
               "description": "Search across list, set, dict, and string",
-              "code": "# List — O(n)\nlst = [3, 1, 4, 1, 5, 9, 2, 6]\nprint(5 in lst)              # True  — O(n)\nprint(lst.index(4))          # 2     — O(n)\nprint(lst.count(1))          # 2     — O(n)\n\n# Set — O(1) average\ns = {3, 1, 4, 1, 5, 9, 2, 6}  # duplicates removed\nprint(5 in s)                # True  — O(1)\nprint(7 in s)                # False — O(1)\n\n# Dict — O(1) average\ngrades = {'Alice': 92, 'Bob': 85, 'Carol': 78}\nprint('Alice' in grades)     # True  — key search O(1)\nprint(grades.get('Bob', 0))  # 85    — O(1)\nprint(grades.get('Dan', 0))  # 0     — default if not found\n\n# String — substring search\ns = 'hello from from python_source.content._source.content. world'\nprint('from from python_source.content._source.content.' in s)         # True  — O(n*m)\nprint(s.find('from from python_source.content._source.content.'))      # 6     — index or -1\nprint(s.index('world'))      # 13    — raises ValueError if not found\nprint(s.count('o'))          # 3     — count occurrences"
+              "code": "# List — O(n)\nlst = [3, 1, 4, 1, 5, 9, 2, 6]\nprint(5 in lst)              # True  — O(n)\nprint(lst.index(4))          # 2     — O(n)\nprint(lst.count(1))          # 2     — O(n)\n\n# Set — O(1) average\ns = {3, 1, 4, 1, 5, 9, 2, 6}  # duplicates removed\nprint(5 in s)                # True  — O(1)\nprint(7 in s)                # False — O(1)\n\n# Dict — O(1) average\ngrades = {'Alice': 92, 'Bob': 85, 'Carol': 78}\nprint('Alice' in grades)     # True  — key search O(1)\nprint(grades.get('Bob', 0))  # 85    — O(1)\nprint(grades.get('Dan', 0))  # 0     — default if not found\n\n# String — substring search\ns = 'hello Python world'\nprint('Python ' in s)         # True  — O(n*m)\nprint(s.find('Python '))      # 6     — index or -1\nprint(s.index('world'))      # 13    — raises ValueError if not found\nprint(s.count('o'))          # 3     — count occurrences"
             },
             {
               "description": "Practical search patterns — two-sum, frequency count, sorted search",
@@ -1988,7 +1988,7 @@
             "Two-sum pattern: use a hash map to reduce O(n²) to O(n)"
           ],
           "exam_questions": [
-            "What is the time complexity of searching in a list vs a set in from from python_source.content._source.content.?",
+            "What is the time complexity of searching in a list vs a set in Python ?",
             "Write a function to find if a pair in an array sums to a target value — O(n).",
             "What is the difference between str.find() and str.index()?",
             "How does Counter work? Write an example to find the most frequent element.",
@@ -2094,7 +2094,7 @@
                 "No"
               ],
               [
-                "from from python_source.content._source.content. in (list)",
+                "Python in (list)",
                 "O(1)",
                 "O(n)",
                 "O(n)",
@@ -2102,7 +2102,7 @@
                 "No"
               ],
               [
-                "from from python_source.content._source.content. in (set)",
+                "Python in (set)",
                 "O(1)",
                 "O(1)",
                 "O(n)*",
@@ -2123,23 +2123,23 @@
             "Hash Set/Dict: fastest membership test, unordered data, no duplicates needed",
             "Jump Search: sorted array, when binary search overhead is too high",
             "Interpolation Search: large sorted uniformly distributed numeric data",
-            "bisect module: from from python_source.content._source.content.ic binary search with insert-in-order capability"
+            "bisect module: Pythonic binary search with insert-in-order capability"
           ],
           "important_points": [
             "For repeated searches on a fixed dataset — convert to set for O(1) lookup",
             "Binary search requires sorted data — sort cost O(n log n) must be amortised",
             "Hash collision worst case is O(n) but extremely rare with good hash functions",
-            "from from python_source.content._source.content.'s dict and set use open addressing with a hash table",
+            "Python's dict and set use open addressing with a hash table",
             "Jump search block size √n is optimal — balances jumps and linear steps"
           ],
           "exam_questions": [
             "Compare linear search and binary search — time complexity, preconditions, use cases.",
             "What is jump search? What is its time complexity and optimal block size?",
             "When would you use interpolation search over binary search?",
-            "What is the worst-case time complexity of searching in a from from python_source.content._source.content. set?",
+            "What is the worst-case time complexity of searching in a Python set?",
             "You have an unsorted list of 1 million elements and need to search it 10000 times. What is the most efficient approach?"
           ],
-          "explanation": "Searching algorithm selection depends on data size, structure, and search frequency. For unsorted data, linear search is the only option. For sorted arrays, binary search is O(log n). For unordered frequent lookups, hash-based structures (set/dict) give O(1). The bisect module is from from python_source.content._source.content.'s built-in tool for sorted array search."
+          "explanation": "Searching algorithm selection depends on data size, structure, and search frequency. For unsorted data, linear search is the only option. For sorted arrays, binary search is O(log n). For unordered frequent lookups, hash-based structures (set/dict) give O(1). The bisect module is Python's built-in tool for sorted array search."
         }
       ]
     },
@@ -2157,7 +2157,7 @@
             "Every recursive call must move closer to the base case",
             "Recursive problems have an optimal substructure — solution built from sub-solutions",
             "The call stack stores the state of each recursive call",
-            "from from python_source.content._source.content. default recursion limit is 1000 — sys.setrecursionlimit(n) to change",
+            "Python default recursion limit is 1000 — sys.setrecursionlimit(n) to change",
             "Recursive solutions are often cleaner but may be slower than iterative"
           ],
           "code_examples": [
@@ -2170,9 +2170,9 @@
           "important_points": [
             "Always define the base case first — missing base case causes infinite recursion",
             "Each recursive call must make the problem strictly smaller",
-            "from from python_source.content._source.content. raises RecursionError after ~1000 nested calls",
+            "Python raises RecursionError after ~1000 nested calls",
             "Recursive solutions map naturally to mathematical induction",
-            "Tail recursion: recursive call is the last operation — from from python_source.content._source.content. does NOT optimise this"
+            "Tail recursion: recursive call is the last operation — Python does NOT optimise this"
           ],
           "exam_questions": [
             "What are the two essential components of a recursive function?",
@@ -2230,7 +2230,7 @@
             "LIFO structure: last call in is first to return",
             "Each recursive call pushes a new frame onto the call stack",
             "When base case is reached, frames are popped in reverse order",
-            "from from python_source.content._source.content.'s default stack limit is ~1000 frames",
+            "Python's default stack limit is ~1000 frames",
             "RecursionError: maximum recursion depth exceeded — stack overflow",
             "sys.getrecursionlimit() returns current limit",
             "sys.setrecursionlimit(n) sets a new limit — use carefully",
@@ -2249,7 +2249,7 @@
           "call_stack_trace": "factorial(4) — call stack frames:\n┌─────────────────────┐  ← TOP (active)\n│ factorial(1) n=1    │\n├─────────────────────┤\n│ factorial(2) n=2    │\n├─────────────────────┤\n│ factorial(3) n=3    │\n├─────────────────────┤\n│ factorial(4) n=4    │\n└─────────────────────┘  ← BOTTOM\nWhen factorial(1) returns 1:\n  factorial(2) returns 2*1=2\n  factorial(3) returns 3*2=6\n  factorial(4) returns 4*6=24",
           "important_points": [
             "Each recursive call consumes O(1) stack space — n calls use O(n) space total",
-            "RecursionError is from from python_source.content._source.content.'s stack overflow — not a program bug, it is a limit",
+            "RecursionError is Python's stack overflow — not a program bug, it is a limit",
             "Deep recursion (n > 1000) should be converted to iteration",
             "An explicit stack data structure can simulate any recursion iteratively",
             "Tail recursive functions are the easiest to convert to iteration"
@@ -2257,11 +2257,11 @@
           "exam_questions": [
             "What is a call stack? How does it relate to recursion?",
             "What is a stack frame? What does it contain?",
-            "What error does from from python_source.content._source.content. raise when the recursion depth is exceeded?",
+            "What error does Python raise when the recursion depth is exceeded?",
             "Convert recursive factorial to iterative using a while loop.",
             "What is the space complexity of a recursive function that makes n calls?"
           ],
-          "explanation": "The call stack is the memory mechanism that makes recursion work. Each call gets its own frame with local state. Deep recursion fills the stack — from from python_source.content._source.content. limits this to ~1000 frames. Converting recursion to iteration using an explicit stack avoids this limit and reduces space from O(n) to O(1) for tail-recursive functions."
+          "explanation": "The call stack is the memory mechanism that makes recursion work. Each call gets its own frame with local state. Deep recursion fills the stack — Python limits this to ~1000 frames. Converting recursion to iteration using an explicit stack avoids this limit and reduces space from O(n) to O(1) for tail-recursive functions."
         },
         {
           "topic": "Backtracking",
@@ -2413,7 +2413,7 @@
             "Write the recurrence relation before coding",
             "Tabulation avoids recursion overhead and stack overflow",
             "Memoisation is easier to derive — start with recursion, add cache",
-            "functools.lru_cache is from from python_source.content._source.content.'s built-in memoisation decorator"
+            "functools.lru_cache is Python's built-in memoisation decorator"
           ],
           "exam_questions": [
             "What are the two properties a problem must have for DP to apply?",
@@ -2431,8 +2431,8 @@
             "Top-down approach: start from the original problem, recurse down to base cases",
             "Cache: store results in a dict (for arbitrary keys) or array (for integer indices)",
             "On each call: check cache first; if hit, return cached value; otherwise compute and store",
-            "functools.lru_cache: from from python_source.content._source.content.'s built-in decorator for automatic memoisation",
-            "functools.cache: simpler unlimited-size cache (from from python_source.content._source.content. 3.9+)",
+            "functools.lru_cache: Python's built-in decorator for automatic memoisation",
+            "functools.cache: simpler unlimited-size cache (Python 3.9+)",
             "Time complexity: O(number of unique subproblems × work per subproblem)",
             "Space complexity: O(number of unique subproblems) for cache + O(depth) for call stack",
             "Memoisation is lazy: only computes subproblems actually needed"
@@ -2448,7 +2448,7 @@
             }
           ],
           "important_points": [
-            "@lru_cache(maxsize=None) is the cleanest way to memoise in from from python_source.content._source.content.",
+            "@lru_cache(maxsize=None) is the cleanest way to memoise in Python",
             "Clear cache with function.cache_clear() when needed",
             "Use tuple for hashable arguments — lists cannot be dict keys",
             "Memoisation only helps when subproblems truly overlap",
@@ -2457,12 +2457,12 @@
           ],
           "exam_questions": [
             "What is memoisation? How does it differ from plain recursion?",
-            "How does @lru_cache work in from from python_source.content._source.content.? Write an example.",
+            "How does @lru_cache work in Python ? Write an example.",
             "Write a memoised solution for the coin change problem.",
             "What is the time complexity of memoised Fibonacci?",
             "Why must arguments to @lru_cache be hashable?"
           ],
-          "explanation": "Memoisation adds a cache to an existing recursive solution with minimal code change. from from python_source.content._source.content.'s @lru_cache decorator makes this trivial. The time complexity drops from exponential to O(unique subproblems). The trade-off is O(n) space for the cache. Memoisation is the easiest DP approach — start with recursion, add cache, done."
+          "explanation": "Memoisation adds a cache to an existing recursive solution with minimal code change. Python's @lru_cache decorator makes this trivial. The time complexity drops from exponential to O(unique subproblems). The trade-off is O(n) space for the cache. Memoisation is the easiest DP approach — start with recursion, add cache, done."
         },
         {
           "topic": "Tabulation",
@@ -2645,7 +2645,7 @@
           "code_examples": [
             {
               "description": "Graph representations — adjacency matrix and adjacency list",
-              "code": "# ── Adjacency List (most common in from from python_source.content._source.content.) ──────────────\nfrom collections import defaultdict\n\n# Undirected unweighted graph\ngraph = defaultdict(list)\nedges = [(0,1),(0,2),(1,3),(2,3),(3,4)]\nfor u, v in edges:\n    graph[u].append(v)\n    graph[v].append(u)   # undirected — add both directions\n\nprint(dict(graph))\n# {0:[1,2], 1:[0,3], 2:[0,3], 3:[1,2,4], 4:[3]}\n\n# Weighted directed graph\nwgraph = defaultdict(list)\nwedges = [(0,1,4),(0,2,1),(1,3,1),(2,1,2),(2,3,5),(3,4,3)]\nfor u, v, w in wedges:\n    wgraph[u].append((v, w))   # (neighbour, weight)\n\n# ── Adjacency Matrix ─────────────────────────────────────\nn = 5   # number of vertices\nmatrix = [[0]*n for _ in range(n)]\nfor u, v in edges:\n    matrix[u][v] = 1\n    matrix[v][u] = 1   # undirected\n\nfor row in matrix:\n    print(row)"
+              "code": "# ── Adjacency List (most common in Python) ──────────────\nfrom collections import defaultdict\n\n# Undirected unweighted graph\ngraph = defaultdict(list)\nedges = [(0,1),(0,2),(1,3),(2,3),(3,4)]\nfor u, v in edges:\n    graph[u].append(v)\n    graph[v].append(u)   # undirected — add both directions\n\nprint(dict(graph))\n# {0:[1,2], 1:[0,3], 2:[0,3], 3:[1,2,4], 4:[3]}\n\n# Weighted directed graph\nwgraph = defaultdict(list)\nwedges = [(0,1,4),(0,2,1),(1,3,1),(2,1,2),(2,3,5),(3,4,3)]\nfor u, v, w in wedges:\n    wgraph[u].append((v, w))   # (neighbour, weight)\n\n# ── Adjacency Matrix ─────────────────────────────────────\nn = 5   # number of vertices\nmatrix = [[0]*n for _ in range(n)]\nfor u, v in edges:\n    matrix[u][v] = 1\n    matrix[v][u] = 1   # undirected\n\nfor row in matrix:\n    print(row)"
             }
           ],
           "comparison_table": {
@@ -2691,17 +2691,17 @@
             "Adjacency list is preferred for sparse graphs (most real-world graphs)",
             "Adjacency matrix wastes O(V²) space when graph is sparse",
             "For weighted graphs, store (neighbour, weight) tuples in adjacency list",
-            "defaultdict(list) is the cleanest from from python_source.content._source.content. adjacency list representation",
+            "defaultdict(list) is the cleanest Python adjacency list representation",
             "Dense graph: E ≈ V²; Sparse graph: E ≈ V"
           ],
           "exam_questions": [
             "What is the difference between a directed and undirected graph?",
             "Compare adjacency matrix and adjacency list — space and time complexity.",
-            "How do you represent a weighted graph in from from python_source.content._source.content. using an adjacency list?",
+            "How do you represent a weighted graph in Python using an adjacency list?",
             "What is the degree of a vertex? How is it different in directed vs undirected graphs?",
             "When would you prefer adjacency matrix over adjacency list?"
           ],
-          "explanation": "Graphs model relationships between entities. The adjacency list is the standard from from python_source.content._source.content. representation — it is memory-efficient for sparse graphs and gives O(degree) neighbour access. The adjacency matrix gives O(1) edge lookup but costs O(V²) space. Most graph algorithms (BFS, DFS, Dijkstra) work best with the adjacency list."
+          "explanation": "Graphs model relationships between entities. The adjacency list is the standard Python representation — it is memory-efficient for sparse graphs and gives O(degree) neighbour access. The adjacency matrix gives O(1) edge lookup but costs O(V²) space. Most graph algorithms (BFS, DFS, Dijkstra) work best with the adjacency list."
         },
         {
           "topic": "Breadth First Search",
@@ -2830,7 +2830,7 @@
             "Bellman-Ford: relaxes all edges V-1 times, handles negative weights, O(VE)",
             "Floyd-Warshall: all-pairs shortest paths, O(V³), uses DP",
             "Relaxation: update dist[v] if dist[u] + weight(u,v) < dist[v]",
-            "Priority queue (min-heap): heapq module in from from python_source.content._source.content. for Dijkstra",
+            "Priority queue (min-heap): heapq module in Python for Dijkstra",
             "Negative cycle: Bellman-Ford detects if a V-th relaxation still improves a path",
             "Single-source: Dijkstra and Bellman-Ford from one source to all vertices",
             "All-pairs: Floyd-Warshall finds shortest path between every pair"
@@ -2883,7 +2883,7 @@
           },
           "important_points": [
             "Dijkstra fails with negative weights — use Bellman-Ford instead",
-            "heapq in from from python_source.content._source.content. is a min-heap — always pops smallest element",
+            "heapq in Python is a min-heap — always pops smallest element",
             "Lazy deletion: skip stale heap entries when d > dist[u]",
             "Floyd-Warshall: dp[i][j] = min(dp[i][j], dp[i][k]+dp[k][j]) for all k",
             "Bellman-Ford runs V-1 iterations — a path can have at most V-1 edges"
@@ -2940,7 +2940,7 @@
       "topics": [
         {
           "topic": "Abstract Classes",
-          "definition": "An abstract class is a class that cannot be instantiated directly and is meant to be subclassed. It defines a common interface (abstract methods) that all subclasses must implement. from from python_source.content._source.content. provides abstract classes through the abc (Abstract Base Classes) module using the ABC base class and @abstractmethod decorator.",
+          "definition": "An abstract class is a class that cannot be instantiated directly and is meant to be subclassed. It defines a common interface (abstract methods) that all subclasses must implement. Python provides abstract classes through the abc (Abstract Base Classes) module using the ABC base class and @abstractmethod decorator.",
           "key_concepts": [
             "Abstract class: cannot be instantiated — serves as a blueprint for subclasses",
             "Abstract method: declared in abstract class, must be overridden in every concrete subclass",
@@ -2965,7 +2965,7 @@
             "Instantiating an abstract class raises TypeError — not just a convention",
             "A subclass missing any abstract method also becomes abstract",
             "Abstract classes can have __init__, concrete methods, and class/static methods",
-            "Use ABC for interface-like behaviour in from from python_source.content._source.content. — from from python_source.content._source.content. has no interface keyword",
+            "Use ABC for interface-like behaviour in Python — Python has no interface keyword",
             "@property + @abstractmethod enforces abstract properties",
             "ABCMeta is the metaclass; inheriting from ABC is the cleaner equivalent"
           ],
@@ -2976,7 +2976,7 @@
             "Write an abstract class Vehicle with abstract methods start() and stop().",
             "What is the difference between an abstract method and a regular method?"
           ],
-          "explanation": "Abstract classes enforce a contract — any subclass must implement the declared abstract methods or it too becomes abstract. This is from from python_source.content._source.content.'s mechanism for interface-like design. Unlike Java, from from python_source.content._source.content. abstract classes can also contain concrete implementations, making them more flexible than pure interfaces."
+          "explanation": "Abstract classes enforce a contract — any subclass must implement the declared abstract methods or it too becomes abstract. This is Python's mechanism for interface-like design. Unlike Java, Python abstract classes can also contain concrete implementations, making them more flexible than pure interfaces."
         },
         {
           "topic": "Decorators",
@@ -3010,17 +3010,17 @@
             "lru_cache is the most important built-in decorator — automatic memoisation"
           ],
           "exam_questions": [
-            "What is a decorator in from from python_source.content._source.content.? Write a simple timing decorator.",
+            "What is a decorator in Python ? Write a simple timing decorator.",
             "What does @functools.wraps do? Why is it important?",
             "What is the execution order when multiple decorators are stacked?",
             "Write a decorator that validates that all function arguments are positive.",
             "How do you write a decorator that takes arguments?"
           ],
-          "explanation": "Decorators are from from python_source.content._source.content.'s elegant mechanism for cross-cutting concerns — logging, timing, caching, validation — without modifying the original function. The @ syntax is syntactic sugar for function wrapping. functools.wraps preserves the original function's identity. Decorator factories (decorators with arguments) add a third nesting level."
+          "explanation": "Decorators are Python's elegant mechanism for cross-cutting concerns — logging, timing, caching, validation — without modifying the original function. The @ syntax is syntactic sugar for function wrapping. functools.wraps preserves the original function's identity. Decorator factories (decorators with arguments) add a third nesting level."
         },
         {
           "topic": "Dunder Methods Advanced",
-          "definition": "Advanced dunder (magic) methods allow custom classes to behave like built-in from from python_source.content._source.content. types — supporting iteration, context management, attribute access, callable behaviour, and comparison. Mastering these methods enables truly from from python_source.content._source.content.ic class design.",
+          "definition": "Advanced dunder (magic) methods allow custom classes to behave like built-in Python types — supporting iteration, context management, attribute access, callable behaviour, and comparison. Mastering these methods enables truly Pythonic class design.",
           "key_concepts": [
             "__iter__ and __next__: make a class iterable (iterator protocol)",
             "__enter__ and __exit__: context manager protocol (with statement)",
@@ -3057,11 +3057,11 @@
             "What is __slots__ and why would you use it?",
             "What is @total_ordering and what methods must you define to use it?"
           ],
-          "explanation": "Advanced dunder methods let custom classes integrate seamlessly with from from python_source.content._source.content.'s built-in syntax. __iter__/__next__ enable for-loop support. __enter__/__exit__ enable the with statement. __call__ makes instances callable. __slots__ optimises memory. @total_ordering reduces boilerplate for comparable classes."
+          "explanation": "Advanced dunder methods let custom classes integrate seamlessly with Python's built-in syntax. __iter__/__next__ enable for-loop support. __enter__/__exit__ enable the with statement. __call__ makes instances callable. __slots__ optimises memory. @total_ordering reduces boilerplate for comparable classes."
         },
         {
           "topic": "Design Patterns",
-          "definition": "Design patterns are reusable solutions to commonly occurring problems in software design. They are proven templates for structuring code. The three main categories are Creational (object creation), Structural (object composition), and Behavioural (object interaction). Key from from python_source.content._source.content. patterns include Singleton, Factory, Observer, and Strategy.",
+          "definition": "Design patterns are reusable solutions to commonly occurring problems in software design. They are proven templates for structuring code. The three main categories are Creational (object creation), Structural (object composition), and Behavioural (object interaction). Key Python patterns include Singleton, Factory, Observer, and Strategy.",
           "key_concepts": [
             "Creational patterns: control object creation — Singleton, Factory, Builder",
             "Structural patterns: organise object relationships — Decorator, Adapter, Facade",
@@ -3070,7 +3070,7 @@
             "Factory Method: define interface for creating objects, let subclasses decide which class",
             "Observer: one-to-many dependency — when one object changes, all dependents are notified",
             "Strategy: define family of algorithms, encapsulate each, make them interchangeable",
-            "Decorator pattern: add behaviour dynamically (different from from from python_source.content._source.content.'s @ decorator)"
+            "Decorator pattern: add behaviour dynamically (different from Python's @ decorator)"
           ],
           "code_examples": [
             {
@@ -3087,23 +3087,23 @@
             "Factory pattern decouples object creation from usage — open/closed principle",
             "Observer implements loose coupling — publishers don't know about subscribers",
             "Strategy allows runtime algorithm switching without changing client code",
-            "from from python_source.content._source.content. functions are first-class — many patterns reduce to passing functions",
+            "Python functions are first-class — many patterns reduce to passing functions",
             "Don't overuse patterns — use them only when they solve a real problem"
           ],
           "exam_questions": [
-            "What is the Singleton pattern? Implement it in from from python_source.content._source.content..",
+            "What is the Singleton pattern? Implement it in Python.",
             "What is the Factory pattern? When would you use it?",
             "Explain the Observer pattern with an example.",
             "What is the Strategy pattern? How does it differ from inheritance?",
             "What are the three categories of design patterns? Give one example each."
           ],
-          "explanation": "Design patterns provide proven templates for common OOP problems. Singleton ensures a single shared instance. Factory decouples creation from use. Observer enables event-driven systems. Strategy makes algorithms swappable at runtime. In from from python_source.content._source.content., many patterns are simpler because functions are first-class objects — strategies can be plain functions rather than full classes."
+          "explanation": "Design patterns provide proven templates for common OOP problems. Singleton ensures a single shared instance. Factory decouples creation from use. Observer enables event-driven systems. Strategy makes algorithms swappable at runtime. In Python, many patterns are simpler because functions are first-class objects — strategies can be plain functions rather than full classes."
         },
         {
           "topic": "Metaclasses and Class Internals",
-          "definition": "A metaclass is the class of a class — it controls how classes are created. In from from python_source.content._source.content., everything is an object, including classes themselves. The default metaclass is type. Custom metaclasses allow intercepting class creation to add validation, registration, or modification. Understanding class internals (MRO, __dict__, descriptors) completes the advanced OOP picture.",
+          "definition": "A metaclass is the class of a class — it controls how classes are created. In Python, everything is an object, including classes themselves. The default metaclass is type. Custom metaclasses allow intercepting class creation to add validation, registration, or modification. Understanding class internals (MRO, __dict__, descriptors) completes the advanced OOP picture.",
           "key_concepts": [
-            "type: from from python_source.content._source.content.'s built-in metaclass — all classes are instances of type",
+            "type: Python's built-in metaclass — all classes are instances of type",
             "type(obj): returns the type (class) of obj",
             "type(name, bases, dict): dynamically creates a new class",
             "Custom metaclass: class Meta(type) — override __new__ or __init__",
@@ -3124,21 +3124,21 @@
             }
           ],
           "important_points": [
-            "Everything in from from python_source.content._source.content. is an object — including classes (instances of type)",
+            "Everything in Python is an object — including classes (instances of type)",
             "type(name, bases, dict) creates a class dynamically at runtime",
-            "Metaclasses are the most advanced from from python_source.content._source.content. feature — use sparingly",
+            "Metaclasses are the most advanced Python feature — use sparingly",
             "__init_subclass__ is a simpler alternative to metaclasses for subclass hooks",
             "Descriptors power @property, @classmethod, @staticmethod under the hood",
             "MRO accessible via ClassName.__mro__ or ClassName.mro()"
           ],
           "exam_questions": [
-            "What is a metaclass? What is from from python_source.content._source.content.'s default metaclass?",
+            "What is a metaclass? What is Python's default metaclass?",
             "What does type(name, bases, dict) do?",
             "What is the descriptor protocol? How does @property use it?",
             "What is __init_subclass__ and when would you use it?",
             "What is the difference between __dict__ of a class and an instance?"
           ],
-          "explanation": "Metaclasses are the deepest level of from from python_source.content._source.content.'s object model — classes are themselves objects, instances of type. Custom metaclasses enable powerful class-creation hooks for validation, registration, and code generation. __init_subclass__ provides a simpler subclass hook. Descriptors implement the protocol that powers @property, @classmethod, and @staticmethod."
+          "explanation": "Metaclasses are the deepest level of Python's object model — classes are themselves objects, instances of type. Custom metaclasses enable powerful class-creation hooks for validation, registration, and code generation. __init_subclass__ provides a simpler subclass hook. Descriptors implement the protocol that powers @property, @classmethod, and @staticmethod."
         }
       ]
     },
@@ -3210,7 +3210,7 @@
             "O(1) deletion when node reference is known (no need to find previous node)",
             "O(1) insertion at both head and tail with tail pointer",
             "Extra memory: one additional pointer per node vs singly linked list",
-            "from from python_source.content._source.content.'s collections.deque is implemented as a doubly linked list"
+            "Python's collections.deque is implemented as a doubly linked list"
           ],
           "code_examples": [
             {
@@ -3273,7 +3273,7 @@
           "important_points": [
             "Doubly linked list uses 2x memory of singly linked list for pointers",
             "O(1) deletion requires a reference to the node — not just the value",
-            "from from python_source.content._source.content.'s collections.deque uses a doubly linked list internally",
+            "Python's collections.deque uses a doubly linked list internally",
             "LRU Cache is classically implemented with a doubly linked list + hash map",
             "Always update BOTH prev and next pointers when inserting or deleting"
           ],
@@ -3281,10 +3281,10 @@
             "What is the difference between a singly and doubly linked list?",
             "Why is deletion O(1) in a doubly linked list but O(n) in a singly linked list?",
             "Write a doubly linked list with O(1) insertion at both head and tail.",
-            "How is collections.deque implemented in from from python_source.content._source.content.?",
+            "How is collections.deque implemented in Python ?",
             "What is an LRU cache and how does a doubly linked list help implement it?"
           ],
-          "explanation": "Doubly linked lists add a prev pointer to each node, enabling O(1) deletion given a node reference and O(1) tail insertion. These properties make them ideal for LRU cache, browser history, and undo/redo systems. The trade-off is extra memory per node. from from python_source.content._source.content.'s deque is backed by a doubly linked list."
+          "explanation": "Doubly linked lists add a prev pointer to each node, enabling O(1) deletion given a node reference and O(1) tail insertion. These properties make them ideal for LRU cache, browser history, and undo/redo systems. The trade-off is extra memory per node. Python's deque is backed by a doubly linked list."
         },
         {
           "topic": "Traversal Insertion and Deletion",
@@ -3371,7 +3371,7 @@
       "topics": [
         {
           "topic": "Stacks",
-          "definition": "A stack is a linear data structure that follows the Last In First Out (LIFO) principle — the last element added is the first to be removed. Think of a stack of plates: you add and remove from the top only. from from python_source.content._source.content. lists can serve as stacks using append() and pop(), or the collections.deque for thread-safe operations.",
+          "definition": "A stack is a linear data structure that follows the Last In First Out (LIFO) principle — the last element added is the first to be removed. Think of a stack of plates: you add and remove from the top only. Python lists can serve as stacks using append() and pop(), or the collections.deque for thread-safe operations.",
           "key_concepts": [
             "LIFO: Last In First Out — the most recently added element is removed first",
             "Push: add element to the top — O(1)",
@@ -3380,13 +3380,13 @@
             "isEmpty: check if stack is empty — O(1)",
             "Overflow: pushing onto a full stack (bounded stacks)",
             "Underflow: popping from an empty stack",
-            "from from python_source.content._source.content. list as stack: append() to push, pop() to pop",
+            "Python list as stack: append() to push, pop() to pop",
             "collections.deque: thread-safe alternative to list for stack"
           ],
           "code_examples": [
             {
               "description": "Stack implementation using list and class",
-              "code": "# Stack using from from python_source.content._source.content. list — simplest approach\nstack = []\nstack.append(1)    # push 1\nstack.append(2)    # push 2\nstack.append(3)    # push 3\nprint(stack[-1])   # peek → 3\nprint(stack.pop()) # pop  → 3\nprint(stack.pop()) # pop  → 2\nprint(stack)       # [1]\n\n# Stack class with error handling\nclass Stack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, item):\n        self._data.append(item)\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError('Pop from empty stack')\n        return self._data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError('Peek at empty stack')\n        return self._data[-1]\n\n    def is_empty(self): return len(self._data) == 0\n    def __len__(self):  return len(self._data)\n    def __str__(self):  return str(self._data) + ' ← top'\n\ns = Stack()\ns.push(10); s.push(20); s.push(30)\nprint(s)           # [10, 20, 30] ← top\nprint(s.peek())    # 30\nprint(s.pop())     # 30\nprint(len(s))      # 2"
+              "code": "# Stack using Python list — simplest approach\nstack = []\nstack.append(1)    # push 1\nstack.append(2)    # push 2\nstack.append(3)    # push 3\nprint(stack[-1])   # peek → 3\nprint(stack.pop()) # pop  → 3\nprint(stack.pop()) # pop  → 2\nprint(stack)       # [1]\n\n# Stack class with error handling\nclass Stack:\n    def __init__(self):\n        self._data = []\n\n    def push(self, item):\n        self._data.append(item)\n\n    def pop(self):\n        if self.is_empty():\n            raise IndexError('Pop from empty stack')\n        return self._data.pop()\n\n    def peek(self):\n        if self.is_empty():\n            raise IndexError('Peek at empty stack')\n        return self._data[-1]\n\n    def is_empty(self): return len(self._data) == 0\n    def __len__(self):  return len(self._data)\n    def __str__(self):  return str(self._data) + ' ← top'\n\ns = Stack()\ns.push(10); s.push(20); s.push(30)\nprint(s)           # [10, 20, 30] ← top\nprint(s.peek())    # 30\nprint(s.pop())     # 30\nprint(len(s))      # 2"
             },
             {
               "description": "Stack applications — balanced parentheses and expression evaluation",
@@ -3412,7 +3412,7 @@
             "Space": "O(n)"
           },
           "important_points": [
-            "from from python_source.content._source.content. list pop() with no argument removes the LAST element — correct for stack",
+            "Python list pop() with no argument removes the LAST element — correct for stack",
             "list.pop(0) removes the FIRST element — O(n), use deque for this instead",
             "Always check is_empty() before pop() or peek() to avoid IndexError",
             "The call stack in recursion is literally a stack data structure",
@@ -3425,17 +3425,17 @@
             "What are five real-world applications of a stack?",
             "What is the time complexity of push and pop operations on a stack?"
           ],
-          "explanation": "Stacks are one of the most fundamental data structures, implementing LIFO access. In from from python_source.content._source.content., a list with append() and pop() is the simplest stack. The key applications are bracket matching, expression evaluation, and DFS. The call stack in every program is literally a stack — each function call pushes a frame, each return pops it."
+          "explanation": "Stacks are one of the most fundamental data structures, implementing LIFO access. In Python, a list with append() and pop() is the simplest stack. The key applications are bracket matching, expression evaluation, and DFS. The call stack in every program is literally a stack — each function call pushes a frame, each return pops it."
         },
         {
           "topic": "Queues",
-          "definition": "A queue is a linear data structure that follows the First In First Out (FIFO) principle — the first element added is the first to be removed. Think of a line at a ticket counter: people join at the back and leave from the front. from from python_source.content._source.content.'s collections.deque is the standard queue implementation providing O(1) enqueue and dequeue.",
+          "definition": "A queue is a linear data structure that follows the First In First Out (FIFO) principle — the first element added is the first to be removed. Think of a line at a ticket counter: people join at the back and leave from the front. Python's collections.deque is the standard queue implementation providing O(1) enqueue and dequeue.",
           "key_concepts": [
             "FIFO: First In First Out — the oldest element is removed first",
             "Enqueue: add element to the rear — O(1)",
             "Dequeue: remove element from the front — O(1)",
             "Front: view the front element without removing — O(1)",
-            "collections.deque: from from python_source.content._source.content.'s O(1) double-ended queue",
+            "collections.deque: Python's O(1) double-ended queue",
             "list as queue: append() to enqueue, pop(0) to dequeue — O(n) for dequeue (BAD)",
             "queue.Queue: thread-safe queue from the queue module",
             "Circular queue: fixed-size queue where rear wraps around to front",
@@ -3519,10 +3519,10 @@
             "What is FIFO? How does a queue implement it?",
             "Why should you use collections.deque instead of a list for a queue?",
             "What is a circular queue? How does it solve the space problem?",
-            "What is a priority queue? How is it implemented in from from python_source.content._source.content.?",
+            "What is a priority queue? How is it implemented in Python ?",
             "Write a queue class using collections.deque with enqueue, dequeue, and front."
           ],
-          "explanation": "Queues implement FIFO access — the backbone of BFS, scheduling, and event processing. from from python_source.content._source.content.'s collections.deque is the correct implementation — list.pop(0) is O(n) and should never be used. Priority queues use heapq for O(log n) insertion and extraction. The deque also underpins the sliding window maximum pattern."
+          "explanation": "Queues implement FIFO access — the backbone of BFS, scheduling, and event processing. Python's collections.deque is the correct implementation — list.pop(0) is O(n) and should never be used. Priority queues use heapq for O(log n) insertion and extraction. The deque also underpins the sliding window maximum pattern."
         },
         {
           "topic": "Stack and Queue Problems",
@@ -3566,7 +3566,7 @@
         },
         {
           "topic": "Deque and Applications",
-          "definition": "A deque (double-ended queue) is a linear data structure that supports O(1) insertion and deletion at both the front and rear. from from python_source.content._source.content.'s collections.deque is the standard implementation. A deque generalises both stacks and queues and is the basis for several advanced algorithms including the sliding window maximum.",
+          "definition": "A deque (double-ended queue) is a linear data structure that supports O(1) insertion and deletion at both the front and rear. Python's collections.deque is the standard implementation. A deque generalises both stacks and queues and is the basis for several advanced algorithms including the sliding window maximum.",
           "key_concepts": [
             "Deque: supports append/appendleft (O(1)) and pop/popleft (O(1))",
             "Generalises stack (LIFO) and queue (FIFO)",
@@ -3630,7 +3630,7 @@
             ]
           },
           "important_points": [
-            "collections.deque is the most versatile sequential data structure in from from python_source.content._source.content.",
+            "collections.deque is the most versatile sequential data structure in Python",
             "maxlen deque is perfect for moving windows — auto-removes old elements",
             "deque.rotate(k) is useful for round-robin scheduling simulations",
             "Use deque when you need O(1) operations at BOTH ends",
@@ -3643,7 +3643,7 @@
             "Write a palindrome checker using a deque.",
             "When would you use a deque instead of a list?"
           ],
-          "explanation": "The deque is from from python_source.content._source.content.'s most versatile sequential data structure, offering O(1) operations at both ends. It generalises stacks and queues. The maxlen parameter creates a fixed-size sliding buffer. Rotating the deque simulates circular structures. For BFS, palindrome checking, and sliding window problems, deque is the ideal tool."
+          "explanation": "The deque is Python's most versatile sequential data structure, offering O(1) operations at both ends. It generalises stacks and queues. The maxlen parameter creates a fixed-size sliding buffer. Rotating the deque simulates circular structures. For BFS, palindrome checking, and sliding window problems, deque is the ideal tool."
         }
       ]
     },
@@ -3863,7 +3863,7 @@
             "Convert sorted array to balanced BST",
             "Convert BST to sorted doubly linked list",
             "AVL tree: self-balancing BST — height difference ≤ 1 for all nodes",
-            "Red-Black tree: self-balancing BST used in from from python_source.content._source.content.'s sortedcontainers"
+            "Red-Black tree: self-balancing BST used in Python's sortedcontainers"
           ],
           "code_examples": [
             {
@@ -3909,7 +3909,7 @@
             "Perfect hash function: no collisions — each key maps to a unique index",
             "Uniform distribution: a good hash function distributes keys evenly",
             "Rehashing: resize and rehash all keys when load factor exceeds threshold",
-            "from from python_source.content._source.content. hash(): built-in function returning hash code of an object",
+            "Python hash(): built-in function returning hash code of an object",
             "Hashable: objects that have a hash value — immutable types (int, str, tuple)"
           ],
           "code_examples": [
@@ -3923,21 +3923,21 @@
             }
           ],
           "important_points": [
-            "hash() in from from python_source.content._source.content. is randomised per session for strings — not stable across runs",
+            "hash() in Python is randomised per session for strings — not stable across runs",
             "Only immutable objects are hashable: int, float, str, tuple, frozenset",
             "Mutable objects (list, dict, set) are NOT hashable — cannot be dict keys",
-            "Load factor > 0.75 typically triggers rehashing in from from python_source.content._source.content. dicts",
-            "from from python_source.content._source.content. dicts are implemented as hash tables with open addressing",
+            "Load factor > 0.75 typically triggers rehashing in Python dicts",
+            "Python dicts are implemented as hash tables with open addressing",
             "A good hash function: fast to compute, uniform distribution, deterministic"
           ],
           "exam_questions": [
             "What is a hash function? What properties should a good hash function have?",
             "What is a load factor? What happens when it exceeds the threshold?",
-            "Why are lists not hashable in from from python_source.content._source.content. but tuples are?",
+            "Why are lists not hashable in Python but tuples are?",
             "What is rehashing? Why is it needed?",
             "Write a simple hash function for string keys."
           ],
-          "explanation": "Hashing maps keys to array indices for O(1) average-case operations. A good hash function distributes keys uniformly to minimise collisions. The load factor controls when rehashing occurs — from from python_source.content._source.content. dicts rehash when load factor exceeds ~0.75, doubling capacity each time."
+          "explanation": "Hashing maps keys to array indices for O(1) average-case operations. A good hash function distributes keys uniformly to minimise collisions. The load factor controls when rehashing occurs — Python dicts rehash when load factor exceeds ~0.75, doubling capacity each time."
         },
         {
           "topic": "Collision Resolution",
@@ -3951,7 +3951,7 @@
             "Clustering: consecutive occupied slots — degrades performance",
             "Primary clustering: problem with linear probing — long runs of occupied slots",
             "Tombstone: marker for deleted slots in open addressing — prevents broken probe chains",
-            "from from python_source.content._source.content. dicts use open addressing with random probing"
+            "Python dicts use open addressing with random probing"
           ],
           "code_examples": [
             {
@@ -4010,7 +4010,7 @@
               [
                 "Used in",
                 "Java HashMap",
-                "from from python_source.content._source.content. dict",
+                "Python dict",
                 "Some databases"
               ]
             ]
@@ -4020,7 +4020,7 @@
             "Linear probing: primary clustering degrades performance at high load",
             "Tombstone prevents breaking probe chains on deletion",
             "Without tombstone: deleting a middle slot breaks subsequent lookups",
-            "from from python_source.content._source.content. dict uses open addressing with pseudo-random probing (not linear)",
+            "Python dict uses open addressing with pseudo-random probing (not linear)",
             "Double hashing eliminates clustering but is more complex to implement"
           ],
           "exam_questions": [
@@ -4033,13 +4033,13 @@
           "explanation": "Collision resolution is fundamental to hash table correctness. Chaining is simple and handles high load factors but has poor cache performance. Linear probing is cache-friendly but suffers from clustering. Tombstones are essential for open addressing deletion — without them, probe chains break and lookups fail."
         },
         {
-          "topic": "from from python_source.content._source.content. Dictionaries and Sets",
-          "definition": "from from python_source.content._source.content. dict and set are built-in hash table implementations. dict maps hashable keys to values with O(1) average operations. set stores unique hashable elements with O(1) membership testing.",
+          "topic": "Python Dictionaries and Sets",
+          "definition": "Python dict and set are built-in hash table implementations. dict maps hashable keys to values with O(1) average operations. set stores unique hashable elements with O(1) membership testing.",
           "key_concepts": [
             "dict: hash table mapping keys to values, O(1) average get/set/delete",
             "set: hash table storing unique elements, O(1) average add/remove/in",
             "Both require hashable keys/elements — immutable types only",
-            "dict preserves insertion order (from from python_source.content._source.content. 3.7+)",
+            "dict preserves insertion order (Python 3.7+)",
             "dict.get(key, default): safe lookup — returns default if key missing",
             "dict.setdefault(key, default): inserts key with default if not present",
             "collections.defaultdict: auto-initialises missing keys",
@@ -4131,7 +4131,7 @@
             "What is Counter? Write an example to find the most frequent character in a string.",
             "Write a set to remove duplicates from a list while preserving uniqueness."
           ],
-          "explanation": "from from python_source.content._source.content. dict and set are optimised hash table implementations. dict gives O(1) average key-value operations and preserves insertion order since from from python_source.content._source.content. 3.7. defaultdict and Counter are specialised variants that simplify common patterns like grouping and frequency counting."
+          "explanation": "Python dict and set are optimised hash table implementations. dict gives O(1) average key-value operations and preserves insertion order since Python 3.7. defaultdict and Counter are specialised variants that simplify common patterns like grouping and frequency counting."
         },
         {
           "topic": "Hash Table Problems",

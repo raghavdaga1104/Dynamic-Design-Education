@@ -158,8 +158,13 @@ export default function Learn() {
       setSimplifyNote(null);
       setChatOpen(false);
       setPhase(PHASE.NOTES);
-    } catch {
-      await handleStartQuiz();
+    } catch (e) {
+      // Show the error instead of silently falling through to quiz.
+      // Previously this hid backend failures (e.g. 404 on notes) making
+      // them impossible to diagnose.
+      setError('Could not load notes: ' + (e?.message || 'unknown error') +
+        ' — click "Start Quiz" to continue, or try again.');
+      setPhase(PHASE.SHOW_UNIT);
     } finally {
       setNotesLoading(false);
     }

@@ -92,11 +92,33 @@ _EXECUTOR = ThreadPoolExecutor(max_workers=4, thread_name_prefix="dde_mcts")
 # main.py is at:  ai-ml/main.py
 # dataset is at:  ai-ml/python_source/data/python_course_dataset.json
 _DATASET_PATH = Path(__file__).parent / "python_source" / "data" / "python_course_dataset.json"
-_NOTES_PATH   = Path(__file__).parent / "python_source" / "data" / "notes.json"
+
+# notes.json — search candidate locations so the file is found whether it lives
+# in python_source/data/ (expected) or in the project root (common mistake).
+_NOTES_CANDIDATES = [
+    Path(__file__).parent.parent / "Notes" / "notes.json",             # project root Notes/ folder
+    Path(__file__).parent / "Notes" / "notes.json",                    # ai-ml/Notes/ fallback
+    Path(__file__).parent / "python_source" / "data" / "notes.json",   # canonical data location
+    Path(__file__).parent / "notes.json",                               # ai-ml root
+]
+_NOTES_PATH = next((p for p in _NOTES_CANDIDATES if p.exists()), _NOTES_CANDIDATES[0])
+
+# Startup log — tells you immediately which path was found (or not)
+import logging as _logging
+_log = _logging.getLogger(__name__)
+if _NOTES_PATH.exists():
+    _log.info("notes.json found at: %s", _NOTES_PATH)
+else:
+    _log.warning(
+        "notes.json NOT FOUND. Searched:\n  %s\n"
+        "Place notes.json at: %s",
+        "\n  ".join(str(p) for p in _NOTES_CANDIDATES),
+        _NOTES_CANDIDATES[0],
+    )
 
 # Maps curriculum unit_ids → notes.json unit_ids
 _NOTES_UNIT_MAP = {
-    "UNIT1_PythonBasics":        "UNIT1_PythonBasics",
+    "UNIT1_PythonBasics":        "UNIT1_python_basics",
     "UNIT2_PythonFunctions":     "UNIT2_FunctionsScope",
     "UNIT3_OOP":                 "UNIT3_OOP",
     "UNIT4_OOPAdvanced":         "UNIT10_AdvancedOOP",
@@ -610,7 +632,13 @@ def get_unit_notes(unit_id: str):
     with open(_DATASET_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    raw_notes = [n for n in data if n.get("unit") == unit_id]
+    # FIX: match case-insensitively — dataset stores "UNIT1_python_basics" but
+    # the caller passes "UNIT1_PythonBasics".  Also accept the notes-map target id.
+    notes_unit_id_lower = (_NOTES_UNIT_MAP.get(unit_id) or unit_id).lower()
+    raw_notes = [
+        n for n in data
+        if n.get("unit", "").lower() in (unit_id.lower(), notes_unit_id_lower)
+    ]
     seen: set = set()
     unique_notes = []
     for note in raw_notes:
@@ -620,6 +648,13 @@ def get_unit_notes(unit_id: str):
             unique_notes.append(note)
 
     enriched = _enrich_notes(unit_id, unique_notes)
+
+    if not enriched:
+        raise HTTPException(
+            404,
+            f"No notes found for unit '{unit_id}'. "
+            "Check that notes.json or python_course_dataset.json contains this unit.",
+        )
 
     return {
         "unit_id": unit_id,

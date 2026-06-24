@@ -24,6 +24,22 @@ GROQ_BASE_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 logger = logging.getLogger(__name__)
 
+
+def _strip_json_fences(text: str) -> str:
+    """
+    Groq (and most LLMs) sometimes wrap JSON output in markdown code fences:
+        ```json
+        { ... }
+        ```
+    json.loads() fails on those.  Strip them before parsing.
+    """
+    import re
+    text = text.strip()
+    # Remove ```json ... ``` or ``` ... ```
+    text = re.sub(r"^```[a-zA-Z]*\s*", "", text)
+    text = re.sub(r"\s*```$", "", text)
+    return text.strip()
+
 EMBEDDING_MODEL      = "all-MiniLM-L6-v2"
 CHROMA_PATH          = Path(__file__).parent.parent / "data" / "chroma_db"
 COLLECTION_NAME      = "dde_notes"

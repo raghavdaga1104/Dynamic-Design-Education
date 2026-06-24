@@ -1,12 +1,12 @@
 {
-  "unit_id": "UNIT1_from from python_source.content._source.content.Basics",
-  "unit_title": "from from python_source.content._source.content. Basics",
+  "unit_id": "UNIT1_PythonBasics",
+  "unit_title": "Python Basics",
   "topics": [
     {
       "topic": "Variables",
-      "definition": "A variable is a named label bound to a memory location that stores a data value. In from from python_source.content._source.content. the interpreter infers the type automatically — no explicit declaration is required. from from python_source.content._source.content. follows a reference model: a variable stores a reference (pointer) to an object in memory, not the object itself.",
+      "definition": "A variable is a named label bound to a memory location that stores a data value. In Python the interpreter infers the type automatically — no explicit declaration is required. Python follows a reference model: a variable stores a reference (pointer) to an object in memory, not the object itself.",
       "key_concepts": [
-        "from from python_source.content._source.content. is dynamically typed — type is inferred, not declared",
+        "Python is dynamically typed — type is inferred, not declared",
         "Variables store references to objects, not the objects themselves",
         "Case-sensitive: age and Age are different variables",
         "type() returns the type of any object",
@@ -20,7 +20,7 @@
         "Cannot begin with a digit",
         "Only letters, digits, and underscores are allowed",
         "Case-sensitive: age and Age are different variables",
-        "Cannot use from from python_source.content._source.content. reserved keywords (if, for, while, class …)",
+        "Cannot use Python reserved keywords (if, for, while, class …)",
         "Use snake_case for variables: total_marks, not totalMarks",
         "Constants in UPPER_CASE: MAX_SIZE = 100"
       ],
@@ -31,22 +31,22 @@
         }
       ],
       "important_points": [
-        "from from python_source.content._source.content. variables are dynamically typed — the type can change on reassignment",
+        "Python variables are dynamically typed — the type can change on reassignment",
         "Always use type() to inspect the type at runtime",
         "bool is a subclass of int: True=1, False=0",
         "id() gives the memory address — use to understand reference model"
       ],
       "exam_questions": [
-        "What are the rules for naming variables in from from python_source.content._source.content.?",
-        "What is the difference between = and == in from from python_source.content._source.content.?",
+        "What are the rules for naming variables in Python ?",
+        "What is the difference between = and == in Python ?",
         "Explain dynamic typing with an example.",
         "What is the output of: a, b = 5, 10; a, b = b, a; print(a, b)?"
       ],
-      "explanation": "Variables in from from python_source.content._source.content. are dynamically typed, meaning you do not need to declare a type. The interpreter infers the type from the assigned value. Variables hold references to objects in memory, not the actual values."
+      "explanation": "Variables in Python are dynamically typed, meaning you do not need to declare a type. The interpreter infers the type from the assigned value. Variables hold references to objects in memory, not the actual values."
     },
     {
       "topic": "Data Types",
-      "definition": "A data type defines the kind of value a variable can hold and the operations that can be performed on it. from from python_source.content._source.content. has several built-in data types grouped into categories: Numeric, Text, Boolean, Sequence, Mapping, Set, and None.",
+      "definition": "A data type defines the kind of value a variable can hold and the operations that can be performed on it. Python has several built-in data types grouped into categories: Numeric, Text, Boolean, Sequence, Mapping, Set, and None.",
       "key_concepts": [
         "int — whole numbers, unlimited precision: 42, -7, 0",
         "float — 64-bit IEEE 754 decimal numbers: 3.14, -0.5",
@@ -65,7 +65,7 @@
         "Tuples are hashable and can be used as dict keys; lists cannot",
         "Sets do not allow duplicate values",
         "bool is a subclass of int: True==1 and False==0",
-        "dict preserves insertion order from from from python_source.content._source.content. 3.7+"
+        "dict preserves insertion order from Python 3.7+"
       ],
       "comparison_table": {
         "headers": [
@@ -124,17 +124,17 @@
         }
       ],
       "exam_questions": [
-        "List all built-in data types in from from python_source.content._source.content. with examples.",
+        "List all built-in data types in Python with examples.",
         "What is the difference between a list and a tuple?",
         "Why can tuples be used as dictionary keys but lists cannot?",
         "What is the output of: print(True + 5, False + 0)?",
         "Explain the difference between mutable and immutable types."
       ],
-      "explanation": "from from python_source.content._source.content.'s built-in types cover all common programming needs. The key distinction is mutability — lists, dicts, and sets are mutable (can be changed in place), while int, float, str, tuple, bool, and frozenset are immutable."
+      "explanation": "Python's built-in types cover all common programming needs. The key distinction is mutability — lists, dicts, and sets are mutable (can be changed in place), while int, float, str, tuple, bool, and frozenset are immutable."
     },
     {
       "topic": "Operators",
-      "definition": "Operators are special symbols that perform operations on one or more operands. from from python_source.content._source.content. supports arithmetic, comparison, logical, assignment, bitwise, membership, and identity operators.",
+      "definition": "Operators are special symbols that perform operations on one or more operands. Python supports arithmetic, comparison, logical, assignment, bitwise, membership, and identity operators.",
       "key_concepts": [
         "Arithmetic: +, -, *, /, //, %, ** ",
         "Comparison: ==, !=, <, >, <=, >= — return bool",
@@ -142,7 +142,7 @@
         "Assignment: =, +=, -=, *=, /=, //=, **=, %=",
         "Identity: is, is not — compare object identity (memory address)",
         "Membership: in, not in — check presence in sequence",
-        "/ always returns float in from from python_source.content._source.content. 3",
+        "/ always returns float in Python 3",
         "// returns integer (floor division)",
         "** is right-associative: 2**3**2 = 2**9 = 512"
       ],
@@ -174,7 +174,7 @@
         "/ always returns float: 10/2 = 5.0, not 5",
         "// returns floor: -7//2 = -4 (rounds toward negative infinity)",
         "== checks value equality; is checks object identity",
-        "Cfrom from python_source.content._source.content. caches integers -5 to 256 — do not rely on is for larger integers",
+        "CPython caches integers -5 to 256 — do not rely on is for larger integers",
         "and / or return one of the operands, not necessarily True/False",
         "** is right-associative: 2**3**2 evaluates as 2**(3**2) = 512"
       ],
@@ -182,20 +182,20 @@
         "What is the difference between == and is? Give an example.",
         "What is the output of: print(10 // 3, 10 % 3, 2 ** 10)?",
         "Explain short-circuit evaluation with an example.",
-        "What is the operator precedence in from from python_source.content._source.content.? List from highest to lowest.",
+        "What is the operator precedence in Python ? List from highest to lowest.",
         "What is the output of: print(2 ** 3 ** 2)?"
       ],
-      "explanation": "from from python_source.content._source.content. operators follow a strict precedence order. The most important rules are: ** is highest among arithmetic operators and is right-associative; / always returns float; == tests value while is tests identity."
+      "explanation": "Python operators follow a strict precedence order. The most important rules are: ** is highest among arithmetic operators and is right-associative; / always returns float; == tests value while is tests identity."
     },
     {
       "topic": "Control Flow",
-      "definition": "Control flow statements determine the order in which instructions are executed. from from python_source.content._source.content. uses if/elif/else for conditional execution. Indentation (4 spaces) defines code blocks — there are no braces.",
+      "definition": "Control flow statements determine the order in which instructions are executed. Python uses if/elif/else for conditional execution. Indentation (4 spaces) defines code blocks — there are no braces.",
       "key_concepts": [
         "if block executes when condition is True",
         "elif checks additional conditions in sequence",
         "else runs when all preceding conditions are False",
         "Ternary expression: value_if_true if condition else value_if_false",
-        "Conditions can be chained: 0 < x < 10 is valid from from python_source.content._source.content.",
+        "Conditions can be chained: 0 < x < 10 is valid Python",
         "Any non-zero / non-empty value is truthy",
         "Falsy values: 0, 0.0, '', [], {}, (), None, False"
       ],
@@ -210,23 +210,23 @@
         }
       ],
       "important_points": [
-        "from from python_source.content._source.content. uses indentation — inconsistent indentation causes IndentationError",
-        "elif is short for 'else if' — from from python_source.content._source.content. has no switch statement (match added in 3.10)",
+        "Python uses indentation — inconsistent indentation causes IndentationError",
+        "elif is short for 'else if' — Python has no switch statement (match added in 3.10)",
         "Conditions are evaluated top to bottom — first True block executes",
         "Ternary: x if condition else y — useful for simple one-line conditions",
-        "Chained comparisons: 0 < x < 10 works and is from from python_source.content._source.content.ic"
+        "Chained comparisons: 0 < x < 10 works and is Pythonic"
       ],
       "exam_questions": [
-        "Write a from from python_source.content._source.content. program to find the largest of three numbers.",
+        "Write a Python program to find the largest of three numbers.",
         "What is a ternary operator? Write an example.",
         "Explain the if-elif-else ladder with a grade calculator example.",
-        "What are falsy values in from from python_source.content._source.content.? List all of them."
+        "What are falsy values in Python ? List all of them."
       ],
-      "explanation": "from from python_source.content._source.content.'s control flow uses indentation instead of braces. The if-elif-else ladder evaluates conditions top to bottom and executes the first matching block. The ternary expression provides a concise one-line alternative for simple conditions."
+      "explanation": "Python's control flow uses indentation instead of braces. The if-elif-else ladder evaluates conditions top to bottom and executes the first matching block. The ternary expression provides a concise one-line alternative for simple conditions."
     },
     {
       "topic": "Loops",
-      "definition": "Loops allow repeated execution of a block of code. from from python_source.content._source.content. provides two loop types: for (iterates over a sequence) and while (repeats while a condition is True). Both support break, continue, pass, and an else clause.",
+      "definition": "Loops allow repeated execution of a block of code. Python provides two loop types: for (iterates over a sequence) and while (repeats while a condition is True). Both support break, continue, pass, and an else clause.",
       "key_concepts": [
         "for loop iterates over any iterable: list, string, range, dict, tuple, set",
         "range(start, stop, step) — stop is exclusive",
@@ -258,11 +258,11 @@
       "exam_questions": [
         "What is the difference between break and continue?",
         "Explain the for-else construct with an example.",
-        "Write a from from python_source.content._source.content. program to print all prime numbers between 1 and 50.",
+        "Write a Python program to print all prime numbers between 1 and 50.",
         "What is the output of: for i in range(2, 10, 3): print(i)?",
         "Write a program using a while loop to compute factorial of n."
       ],
-      "explanation": "from from python_source.content._source.content.'s for loop is used to iterate over sequences. The while loop is used when the number of iterations is not known in advance. The else clause on a loop is a unique from from python_source.content._source.content. feature that executes when the loop completes without a break."
+      "explanation": "Python's for loop is used to iterate over sequences. The while loop is used when the number of iterations is not known in advance. The else clause on a loop is a unique Python feature that executes when the loop completes without a break."
     },
     {
       "topic": "Input Output",
@@ -272,7 +272,7 @@
         "int(input()) for integer input; float(input()) for decimal",
         "map(int, input().split()) — read multiple integers on one line",
         "print() parameters: sep (separator), end (line ending)",
-        "f-strings are the recommended formatting method (from from python_source.content._source.content. 3.6+)",
+        "f-strings are the recommended formatting method (Python 3.6+)",
         "Format specifiers: :.2f (2 decimal places), :d (integer), :<10 (left-align)"
       ],
       "code_examples": [
@@ -298,13 +298,13 @@
         "Explain f-string formatting with three examples.",
         "What is the output of: print('A','B','C', sep='--', end='!')?"
       ],
-      "explanation": "input() is the standard way to receive user input in from from python_source.content._source.content.. It always returns a string, so explicit casting with int() or float() is required for numeric operations. f-strings are the modern, preferred formatting method."
+      "explanation": "input() is the standard way to receive user input in Python. It always returns a string, so explicit casting with int() or float() is required for numeric operations. f-strings are the modern, preferred formatting method."
     },
     {
       "topic": "Type Casting",
-      "definition": "Type casting (type conversion) is the process of converting a value from one data type to another. from from python_source.content._source.content. supports implicit conversion (automatic, done by interpreter) and explicit conversion (manual, using built-in functions).",
+      "definition": "Type casting (type conversion) is the process of converting a value from one data type to another. Python supports implicit conversion (automatic, done by interpreter) and explicit conversion (manual, using built-in functions).",
       "key_concepts": [
-        "Implicit: from from python_source.content._source.content. auto-promotes type to prevent data loss (int + float → float)",
+        "Implicit: Python auto-promotes type to prevent data loss (int + float → float)",
         "Explicit: programmer uses int(), float(), str(), bool(), list(), tuple(), set()",
         "int() truncates float — does NOT round: int(3.9) = 3",
         "int('3.14') raises ValueError — must use int(float('3.14'))",
@@ -315,7 +315,7 @@
       "types": [
         {
           "name": "Implicit Conversion",
-          "description": "from from python_source.content._source.content. automatically promotes types to avoid data loss in mixed expressions.",
+          "description": "Python automatically promotes types to avoid data loss in mixed expressions.",
           "example": "result = 10 + 3.5  # int + float → float = 13.5"
         },
         {
@@ -334,16 +334,16 @@
         "int(3.9) = 3 — truncation, not rounding; use round(3.9) = 4 for rounding",
         "bool(0) = False; bool([]) = False; bool([0]) = True (non-empty list)",
         "str(None) = 'None' (string); not the same as None",
-        "Implicit conversion only widens type — from from python_source.content._source.content. never silently loses precision"
+        "Implicit conversion only widens type — Python never silently loses precision"
       ],
       "exam_questions": [
         "What is the difference between implicit and explicit type conversion?",
         "What is the output of: print(int('3.14'))?  Why?",
-        "List all falsy values in from from python_source.content._source.content..",
+        "List all falsy values in Python.",
         "What is the output of: print(bool([]), bool([0]), bool(''))?",
         "How do you convert a binary string '1010' to an integer?"
       ],
-      "explanation": "from from python_source.content._source.content. performs implicit conversion to prevent precision loss in mixed-type arithmetic. Explicit casting must be done manually using built-in functions. The most common mistake is trying to convert a float string directly to int."
+      "explanation": "Python performs implicit conversion to prevent precision loss in mixed-type arithmetic. Explicit casting must be done manually using built-in functions. The most common mistake is trying to convert a float string directly to int."
     },
     {
       "topic": "Strings",
@@ -373,7 +373,7 @@
       "code_examples": [
         {
           "description": "Indexing, slicing, and string methods",
-          "code": "s = 'from from python_source.content._source.content.'\n#    P  y  t  h  o  n\n#    0  1  2  3  4  5   (positive)\n#   -6 -5 -4 -3 -2 -1   (negative)\n\nprint(s[0])       # P\nprint(s[-1])      # n\nprint(s[2:5])     # tho\nprint(s[:3])      # Pyt\nprint(s[3:])      # hon\nprint(s[::2])     # Pto\nprint(s[::-1])    # nohtyP\n\n# Methods\nprint('hello'.upper())         # HELLO\nprint('  hi  '.strip())        # hi\nprint('a,b,c'.split(','))      # ['a','b','c']\nprint('-'.join(['x','y','z'])) # x-y-z\nprint('hello'.replace('l','r'))# herro\nprint('hello'.find('l'))       # 2\nprint('hello'.count('l'))      # 2\nprint('123'.isdigit())         # True"
+          "code": "s = 'Python '\n#    P  y  t  h  o  n\n#    0  1  2  3  4  5   (positive)\n#   -6 -5 -4 -3 -2 -1   (negative)\n\nprint(s[0])       # P\nprint(s[-1])      # n\nprint(s[2:5])     # tho\nprint(s[:3])      # Pyt\nprint(s[3:])      # hon\nprint(s[::2])     # Pto\nprint(s[::-1])    # nohtyP\n\n# Methods\nprint('hello'.upper())         # HELLO\nprint('  hi  '.strip())        # hi\nprint('a,b,c'.split(','))      # ['a','b','c']\nprint('-'.join(['x','y','z'])) # x-y-z\nprint('hello'.replace('l','r'))# herro\nprint('hello'.find('l'))       # 2\nprint('hello'.count('l'))      # 2\nprint('123'.isdigit())         # True"
         }
       ],
       "important_points": [
@@ -381,16 +381,16 @@
         "String methods return NEW strings — the original is unchanged",
         "Slicing never raises IndexError — out-of-range indices are clipped",
         "find() returns -1 if not found; index() raises ValueError",
-        "Use f-strings for formatting (from from python_source.content._source.content. 3.6+): f'Hello {name}'"
+        "Use f-strings for formatting (Python 3.6+): f'Hello {name}'"
       ],
       "exam_questions": [
-        "What is the output of: s='from from python_source.content._source.content.'; print(s[1:4], s[::-1])?",
+        "What is the output of: s='Python '; print(s[1:4], s[::-1])?",
         "Explain string immutability with an example.",
         "What is the difference between find() and index()?",
         "Write a program to count vowels in a given string.",
         "What is the output of: print('ab' * 3, len('hello'))?"
       ],
-      "explanation": "Strings are one of the most frequently used data types in from from python_source.content._source.content.. Their immutability means every modification creates a new string object. The slicing syntax s[start:stop:step] is extremely powerful and must be mastered for exams."
+      "explanation": "Strings are one of the most frequently used data types in Python. Their immutability means every modification creates a new string object. The slicing syntax s[start:stop:step] is extremely powerful and must be mastered for exams."
     }
   ]
 }
